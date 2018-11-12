@@ -1,0 +1,56 @@
+.set {
+    background: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-363073.jpg") no-repeat fixed top;
+}
+
+.set-wrap {
+    position: relative;
+    width: 980px;
+    padding-bottom: 20px;
+    margin: 20px auto 0;
+}
+
+.set-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 160px;
+    height: 100%;
+}
+
+.set-right {
+    padding-left: 160px;
+    width: 100%;
+}
+
+.set-left-nav {
+    padding-right: 10px;
+
+    li {
+        height: 42px;
+        padding: 10px 0 10px 34px;
+        line-height: 22px;
+        background-color: #fff;
+        position: relative;
+        margin-bottom: .5rem;
+
+        a {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            &:hover {
+                color: #1890ff;
+                i {
+                    color: #1890ff;
+                }
+            }
+        }
+
+        i {
+            font-size: 16px;
+            position: absolute;
+            top: 14px;
+            left: 10px;
+            color: red;
+        }
+    }
+}

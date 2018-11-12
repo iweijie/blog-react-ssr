@@ -1,0 +1,15 @@
+$houverBgColor:rgba(196, 196, 196, 0.5) !default;
+$blue : #0088f5;
+
+@mixin pointer {
+    cursor: pointer;
+}
+
+@mixin opacity($num:0) {
+    /* IE */
+    filter: Alpha(opacity= $num*100);
+    /* FF 主要是为了兼容老版本的FF */
+    -moz-opacity: $num;
+    /* FF */
+    opacity: $num;
+}

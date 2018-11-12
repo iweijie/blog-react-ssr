@@ -1,0 +1,31 @@
+.config {
+    width: 96%;
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+    margin: 0 auto;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.configtitle {
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 10px;
+}
+.configtitle button {
+    position: absolute;
+    top: 4px;
+    right: 20px;
+}
+.configTable .handle .ant-btn {
+    margin-right: 10px;
+}
+.configTable .handle .ant-btn:last-child {
+    margin-right: 0px;
+}
+/* 修改antd 的默认样式 */
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    padding: 8px ;
+    text-align: center;
+}
