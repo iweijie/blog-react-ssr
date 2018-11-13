@@ -6,9 +6,9 @@
  */
 import axios from 'axios'
 import {message} from 'antd'
-import history from "util/history"
+import history from "tool/history"
 
-axios.defaults.timeout = 20000;
+axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -34,6 +34,6 @@ axios.interceptors.response.use(response => {
         return data
     }
 },(err)=>{
-    throw err
+    return err
 });
 export default axios

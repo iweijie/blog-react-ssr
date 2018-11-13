@@ -1,8 +1,8 @@
 import config from "config"
 var {basicsUrl} = config
 
-import {filterMenu} from "util/baseTool"
-import axios from "util/axios"
+import {filterMenu} from "tool/baseTool"
+import axios from "tool/axios"
 
 export const menuInfo = "menuInfo"
 export const userInfo = "userInfo"

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { timestampFromat } from "util/baseTool"
+import { timestampFromat } from "tool/baseTool"
 import {
     Form,
     Input,

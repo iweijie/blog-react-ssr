@@ -3,12 +3,15 @@
 *功能描述: 一些公共信息存放
 */
 import {resize} from "actions/common"
+import isServer from "tool/env"
 
 
-function browserInfo(state ={
+const info = !isServer? {
     height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
     widht: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-}, action) {
+}:{}
+
+function browserInfo(state =info, action) {
     switch (action.type) {
         case resize:
             return {

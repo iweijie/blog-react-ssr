@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
-import observer from "util/observer"
-import { timestampFromat } from "util/baseTool"
+import dispatchAction from "tool/dispatchAction"
+import observer from "tool/observer"
+import { timestampFromat } from "tool/baseTool"
 import {
     Button,
     Table,

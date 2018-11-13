@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
-import { timestampFromat } from "util/baseTool"
+import dispatchAction from "tool/dispatchAction"
+import { timestampFromat } from "tool/baseTool"
 import Add from "./add"
 import {
     Button,

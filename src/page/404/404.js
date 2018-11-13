@@ -8,7 +8,7 @@ import React from 'react'
 import './404.css';
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux';
-import history from "util/history"
+import history from "tool/history"
 
 
 class NotFound extends React.Component {

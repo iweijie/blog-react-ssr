@@ -6,8 +6,8 @@
 */
 import React, { PureComponent } from 'react';
 import { Icon } from "antd"
-import { timestampFromat } from "util/baseTool"
-import history from "util/history"
+import { timestampFromat } from "tool/baseTool"
+import history from "tool/history"
 import "./css.scss"
 
 class App extends PureComponent {

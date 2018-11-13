@@ -1,5 +1,5 @@
 import React from 'react';
-import history from "util/history";
+import history from "tool/history";
 import { Router, Switch, Route } from 'react-router-dom';
 // import Bundle from '../bundle/bundle'
 import Loadable from 'react-loadable';
@@ -87,7 +87,7 @@ const AsyncNoFound = Loadable({
     }
 })
 
-const routes = [
+export default [
     {
         path: '/',
         exact: true,
@@ -134,12 +134,12 @@ const routes = [
 
 ]
 
-export default (props) => (
-    <Router history={history}>
-        <Switch>
-            {routes.map((route, i) => (
-                <Route key={i} {...route} />
-            ))}
-        </Switch>
-    </Router>
-)
+//  () => (
+//     <Router history={history}>
+//         <Switch>
+//             {routes.map((route, i) => (
+//                 <Route key={i} {...route} />
+//             ))}
+//         </Switch>
+//     </Router>
+// )

@@ -1,4 +1,4 @@
-import axios from "util/axios"
+import axios from "tool/axios"
 import config from "config"
 import { message } from "antd"
 export const appendArticleList = "appendArticleList"

@@ -4,7 +4,7 @@
  *时间: 2018/4/2 14:35
  */
 
-
+import isServer from "./env"
 
 /**
 *作者: weijie
@@ -208,8 +208,9 @@ export function throttle(fn, interval = 200) {
  *参数说明:
  *时间: 2018/4/2 16:22
  */
+
 (function () {
-    if (!('flex' in document.body.style)) {
+    if (!isServer && !('flex' in document.body.style)) {
         const root = document.getElementById('root');
         const first = document.body.firstChild;
         var html = document.createElement("div");

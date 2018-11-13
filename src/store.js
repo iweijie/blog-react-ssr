@@ -2,9 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import reducers from './reducers'
-
-export default function configureStore(initialState = {}) {
-
+import isServer from 'tool/env'
+export default (state = {}) => {
     const middlewares = [
         thunk
     ]
@@ -15,16 +14,20 @@ export default function configureStore(initialState = {}) {
     const enhancers = [
         applyMiddleware(...middlewares)
     ]
+    let initialState;
+
+    if (!isServer && window.__PRELOADED_STATE__) {
+        initialState = window.__PRELOADED_STATE__;
+        delete window.__PRELOADED_STATE__;
+    }else {
+        initialState = state
+    }
 
     const store = createStore(
         reducers,
         initialState,
         compose(...enhancers)
     )
-
-    // Extensions
-    //store.runSaga = sagaMiddleware.run
-    store.asyncReducers = {} // Async reducer registry
 
     return store
 }

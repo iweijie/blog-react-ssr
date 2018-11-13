@@ -5,12 +5,12 @@
 *时间: 2018/4/16 10:48
 */
 import React, { Component } from 'react';
-import observer from "util/observer"
+import observer from "tool/observer"
 import CodeMirror from "codemirror"
 import "codemirror/lib/codemirror.css"
 import marked from "marked"
-import highlight from "util/highlight/highlight.pack"
-import "util/highlight/styles/arta.css"
+import highlight from "tool/highlight/highlight.pack"
+import "tool/highlight/styles/arta.css"
 import { Tabs, Icon } from 'antd';
 const TabPane = Tabs.TabPane;
 class App extends Component {

@@ -1,7 +1,8 @@
 // 核实是否登入
 import React from "react"
 import { connect } from 'react-redux';
-import history from "util/history"
+import history from "tool/history"
+import isServer from "tool/env"
 
 class Verification extends React.Component {
 
@@ -15,7 +16,7 @@ class Verification extends React.Component {
 
     UNSAFE_componentWillMount() {
         let { verify, userInfo } = this.props;
-        window.Pace.start()
+        !isServer && window.Pace.start()
         if (verify && !userInfo.isLogin) {
             let tmp = setTimeout(() => {
                 history.replace("/404")
@@ -33,7 +34,6 @@ class Verification extends React.Component {
                 sign: null
             })
         }
-
     }
 
     render() {

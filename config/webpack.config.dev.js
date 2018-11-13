@@ -155,7 +155,7 @@ module.exports = {
       container: path.resolve(__dirname, '../src/container'),
       reducers: path.resolve(__dirname, '../src/reducers'),
       style: path.resolve(__dirname, '../src/style'),
-      util: path.resolve(__dirname, '../src/util'),
+      tool: path.resolve(__dirname, '../src/tool'),
       page: path.resolve(__dirname, '../src/page'),
       images: path.resolve(__dirname, '../src/images'),
       json: path.resolve(__dirname, '../src/json'),

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom'
-import dispatchAction from "util/dispatchAction"
+import dispatchAction from "tool/dispatchAction"
 import Edit from "./components/edit"
 import Select from "./components/select"
-import observer from "util/observer"
+import observer from "tool/observer"
 import {
     Button,
     message,

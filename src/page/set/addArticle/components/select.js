@@ -5,7 +5,7 @@
 *时间: 2018/4/16 10:48
 */
 import React, { Component } from 'react';
-import observer from "util/observer"
+import observer from "tool/observer"
 import {
     Form,
     Input,

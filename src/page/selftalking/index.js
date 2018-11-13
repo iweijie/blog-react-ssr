@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
+import dispatchAction from "tool/dispatchAction"
 import Topnav from "../comom/topNav"
-import { timestampFromat } from "util/baseTool"
+import { timestampFromat } from "tool/baseTool"
 import "./css.scss"
 
 

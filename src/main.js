@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import history from "tool/history";
+import { Router, Switch, Route } from 'react-router-dom';
 import routers from './routers'
-import { throttle } from "util/baseTool"
-import dispatchAction from "util/dispatchAction"
+import { throttle } from "tool/baseTool"
+import dispatchAction from "tool/dispatchAction"
 // import AnimatedRouter from 'react-animated-router';
 // import 'react-animated-router/animate.css';
-// import io from "util/socket"
-// import "util/observer"
-import "util/love"
-
-const router = routers();
+// import io from "tool/socket"
+// import "tool/observer"
 
 class App extends Component {
     constructor(props, context) {
@@ -31,7 +30,13 @@ class App extends Component {
     }
     render() {
         return (
-            router
+            <Router history={history}>
+                <Switch>
+                    {routers.map((route, i) => (
+                        <Route key={i} {...route} />
+                    ))}
+                </Switch>
+            </Router>
         );
     }
 }
@@ -44,3 +49,12 @@ export default connect(mapStateToProps, dispatchAction)(App)
 
 
 
+//  () => (
+//     <Router history={history}>
+//         <Switch>
+//             {routes.map((route, i) => (
+//                 <Route key={i} {...route} />
+//             ))}
+//         </Switch>
+//     </Router>
+// )

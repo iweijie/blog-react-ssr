@@ -1,6 +1,6 @@
 
 import React, { PureComponent } from 'react';
-import history from "util/history"
+import history from "tool/history"
 class Tags extends PureComponent {
     constructor(props) {
         super(props);

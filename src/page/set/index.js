@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
+import dispatchAction from "tool/dispatchAction"
 import Topnav from "../comom/topNav"
 import LeftNav from "./leftNav"
 import { Switch, Route, Redirect } from 'react-router-dom'

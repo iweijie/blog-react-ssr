@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux';
-import history from "util/history"
+import history from "tool/history"
 
 class Verification extends React.Component {
 

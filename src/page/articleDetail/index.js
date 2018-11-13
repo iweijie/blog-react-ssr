@@ -1,19 +1,19 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
-import { timestampFromat } from "util/baseTool"
+import dispatchAction from "tool/dispatchAction"
+import { timestampFromat } from "tool/baseTool"
 import Messageboard from "./messageBoard"
 import TopNav from "../comom/topNav"
 import Aside from "./aside"
-import history from "util/history"
+import history from "tool/history"
 import marked from "marked"
 import {
     Icon,
 } from "antd"
-import { setLocation, getLocation } from "util/baseTool"
-import highlight from "util/highlight/highlight.pack"
-import "util/highlight/styles/arta.css"
+import { setLocation, getLocation } from "tool/baseTool"
+import highlight from "tool/highlight/highlight.pack"
+import "tool/highlight/styles/arta.css"
 import "./css.scss"
 
 class ArticleDetail extends Component {

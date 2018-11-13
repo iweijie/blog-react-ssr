@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
-import history from "util/history"
-// import WordCloud from "util/wordcloud2"
+import dispatchAction from "tool/dispatchAction"
+import history from "tool/history"
+// import WordCloud from "tool/wordcloud2"
 import Topnav from "../comom/topNav"
 import "./css.scss"
 class App extends Component {

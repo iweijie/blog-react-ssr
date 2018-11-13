@@ -1,12 +1,12 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
+import dispatchAction from "tool/dispatchAction"
 import Bg from "./components/homeBg"
 import Topnav from "../comom/topNav"
 import Recommend from "./components/recommend"
 import ArticleList from "../comom/articleList/index"
-import { throttle } from "util/baseTool"
+import { throttle } from "tool/baseTool"
 import Whisper from "./components/whisper"
 import Calendar from "./components/calendar"
 import Tags from "./components/tags"

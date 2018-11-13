@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "util/dispatchAction"
-import history from "util/history"
+import dispatchAction from "tool/dispatchAction"
+import history from "tool/history"
 import {
     Form,
     Modal,
