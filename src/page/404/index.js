@@ -5,7 +5,7 @@
 *时间: 2018/4/16 10:47
 */
 import React from 'react'
-import './404.css';
+import './css.css';
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux';
 import history from "tool/history"

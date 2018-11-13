@@ -33,8 +33,7 @@ class App extends PureComponent {
     render() {
         var { list,userInfo } = this.props;
         let {userId} = userInfo
-        list = list || []
-        console.log(list)
+        list = list || [];
         const content = (
             <div className="article-list">
                 {

@@ -24,6 +24,8 @@ const App = (
 
 const root = document.querySelector('#root');
 
+// render(App, root)
+
 if (root.hasChildNodes() === true) {
     // If it's an SSR, we use hydrate to get fast page loads by just
     // attaching event listeners after the initial render
