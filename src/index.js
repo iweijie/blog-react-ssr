@@ -4,9 +4,9 @@
 *参数说明:
 *时间: 2018/4/16 10:53
 */
-import React from 'react'
-import { render, hydrate } from 'react-dom'
-import { Provider } from 'react-redux'
+import React from 'react';
+import { render, hydrate } from 'react-dom';
+import { Provider } from 'react-redux';
 import Loadable from 'react-loadable';
 import Main from './main'
 import configureStore from './store'

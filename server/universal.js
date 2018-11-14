@@ -1,13 +1,13 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
-const React = require('react')
-const { Provider } = require('react-redux')
+const React = require('react');
+const { Provider } = require('react-redux');
 const { renderToString } = require('react-dom/server')
-const { StaticRouter } = require('react-router-dom')
+const { StaticRouter, Switch, Route } = require('react-router-dom')
 
 const { default: configureStore } = require('../src/store')
-const { default: App } = require('../src/main')
+const { default: routers } = require('../src/routers/index')
 
 module.exports = function universalLoader(req, res) {
     const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
@@ -25,7 +25,13 @@ module.exports = function universalLoader(req, res) {
                     location={req.url}
                     context={context}
                 >
-                    <App />
+                    <Switch>
+                        {
+                            routers.map((route, i) => (
+                                <Route key={i} {...route} />
+                            ))
+                        }
+                    </Switch>
                 </StaticRouter>
             </Provider>
         )
@@ -35,7 +41,7 @@ module.exports = function universalLoader(req, res) {
             res.redirect(301, context.url)
         } else {
             // we're good, send the response
-            const RenderedApp = htmlData.replace('{{SSR}}', markup)
+            const RenderedApp = htmlData.replace('<div id="root"></div>', `<div id="root">${markup}</div>`)
             res.send(RenderedApp)
         }
     })

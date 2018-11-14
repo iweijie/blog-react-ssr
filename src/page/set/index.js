@@ -13,6 +13,7 @@ import {
 } from "./routers"
 import "./css.scss"
 
+let url = "/set";
 
 class App extends Component {
     constructor(props) {
@@ -20,7 +21,6 @@ class App extends Component {
     }
     render() {
         let { height } = this.props.browserInfo
-        let url = "/set";
         const content = (
             <div ref="set" className="set">
                 <Topnav isFixed />

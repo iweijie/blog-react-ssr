@@ -11,7 +11,7 @@ import Verification from "page/comom/Verification";
 
 const AsyncHome = Loadable({
     loader: () => import('../page/home/App'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -22,7 +22,7 @@ const AsyncHome = Loadable({
 //  */
 const AsyncArticleDetail = Loadable({
     loader: () => import('../page/articleDetail'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -38,7 +38,7 @@ const AsyncArticleDetail = Loadable({
 //  */
 const AsyncLogin = Loadable({
     loader: () => import('../page/login'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -54,7 +54,7 @@ const AsyncLogin = Loadable({
 //  */
 const AsyncSelftalking = Loadable({
     loader: () => import('../page/selftalking'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -70,7 +70,7 @@ const AsyncSelftalking = Loadable({
 //  */
 const AsyncSet = Loadable({
     loader: () => import('../page/set'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -86,7 +86,7 @@ const AsyncSet = Loadable({
 //  */
 const AsyncAbout = Loadable({
     loader: () => import('../page/about'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -102,7 +102,7 @@ const AsyncAbout = Loadable({
  */
 const AsyncNoFound = Loadable({
     loader: () => import('../page/404'),
-    loading:()=>null,
+    loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
@@ -155,8 +155,8 @@ export default [
         exact: true,
     },
     {
-        path: '*',
-        component: AsyncNoFound
+        path: '/*',
+        component: AsyncNoFound,
+        exact: true,
     }
-
 ]

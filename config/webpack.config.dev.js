@@ -35,11 +35,13 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
+const lessRegex = /\.less$/;
+// const lessModuleRegex = /\.module\.less$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (cssOptions, preProcessor,javascriptEnabled) => {
   const loaders = [
     require.resolve('style-loader'),
     {
@@ -68,7 +70,12 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
   ];
   if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
+    loaders.push({
+      loader: require.resolve(preProcessor),
+      options: {
+        javascriptEnabled: !!javascriptEnabled
+      },
+    });
   }
   return loaders;
 };
@@ -299,6 +306,13 @@ module.exports = {
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
+          },
+          {
+            test: lessRegex,
+            use: getStyleLoaders({
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            },'less-loader',true),
           },
           // Opt-in support for SASS (using .scss or .sass extensions).
           // Chains the sass-loader with the css-loader and the style-loader

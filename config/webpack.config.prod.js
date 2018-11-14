@@ -53,11 +53,12 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
+const lessRegex = /\.less$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (cssOptions, preProcessor,javascriptEnabled) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -97,6 +98,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       loader: require.resolve(preProcessor),
       options: {
         sourceMap: shouldUseSourceMap,
+        javascriptEnabled: !!javascriptEnabled
       },
     });
   }
@@ -377,6 +379,13 @@ module.exports = {
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
+          },
+          {
+            test: lessRegex,
+            use: getStyleLoaders({
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            },'less-loader',true),
           },
           // Opt-in support for SASS. The logic here is somewhat similar
           // as in the CSS routine, except that "sass-loader" runs first

@@ -29,32 +29,19 @@ class App extends Component {
         }, 100))
     }
     render() {
-        return (
-            <Router history={history}>
-                <Switch>
-                    {routers.map((route, i) => (
+        return (<Router history={history}>
+            <Switch>
+                {
+                    routers.map((route, i) => (
                         <Route key={i} {...route} />
-                    ))}
-                </Switch>
-            </Router>
-        );
+                    ))
+                }
+            </Switch>
+        </Router>)
+
     }
 }
 const mapStateToProps = () => {
     return {}
 }
 export default connect(mapStateToProps, dispatchAction)(App)
-
-
-
-
-
-//  () => (
-//     <Router history={history}>
-//         <Switch>
-//             {routes.map((route, i) => (
-//                 <Route key={i} {...route} />
-//             ))}
-//         </Switch>
-//     </Router>
-// )
