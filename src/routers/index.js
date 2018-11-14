@@ -1,10 +1,14 @@
 import React from 'react';
-import history from "tool/history";
-import { Router, Switch, Route } from 'react-router-dom';
 // import Bundle from '../bundle/bundle'
 import Loadable from 'react-loadable';
 import Verification from "page/comom/Verification";
+import actions from "actions/index"
 
+// {
+//     selftalkingListActionAsync,
+//     AsyncrecommendList,
+//     getArticleListAsync,
+// } 
 /**
  * 首页
  */
@@ -118,6 +122,23 @@ export default [
     {
         path: '/',
         exact: true,
+        loadData: async (match, store) => {
+            console.log(store)
+            const { dispatch } =  store
+            let params = {
+                page: 1,
+                pageSize: 10
+            }
+            let promiseAll = [
+                actions.selftalkingListActionAsync()(dispatch),
+                actions.AsyncrecommendList()(dispatch),
+            ]
+            if (match.params.id) {
+                params.tag = match.params.id
+            }
+            promiseAll.push(actions.getArticleListAsync(params)(dispatch))
+            await Promise.all(promiseAll)
+        },
         component: AsyncHome
     },
     {
