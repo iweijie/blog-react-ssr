@@ -180,9 +180,3 @@ class App extends Component {
 }
 
 export default Form.create()(App)
-
-// {
-//     <span className="set-upload-btn">
-                                        
-//                                     </span>
-// }

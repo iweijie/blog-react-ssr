@@ -4,22 +4,22 @@ import dispatchAction from "tool/dispatchAction"
 import { timestampFromat } from "tool/baseTool"
 import Add from "./add"
 import {
-    Button,
-    Table,
-    message,
-    Input,
-    Row,
-    Col,
-    Radio,
-    Form,
-    Modal,
-    Tabs
+    // Button,
+    // Table,
+    // message,
+    // Input,
+    // Row,
+    // Col,
+    // Radio,
+    // Form,
+    // Modal,
+    // Tabs
 } from "antd"
 
 import "./css.scss"
-const TabPane = Tabs.TabPane;
-const FormItem = Form.Item
-const RadioGroup = Radio.Group;
+// const TabPane = Tabs.TabPane;
+// const FormItem = Form.Item
+// const RadioGroup = Radio.Group;
 
 
 class App extends Component {

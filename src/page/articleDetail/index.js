@@ -7,14 +7,33 @@ import Messageboard from "./messageBoard"
 import TopNav from "../comom/topNav"
 import Aside from "./aside"
 import history from "tool/history"
+import isServer from "tool/env"
 import marked from "marked"
 import {
     Icon,
 } from "antd"
-import { setLocation, getLocation } from "tool/baseTool"
+// import { setLocation, getLocation } from "tool/baseTool"
 import highlight from "tool/highlight/highlight.pack"
 import "tool/highlight/styles/arta.css"
 import "./css.scss"
+
+// if (isServer) {
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    highlight: function (code) {
+        return highlight.highlightAuto(code).value;
+    },
+    pedantic: false,
+    // headerPrefix: "mk-wj",
+    gfm: true,
+    tables: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: true,
+    xhtml: false
+});
+// }
 
 class ArticleDetail extends Component {
     constructor(props) {
@@ -26,27 +45,31 @@ class ArticleDetail extends Component {
         isShowNav: true
     }
     UNSAFE_componentWillMount() {
-        var { getArticleDetails, match } = this.props;
+        var { getArticleDetails, match, detial } = this.props;
         var id = match.params.id;
         if (!id) {
             return history.push("/404")
         }
-        getArticleDetails({ id })
-        marked.setOptions({
-            renderer: new marked.Renderer(),
-            highlight: function (code) {
-                return highlight.highlightAuto(code).value;
-            },
-            pedantic: false,
-            // headerPrefix: "mk-wj",
-            gfm: true,
-            tables: true,
-            breaks: false,
-            sanitize: false,
-            smartLists: true,
-            smartypants: true,
-            xhtml: false
-        });
+        if (isServer) {
+            this.setHtml(detial)
+        } else if (!detial || !detial._id) {
+            getArticleDetails({ id })
+        }
+        // marked.setOptions({
+        //     renderer: new marked.Renderer(),
+        //     highlight: function (code) {
+        //         return highlight.highlightAuto(code).value;
+        //     },
+        //     pedantic: false,
+        //     // headerPrefix: "mk-wj",
+        //     gfm: true,
+        //     tables: true,
+        //     breaks: false,
+        //     sanitize: false,
+        //     smartLists: true,
+        //     smartypants: true,
+        //     xhtml: false
+        // });
     }
     match = (html) => {
         var arr = [];
@@ -88,23 +111,23 @@ class ArticleDetail extends Component {
         }
         return arr
     }
-    updateTime = (id, time) => {
-        var { asyncArticlTime } = this.props
-        if (!localStorage) {
-            asyncArticlTime({ id, time })
-        }
-        var timeId = "timeId"
-        var ids = getLocation(timeId)
-        if (!ids) {
-            ids = {}
-        }
-        var now = +new Date()
-        if (!ids[id] || (ids[id] + 60 * 60 * 1000) <= now) {
-            ids[id] = now
-            setLocation(timeId, ids)
-            asyncArticlTime({ id, time })
-        }
-    }
+    // updateTime = (id, time) => {
+    //     var { asyncArticlTime } = this.props
+    //     if (!localStorage) {
+    //         asyncArticlTime({ id, time })
+    //     }
+    //     var timeId = "timeId"
+    //     var ids = getLocation(timeId)
+    //     if (!ids) {
+    //         ids = {}
+    //     }
+    //     var now = +new Date()
+    //     if (!ids[id] || (ids[id] + 60 * 60 * 1000) <= now) {
+    //         ids[id] = now
+    //         setLocation(timeId, ids)
+    //         asyncArticlTime({ id, time })
+    //     }
+    // }
     setATagBlank = (temp) => {
         var a;
         while (a = temp.match(/<a href=.*?>.*?<\/a>/)) {
@@ -128,17 +151,21 @@ class ArticleDetail extends Component {
     }
     UNSAFE_componentWillReceiveProps(next) {
         if (next.detial != this.props.detial) {
-            var data = next.detial
-            var obj = this.getContent(data.content)
-            this.setState({
-                html: { __html: obj.html },
-                nav: obj.nav
-            })
+            this.setHtml(next.detial)
         }
     }
+
+    setHtml = (data) => {
+        var obj = this.getContent(data.content)
+        this.setState({
+            html: { __html: obj.html },
+            nav: obj.nav
+        })
+    }
+
     toTop = () => {
         window.scrollTo({
-            top:0,
+            top: 0,
             behavior: "smooth"
         })
     }
@@ -153,6 +180,7 @@ class ArticleDetail extends Component {
     }
     render() {
         var data = this.props.detial;
+        console.log("articleDetail", data)
         var { html, nav, isShowNav } = this.state
         if (!data._id) return null;
         return (

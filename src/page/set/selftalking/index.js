@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import dispatchAction from "tool/dispatchAction"
-import observer from "tool/observer"
+// import observer from "tool/observer"
 import { timestampFromat } from "tool/baseTool"
 import {
     Button,

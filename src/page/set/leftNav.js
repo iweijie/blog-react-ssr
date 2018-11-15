@@ -38,6 +38,7 @@ class Left extends Component {
     ]
     render() {
         let islogin = this.props.islogin;
+        if(!islogin) return null;
         const content = (
             <ul className="set-left-nav">
                 {

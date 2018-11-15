@@ -99,16 +99,16 @@ const syncArticleLeavesubmit = (params) => (dispatch) => {
         })
 }
 // 更新查看次数
-const asyncArticlTime = (params) => () => {
-    return axios.post(`${config.basicsUrl}/api/article/time`, params)
-        .then(data => {
-            return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
-}
-// 新增 or 编辑 标签 
+// const asyncArticlTime = (params) => () => {
+//     return axios.post(`${config.basicsUrl}/api/article/time`, params)
+//         .then(data => {
+//             return data
+//         }).catch(e => {
+//             console.log(e);
+//             message.error(e.messgae)
+//         })
+// }
+// 新增 or 编辑 标签
 const asyncSetTag = (params) => () => {
     return axios.post(`${config.basicsUrl}/api/tags/add`, params)
         .then(data => {
@@ -196,7 +196,7 @@ export default {
     articlesubmitAction,
     syncArticlesubmit,
     syncArticleLeavesubmit,
-    asyncArticlTime,
+    // asyncArticlTime,
     syncArticleLeave,
     asyncGetTagsList,
     getTagsList,

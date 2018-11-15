@@ -4,7 +4,7 @@ import dispatchAction from "tool/dispatchAction"
 import history from "tool/history"
 import Topnav from "../comom/topNav"
 import logo from "../../images/logo.jpg"
-import bgAbout from "../../images/bg-about.jpg"
+// import bgAbout from "../../images/bg-about.jpg"
 import "./css.scss"
 class App extends Component {
     constructor(props, context) {

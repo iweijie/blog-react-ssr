@@ -18,9 +18,16 @@ class App extends PureComponent {
     state = {
         replyIndex: null,
         replyName: null,
-        replyUserId: null
+        replyUserId: null,
+        name: null,
     }
     UNSAFE_componentWillMount() { }
+    componentDidMount() {
+        var name = localStorage.getItem("leaveName")
+        if (name) {
+            this.setState({ name })
+        }
+    }
     submit = () => {
         var name = localStorage.getItem("leaveName")
         var { userInfo, syncArticleLeavesubmit, detial, articleDetailsAction } = this.props
@@ -82,8 +89,7 @@ class App extends PureComponent {
         var { userInfo } = this.props;
         var getFieldDecorator = this.props.form.getFieldDecorator
         var leavedata = data.review || []
-        var { replyIndex, replyName } = this.state
-        var name = localStorage.getItem("leaveName")
+        var { replyIndex, replyName, name } = this.state;
         var replyInput = (
             <div style={replyIndex !== null ? { padding: "20px 0" } : null}>
                 {
@@ -124,7 +130,7 @@ class App extends PureComponent {
             </div>
         )
         var leaveList = leavedata.map((v, k) => {
-            let html=  { __html: v.content }
+            let html = { __html: v.content }
             return <li key={v._id || k}>
                 <p>
                     {

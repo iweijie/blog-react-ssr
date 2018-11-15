@@ -8,13 +8,13 @@ import actions from "actions/index"
 //     selftalkingListActionAsync,
 //     AsyncrecommendList,
 //     getArticleListAsync,
-// } 
+// }
 /**
  * 首页
  */
 
 const AsyncHome = Loadable({
-    loader: () => import('../page/home/App'),
+    loader: () => import(/* webpackChunkName: "home" */ '../page/home/App'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
@@ -25,106 +25,75 @@ const AsyncHome = Loadable({
 //  *  查看文章详情
 //  */
 const AsyncArticleDetail = Loadable({
-    loader: () => import('../page/articleDetail'),
+    loader: () => import(/* webpackChunkName: "articleDetail" */ '../page/articleDetail'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// // const AsyncArticleDetail = (props) => (
-// //     <Bundle load={() => import('../page/articleDetail')}>
-// //         {(ArticleDetail) => <Verification key="4"><ArticleDetail {...props} /></Verification>}
-// //     </Bundle>
-// // )
 // /**
 //  *  登入
 //  */
 const AsyncLogin = Loadable({
-    loader: () => import('../page/login'),
+    loader: () => import(/* webpackChunkName: "login" */ '../page/login'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// const AsyncLogin = (props) => (
-//     <Bundle load={() => import('../page/login')}>
-//         {(Login) => <Verification><Login {...props} /></Verification>}
-//     </Bundle>
-// )
 // /**
 //  * 碎碎念
 //  */
 const AsyncSelftalking = Loadable({
-    loader: () => import('../page/selftalking'),
+    loader: () => import(/* webpackChunkName: "selftalking" */ '../page/selftalking'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// const AsyncSelftalking = (props) => (
-//     <Bundle load={() => import('../page/selftalking')}>
-//         {(Selftalking) => <Verification verify><Selftalking {...props} /></Verification>}
-//     </Bundle>
-// )
 // /**
 //  * 设置界面
 //  */
 const AsyncSet = Loadable({
-    loader: () => import('../page/set'),
+    loader: () => import(/* webpackChunkName: "set" */ '../page/set'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// const AsyncSet = (props) => (
-//     <Bundle load={() => import('../page/set')}>
-//         {(Setting) => <Verification verify><Setting {...props} /></Verification>}
-//     </Bundle>
-// )
 // /**
 //  * 关于
 //  */
 const AsyncAbout = Loadable({
-    loader: () => import('../page/about'),
+    loader: () => import(/* webpackChunkName: "about" */ '../page/about'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// const AsyncAbout = (props) => (
-//     <Bundle load={() => import('../page/about')}>
-//         {(About) => <Verification><About {...props} /></Verification>}
-//     </Bundle>
-// )
 /**
  *  404
  */
 const AsyncNoFound = Loadable({
-    loader: () => import('../page/404'),
+    loader: () => import(/* webpackChunkName: "notfound" */ '../page/404'),
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
         return <Verification><Component {...props} /></Verification>
     }
 })
-// const AsyncNoFound = (props) => (
-//     <Bundle load={() => import('../page/404/404')}>
-//         {(NoFound) => <NoFound {...props} />}
-//     </Bundle>
-// )
 
-export default [
+const routers = [
     {
         path: '/',
         exact: true,
-        loadData: async (match, store) => {
-            console.log(store)
-            const { dispatch } =  store
+        loadData: (match, store) => {
+            const { dispatch } = store
             let params = {
                 page: 1,
                 pageSize: 10
@@ -132,19 +101,39 @@ export default [
             let promiseAll = [
                 actions.selftalkingListActionAsync()(dispatch),
                 actions.AsyncrecommendList()(dispatch),
+                actions.asyncGetTagsList()(dispatch),
             ]
             if (match.params.id) {
                 params.tag = match.params.id
             }
             promiseAll.push(actions.getArticleListAsync(params)(dispatch))
-            await Promise.all(promiseAll)
+            return promiseAll;
         },
-        component: AsyncHome
+        component: AsyncHome,
+        isServicesRendered: true
     },
     {
         path: '/tags/:id',
         exact: true,
-        component: AsyncHome
+        loadData: (match, store) => {
+            const { dispatch } = store
+            let params = {
+                page: 1,
+                pageSize: 10
+            }
+            let promiseAll = [
+                actions.selftalkingListActionAsync()(dispatch),
+                actions.AsyncrecommendList()(dispatch),
+                actions.asyncGetTagsList()(dispatch),
+            ]
+            if (match.params.id) {
+                params.tag = match.params.id
+            }
+            promiseAll.push(actions.getArticleListAsync(params)(dispatch))
+            return promiseAll;
+        },
+        component: AsyncHome,
+        isServicesRendered: true
     },
     {
         path: '/selftalking',
@@ -155,6 +144,14 @@ export default [
         path: '/article/detail/:id',
         component: AsyncArticleDetail,
         exact: true,
+        loadData: (match, store) => {
+            const { dispatch } = store
+            let id = match.params.id;
+            let promiseAll = [];
+            promiseAll.push(actions.getArticleDetails({ id })(dispatch))
+            return promiseAll;
+        },
+        isServicesRendered: true
     },
     {
         path: '/login',
@@ -169,6 +166,7 @@ export default [
         path: '/about',
         component: AsyncAbout,
         exact: true,
+        isServicesRendered: true
     },
     {
         path: '/404',
@@ -176,8 +174,19 @@ export default [
         exact: true,
     },
     {
-        path: '/*',
-        component: AsyncNoFound,
-        exact: true,
+        path: '*',
+        component: AsyncNoFound
     }
 ]
+
+routers.commonLoadData = (store) => {
+    const { dispatch } = store
+    const promiseAll = [
+        actions.getHomeBgImageActionASync()(dispatch),
+        actions.syncuserInfoCheckAction()(dispatch)
+    ]
+
+    return promiseAll
+}
+
+export default routers

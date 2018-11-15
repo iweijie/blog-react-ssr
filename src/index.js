@@ -6,10 +6,12 @@
 */
 import React from 'react';
 import { render, hydrate } from 'react-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Loadable from 'react-loadable';
 import Main from './main'
 import configureStore from './store'
+import history from "tool/history";
 import "tool/pace.js"
 import "tool/pace/themes/blue/pace-theme-minimal.css"
 import "style/basics.scss"
@@ -18,13 +20,13 @@ import "tool/love"
 
 const App = (
     <Provider store={configureStore()}>
-        <Main />
+        <Router history={history}>
+            <Main />
+        </Router>
     </Provider>
 )
 
 const root = document.querySelector('#root');
-
-// render(App, root)
 
 if (root.hasChildNodes() === true) {
     // If it's an SSR, we use hydrate to get fast page loads by just
