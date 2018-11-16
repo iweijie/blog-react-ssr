@@ -9,8 +9,15 @@ import temp from './template'
 import clinetRouters from '../src/routers/index'
 import configureStore from '../src/store'
 import axios, { setAxiosCookie } from 'tool/axios'
+const log = require('./log4js').info;
+const matchRouter = clinetRouters.filter(v => v.isServicesRendered).map(v => v.path);
 
-async function universalLoader(ctx, next) {
+// const router = new Router();
+const router = new Router();
+
+router.get(matchRouter, async (ctx, next) => {
+
+    log.info(`pid: ${ctx.cookies.get('pid')}, url: ${ctx.url}`);
 
     const interceptor = setAxiosCookie(ctx.headers.cookie || "");
 
@@ -74,16 +81,8 @@ async function universalLoader(ctx, next) {
         })
         .catch(err => {
             axios.interceptors.request.eject(interceptor);
-            ctx.set('Content-Type', 'text/html; charset=utf-8');
-            ctx.body = currentTemp
+            throw err;
         })
-}
-
-const matchRouter = clinetRouters.filter(v => v.isServicesRendered).map(v => v.path);
-
-// const router = new Router();
-const router = new Router();
-
-router.get(matchRouter, universalLoader)
+})
 
 module.exports = router

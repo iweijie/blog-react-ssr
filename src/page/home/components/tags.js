@@ -1,6 +1,6 @@
 
 import React, { PureComponent } from 'react';
-import history from "tool/history"
+import { Link } from 'react-router-dom'
 class Tags extends PureComponent {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class Tags extends PureComponent {
             <ul className="home-tags clearfix">
                 {
                     list.map(v => {
-                        return <li onClick={()=>this.goTo(v.tagCode)} key={v.tagCode}>{v.tagName} <span>[{v.count}]</span></li>
+                        return <li key={v.tagCode}><Link to={`/tags/${v.tagCode}`}>{v.tagName} <span>[{v.count}]</span></Link></li>
                     })
                 }
             </ul>

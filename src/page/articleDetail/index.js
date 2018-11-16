@@ -54,6 +54,8 @@ class ArticleDetail extends Component {
             this.setHtml(detial)
         } else if (!detial || !detial._id) {
             getArticleDetails({ id })
+        } else {
+            this.setHtml(detial)
         }
         // marked.setOptions({
         //     renderer: new marked.Renderer(),
@@ -180,7 +182,6 @@ class ArticleDetail extends Component {
     }
     render() {
         var data = this.props.detial;
-        console.log("articleDetail", data)
         var { html, nav, isShowNav } = this.state
         if (!data._id) return null;
         return (

@@ -3,10 +3,16 @@ const Koa = require('koa')
 const etag = require('koa-etag')();
 const serve = require('koa-static');
 const router = require('./router')
+const err = require('./err')
+const renderTime = require('./renderTime')
+const cache = require('./cache')
 const template = require('./template');
 
 const app = new Koa()
 
+app.use(err)
+app.use(renderTime)
+app.use(cache)
 app.use(etag)
 
 app.use(router.routes())

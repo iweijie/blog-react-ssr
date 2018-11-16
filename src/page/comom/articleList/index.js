@@ -6,6 +6,7 @@
 */
 import React, { PureComponent } from 'react';
 import { Icon } from "antd"
+import { Link } from 'react-router-dom'
 import { timestampFromat } from "tool/baseTool"
 import history from "tool/history"
 import "./css.scss"
@@ -26,13 +27,13 @@ class App extends PureComponent {
         if (!id) return
         history.push("/article/detail/" + id)
     }
-    gotoEditPag = (id)=>{
+    gotoEditPag = (id) => {
         if (!id) return
         history.push("/set/article/edit/" + id)
     }
     render() {
-        var { list,userInfo } = this.props;
-        let {userId} = userInfo
+        var { list, userInfo } = this.props;
+        let { userId } = userInfo
         list = list || [];
         const content = (
             <div className="article-list">
@@ -49,11 +50,12 @@ class App extends PureComponent {
                                     <div className="article-list-item-text img-mask" style={{ backgroundColor: this.getRandomBgColor() }}>{tag}</div>
                             }
 
-                            <h3 className="article-list-item-title underline" onClick={() => this.goTo(data._id)}>{data.title}</h3>
+                            <h3 className="display-none">{data.title}</h3>
+                            <Link className="article-list-item-title underline" to={`/article/detail/${data._id}`}>{data.title}</Link>。
                             {
                                 userId && data.autor && userId === data.autor._id ?
-                                <span onClick={()=>this.gotoEditPag(data._id)} className="article-list-item-edit"><Icon type="edit" theme="outlined" /></span>
-                                : null
+                                    <span onClick={() => this.gotoEditPag(data._id)} className="article-list-item-edit"><Icon type="edit" theme="outlined" /></span>
+                                    : null
                             }
                             <p className="article-list-item-descrption">{data.description}</p>
                             <div className="article-list-item-author">

@@ -41,7 +41,6 @@ axios.interceptors.response.use(response => {
 export const setAxiosCookie = (cookie) => {
     return axios.interceptors.request.use(
         function (config) {
-            console.log(config)
             config.headers.cookie = cookie
             return config
         },
