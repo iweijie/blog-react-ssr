@@ -3,6 +3,7 @@ var {basicsUrl} = config
 
 import {filterMenu} from "tool/baseTool"
 import axios from "tool/axios"
+import { log, promiseCatch } from 'tool/baseTool'
 
 export const menuInfo = "menuInfo"
 export const userInfo = "userInfo"
@@ -10,7 +11,7 @@ export const mannerInfo = "mannerInfo"
 export const menutoggle = "menutoggle"
 export const resize = "resize"
 
-import { message } from 'antd';
+// import { message } from 'antd';
 
 // 菜单格式化
 var getList = (data,keyname) =>{
@@ -40,10 +41,7 @@ const syncMenuAction = (flag) => (dispatch) => {
                     dispatch(menuAction(menu))
                 }
                 return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 菜单切换
 const menutoggleAction = value=>({
@@ -67,10 +65,7 @@ const syncuserInfoAction = (params) => (dispatch) => {
                 }))
             }
             return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 核实用户信息
 const syncuserInfoCheckAction = (params) => (dispatch) => {
@@ -84,10 +79,7 @@ const syncuserInfoCheckAction = (params) => (dispatch) => {
                 }))
             }
             return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 
 //菜单分类配置项

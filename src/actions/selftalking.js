@@ -1,6 +1,7 @@
 import axios from "tool/axios"
 import config from "config"
-import {message} from "antd"
+// import {message} from "antd"
+import { log, promiseCatch } from 'tool/baseTool'
 
 export const selftalkingList = "selftalkingList"
 
@@ -10,10 +11,7 @@ const addSelftalkingAsync = (params)=>()=>{
             if(data.state){
                 return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 const selftalkingListAction = (value) => ({
     type: selftalkingList,
@@ -30,10 +28,7 @@ const selftalkingListActionAsync = (params)=>(dispatch)=>{
                 }))
                 return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 
 export default  {

@@ -54,7 +54,7 @@ class ArticleDetail extends Component {
             this.setHtml(detial)
         } else if (!detial || !detial._id) {
             getArticleDetails({ id })
-        } else {
+        } else if (detial && detial._id) {
             this.setHtml(detial)
         }
         // marked.setOptions({

@@ -1,6 +1,6 @@
 import axios from "tool/axios"
 import config from "config"
-import { message } from "antd"
+import { log, promiseCatch } from 'tool/baseTool'
 export const appendArticleList = "appendArticleList"
 export const replaceArticleList = "replaceArticleList"
 export const cleararticleList = "cleararticleList"
@@ -35,10 +35,7 @@ const getArticleListAsync = (params, pattern) => (dispatch) => {
                 pattern ? dispatch(replaceArticleListAction(data)) : dispatch(appendArticleListAction(data));
                 return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 文章详情
 const articleDetailsAction = value => ({
@@ -50,15 +47,12 @@ const getArticleDetails = (params) => (dispatch) => {
         params
     })
         .then(data => {
-            if (data.state == 1) {
+            if (data && data.state == 1) {
                 let resdata = data.result;
                 dispatch(articleDetailsAction(resdata))
-                return resdata
+                return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 
 // 文章 新增与修改
@@ -70,13 +64,10 @@ const syncArticlesubmit = (params) => () => {
     return axios.post(`${config.basicsUrl}/api/article/add`, params)
         .then(data => {
             if (data.state == 1) {
-                message.success(data.msg)
+                log.success(data.msg)
             }
             return data.state
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 添加留言
 const syncArticleLeave = (value) => {
@@ -89,14 +80,11 @@ const syncArticleLeavesubmit = (params) => (dispatch) => {
     return axios.post(`${config.basicsUrl}/api/article/review/add`, params)
         .then(data => {
             if (data.state == 1) {
-                message.success(data.msg)
+                log.success(data.msg)
                 dispatch(syncArticleLeave(data.result))
             }
             return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 更新查看次数
 // const asyncArticlTime = (params) => () => {
@@ -115,10 +103,7 @@ const asyncSetTag = (params) => () => {
             if (data.state == 1) {
                 return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 // 获取标签列表
 const getTagsList = (value) => {
@@ -133,11 +118,8 @@ const asyncGetTagsList = (params) => (dispatch) => {
             if (data.state == 1) {
                 dispatch(getTagsList(data.result))
             }
-            return data.result
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+            return data
+        }).catch(promiseCatch)
 }
 // 获取标签列表详细信息
 const getDetailTagsList = (value) => {
@@ -152,11 +134,8 @@ const asyncGetDetailTagsList = (params) => (dispatch) => {
             if (data.state == 1) {
                 dispatch(getDetailTagsList(data.result))
             }
-            return data.result
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+            return data
+        }).catch(promiseCatch)
 }
 // 设置当前标签
 const setCurrentTag = (value) => {
@@ -180,10 +159,7 @@ const AsyncrecommendList = (params) => (dispatch) => {
                 return data
             }
             return data
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 
 export default {

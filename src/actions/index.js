@@ -5,19 +5,21 @@
 */
 import common from "./common"
 import articleAction from "./article"
-import configAction from "./config"
+// import configAction from "./config"
 import home from "./home"
 import fileUpload from "./fileUpload"
 import selftalking from "./selftalking"
+import server from "./server"
 
 
 const actions = {
     ...common,
     ...articleAction,
-    ...configAction,
+    // ...configAction,
     ...home,
     ...fileUpload,
-    ...selftalking
+    ...selftalking,
+    ...server
 }
 
 export default actions

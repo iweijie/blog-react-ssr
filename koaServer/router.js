@@ -15,6 +15,14 @@ const matchRouter = clinetRouters.filter(v => v.isServicesRendered).map(v => v.p
 // const router = new Router();
 const router = new Router();
 
+const checkResult = (arr) => {
+    if (!Array.isArray(arr) || !arr.length) return false;
+    for (let i = 0; i < arr.length; i++) {
+        if (!arr[i] || arr[i].state !== 1) return false;
+    }
+    return true;
+}
+
 router.get(matchRouter, async (ctx, next) => {
 
     log.info(`pid: ${ctx.cookies.get('pid')}, url: ${ctx.url}`);
@@ -44,10 +52,13 @@ router.get(matchRouter, async (ctx, next) => {
     });
 
     await Promise.all(promises)
-        .then(() => {
-
+        .then((data) => {
             axios.interceptors.request.eject(interceptor);
-
+            ctx.set('Content-Type', 'text/html; charset=utf-8');
+            if (!checkResult(data)) {
+                ctx.body = currentTemp
+                return;
+            }
             const preloadedState = store.getState();
             const markup = renderToString(
                 <Provider store={store}>
@@ -74,7 +85,6 @@ router.get(matchRouter, async (ctx, next) => {
                 currentTemp = currentTemp.replace('<div id="root"></div>', `<div id="root">${markup}</div>`)
                     .replace("window.__PRELOADED_STATE__", `window.__PRELOADED_STATE__=${JSON.stringify(preloadedState)}`);
 
-                ctx.set('Content-Type', 'text/html; charset=utf-8');
                 ctx.body = currentTemp
             }
 

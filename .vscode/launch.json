@@ -11,7 +11,9 @@
             "name": "启动程序",
             "program": "${workspaceFolder}\\koaServer\\index.js",
             "env": {
+                // "NODE_ENV": "test"
                 "NODE_ENV": "production"
+                // "NODE_ENV": "development"
             }
         }
     ]

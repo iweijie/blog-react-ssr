@@ -5,6 +5,29 @@
  */
 
 import isServer from "./env"
+import { message } from "antd"
+
+function log_server(msg) {
+    console.log(msg)
+}
+
+let log_server_obj = {
+    success: log_server,
+    error: log_server,
+    warning: log_server,
+}
+
+export const log = (function () {
+    let log;
+    if (isServer) {
+        log = log_server_obj
+    } else {
+        log = message;
+    }
+    return log
+})();
+
+
 
 /**
 *作者: weijie
@@ -189,7 +212,7 @@ export function throttle(fn, interval = 200) {
         var th = this;
         var args = arguments;
         var now = Date.now();
-        if (last  && now - last < interval) {
+        if (last && now - last < interval) {
             clearTimeout(timer);
             timer = setTimeout(function () {
                 last = now;
@@ -201,6 +224,17 @@ export function throttle(fn, interval = 200) {
             fn.apply(th, args);
         }
     }
+}
+
+/**
+ *作者: weijie
+ *功能描述: 统一 promise catch 处理方式（兼容服务端）
+ */
+export function promiseCatch(err) {
+    isServer ?
+        log.error(`message: ${err.message}, stack: ${err.stack}`)
+        :
+        log.error(err.messgae)
 }
 /**
  *作者: weijie

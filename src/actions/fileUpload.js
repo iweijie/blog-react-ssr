@@ -3,22 +3,20 @@
  */
 import axios from "tool/axios"
 import config from "config"
-import {message} from "antd"
+// import { message } from "antd"
+import { log, promiseCatch } from 'tool/baseTool'
 
-const uploadAsync = (params)=>()=>{
-    return axios.post(`${config.basicsUrl}/api/fileupload`,params,{
-        "Content-Type":"multipart/form-data"
+const uploadAsync = (params) => () => {
+    return axios.post(`${config.basicsUrl}/api/fileupload`, params, {
+        "Content-Type": "multipart/form-data"
     })
         .then(data => {
-            if(data.state === 1){
-                message.success(data.msg)
+            if (data.state === 1) {
+                log.success(data.msg)
                 return data
             }
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
-export default  {
+export default {
     uploadAsync
 }

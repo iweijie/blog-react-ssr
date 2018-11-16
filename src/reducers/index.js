@@ -11,11 +11,12 @@ import {
     userInfo,
     // menutoggle
 } from "actions/common"
-import menuInfos from "./menu"
+// import menuInfos from "./menu"
 import home from "./home"
 import article from "./article"
 import common from "./common"
 import selftalking from "./selftalking"
+import server from "./server"
 
 function userInfoModel(state = {
     isLogin: false,
@@ -42,11 +43,12 @@ function userInfoModel(state = {
 const rootReducer = combineReducers({
     // menutoggleModel,
     userInfoModel,
-    ...menuInfos,
+    // ...menuInfos,
     ...home,
     ...article,
     ...common,
-    ...selftalking
+    ...selftalking,
+    ...server
 })
 
 export default rootReducer

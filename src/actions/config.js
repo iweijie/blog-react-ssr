@@ -1,6 +1,7 @@
 import axios from "tool/axios"
 import config from "config"
-import {message} from "antd"
+// import { message } from "antd"
+import { log, promiseCatch } from 'tool/baseTool'
 
 export const config_menu = "config_menu"
 export const config_manner = "config_manner"
@@ -11,20 +12,17 @@ const menuConfigAction = value => ({
     type: config_menu,
     payload: value
 })
-const menuConfigActionSync = (params)=>()=>{
-    return axios.post(`${config.basicsUrl}/api/config/menu`,params)
+const menuConfigActionSync = (params) => () => {
+    return axios.post(`${config.basicsUrl}/api/config/menu`, params)
         .then(data => {
-            if(data.state){
-                message.success(data.msg)
+            if (data.state) {
+                log.success(data.msg)
             }
             return data.state
-        }).catch(e => {
-            console.log(e);
-            message.error(e.messgae)
-        })
+        }).catch(promiseCatch)
 }
 
-export default  {
+export default {
     menuConfigAction,
     menuConfigActionSync,
 }
