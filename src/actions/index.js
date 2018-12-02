@@ -19,7 +19,7 @@ const actions = {
     ...home,
     ...fileUpload,
     ...selftalking,
-    ...server
+    // ...server 
 }
 
 export default actions

@@ -41,12 +41,9 @@ class App extends Component {
           if (!err) {
             console.log('Received values of form: ', values);
           }
-          console.log(values)
         });
-        console.log(files)
         var formData = new FormData();
         files.forEach(v=>{
-            console.log(v.name)
             formData.append("file",v,v.name)
         })
         axios.post("http://localhost:8001/api/fileupload",formData,{

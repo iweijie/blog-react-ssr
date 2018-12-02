@@ -7,7 +7,7 @@ export default (state = {}) => {
     const middlewares = [
         thunk
     ]
-    if (process.env.NODE_ENV !== 'production') {
+    if (!isServer && process.env.NODE_ENV !== 'production') {
         middlewares.push(createLogger())
     }
 

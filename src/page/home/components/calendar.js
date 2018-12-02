@@ -10,8 +10,8 @@ class Calendar extends React.PureComponent {
         super(props);
         this.state = {
             // weekList: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            weekList:['日','一','二','三','四','五','六'],
-            monthList:[1,2,3,4,5,6,7,8,9,10,11,12],
+            weekList: ['日', '一', '二', '三', '四', '五', '六'],
+            monthList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             // monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             dateList: [],
             year: new Date().getFullYear(),
@@ -27,23 +27,24 @@ class Calendar extends React.PureComponent {
     }
     componentDidMount() {
         let { ymd } = this.state;
-        this.props.changeDate(ymd.join('-'))
+        const { changeDate } = this.props;
+        changeDate && changeDate(ymd.join('-'))
         let { calendarheader, calendar_t, calendar } = this.refs;
         if (!calendarheader || !calendar_t || !calendar) return;
     }
-    setYMD =(date)=> {   //设置年月日
+    setYMD = (date) => {   //设置年月日
         date = date || new Date();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
         let currentDay = date.getDate();
         return [year, month, currentDay]
     }
-    getCountDays=(timeFormat)=> { //返回某月天数
+    getCountDays = (timeFormat) => { //返回某月天数
         var arr = timeFormat.split('-');
         var date = new Date(Number(arr[0]), Number(arr[1]), 0);
         return date.getDate();
     }
-    getUpDay =(date)=> { //返回上个月的天数
+    getUpDay = (date) => { //返回上个月的天数
         var arr = date.split('-'), timeFormat;
         if (arr[1] == 1) {
             timeFormat = arr[0] - 1 + '-' + 12 + '-' + 1;
@@ -52,7 +53,7 @@ class Calendar extends React.PureComponent {
         }
         return this.getCountDays(timeFormat);
     }
-    dateArr=(date)=> {   //设置listArr
+    dateArr = (date) => {   //设置listArr
 
         let listArr = [];
         var arr = date.split('-');
@@ -110,7 +111,7 @@ class Calendar extends React.PureComponent {
             dateList: listArr
         })
     }
-    changeMonth=(num)=> {   // 改变月份
+    changeMonth = (num) => {   // 改变月份
         let timeFormat;
         let { year, month, currentDay } = this.state;
         if (month <= 1 && num < 0) {
@@ -128,7 +129,7 @@ class Calendar extends React.PureComponent {
             year, month, currentDay
         })
     }
-    isActive =(params)=> { // 判断是否为选中的时间
+    isActive = (params) => { // 判断是否为选中的时间
         let { ymd } = this.state;
         let { y, m, d } = params;
         if (ymd[0] == y && ymd[1] == m && ymd[2] == d) {
@@ -136,19 +137,19 @@ class Calendar extends React.PureComponent {
         }
         return false;
     }
-    addClassName =(params)=> {
+    addClassName = (params) => {
         let className = '';
         if (this.isActive(params)) {
             className += ' active'
         }
         return className
     }
-    formatChangeData =(params)=> {
+    formatChangeData = (params) => {
         let { y, m, d } = params;
         let format = [y, m, d]
         return this.changeData(format)
     }
-    changeData=(params)=> {
+    changeData = (params) => {
         this.props.changeDate(params.join('-'))
         this.setState({
             ymd: params
@@ -173,7 +174,7 @@ class Calendar extends React.PureComponent {
         return (
             <div id="calendar" className="calendar">
                 <div className="calendar-t">
-                    <p className="calendar-t-month"><span>{year +"年" + monthList[month - 1]+"月"}</span></p>
+                    <p className="calendar-t-month"><span>{year + "年" + monthList[month - 1] + "月"}</span></p>
                     <span onClick={() => this.changeMonth(-1)} className="calendar-t-l"> <Icon type="left" /> </span>
                     <span onClick={() => this.changeMonth(1)} className="calendar-t-r"> <Icon type="right" /> </span>
                 </div>
@@ -194,9 +195,9 @@ class Calendar extends React.PureComponent {
                                         let { year, month, day, sign } = value;
                                         let className = ""
                                         if (sign != 1) {
-                                            className ="calendar-content-grey"
-                                        }else if ( year === y && month === m && day === d && sign){
-                                            className ="calendar-content-today"
+                                            className = "calendar-content-grey"
+                                        } else if (year === y && month === m && day === d && sign) {
+                                            className = "calendar-content-today"
                                         }
                                         return <li className={className} key={key}>{day}</li>
                                     })

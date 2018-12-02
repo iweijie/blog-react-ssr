@@ -1,4 +1,4 @@
-// 核实是否登入
+// 共享
 import React from "react"
 import dispatchAction from "tool/dispatchAction"
 import { connect } from 'react-redux';
@@ -8,29 +8,30 @@ import isServer from 'tool/env'
 class Verification extends React.Component {
 
     UNSAFE_componentWillMount() {
-        const { browserInfo, homeBgList, userInfo } = this.props;
-        if (!userInfo.isLogin) {
-            this.props.syncuserInfoCheckAction()
-        }
-        if (!homeBgList || !homeBgList.length) {
+        const { isServerRendering } = this.props;
+        // 核实用户信息
+        this.props.syncuserInfoCheckAction()
+        // 获取背景图片列表
+        if (!isServerRendering) {
             this.props.getHomeBgImageActionASync()
         }
-        if (!isServer && !browserInfo.widht) {
+        // 服务端渲染 重新获取浏览器宽度
+        if (!isServer && isServerRendering) {
             let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-            let widht = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+            let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
             this.props.resizeAction({
                 height,
-                widht
+                width
             })
         }
     }
     componentDidMount() {
         window.addEventListener("resize", throttle(() => {
             let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-            let widht = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+            let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
             this.props.resizeAction({
                 height,
-                widht
+                width
             })
         }, 100))
     }
@@ -40,9 +41,7 @@ class Verification extends React.Component {
 }
 const mapStateToProps = (store) => {
     return {
-        browserInfo: store.browserInfo,
-        homeBgList: store.homeBgList,
-        userInfo: store.userInfoModel,
+        isServerRendering: store.isServerRendering
     }
 }
 export default connect(mapStateToProps, dispatchAction)(Verification)

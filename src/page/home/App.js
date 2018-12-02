@@ -80,9 +80,9 @@ class Home extends Component {
             }
         }
     }
-    changeDate = (time) => {
-        console.log(time)
-    }
+    // changeDate = (time) => {
+    //     console.log(time)
+    // }
     pagination = (total) => {
         let { page, pageSize } = this;
         let max = Math.ceil(total / pageSize);

@@ -13,7 +13,7 @@
 .about-wrap {
     padding-top: 10px;
     margin: 0 auto;
-    width: 30%;
+    width: 60%;
     background-color: #fff;
     border-radius: 5px;
 }
@@ -32,5 +32,17 @@
     display: block;
     border:1px dashed #f1f1f1;
 }
-.user-hobby {
+.about-wrap-body {
+    a {
+        color:#1890ff
+    }
+    .mt6 {
+        margin-top: 6px;
+    }
+    .fsz16 {
+        font-size: 16px;
+    }
+    .gray {
+        color: #b2b2b2;
+    }
 }

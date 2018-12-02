@@ -4,15 +4,16 @@ const React = require('react');
 const { Provider } = require('react-redux');
 const { renderToString } = require('react-dom/server')
 const { StaticRouter, Switch, Route, matchPath } = require('react-router-dom')
+const { default: actions } = require('../src/actions');
 
 import temp from './template'
 import clinetRouters from '../src/routers/index'
 import configureStore from '../src/store'
 import axios, { setAxiosCookie } from 'tool/axios'
-const log = require('./log4js').info;
+const log = require('./log4js').time;
+
 const matchRouter = clinetRouters.filter(v => v.isServicesRendered).map(v => v.path);
 
-// const router = new Router();
 const router = new Router();
 
 const checkResult = (arr) => {
@@ -25,7 +26,7 @@ const checkResult = (arr) => {
 
 router.get(matchRouter, async (ctx, next) => {
 
-    log.info(`pid: ${ctx.cookies.get('pid')}, url: ${ctx.url}`);
+    const time = Date.now();
 
     const interceptor = setAxiosCookie(ctx.headers.cookie || "");
 
@@ -38,7 +39,8 @@ router.get(matchRouter, async (ctx, next) => {
     const promises = [];
     // 创建 store
     const store = configureStore();
-
+    // 设置标记，表示为服务端渲染
+    store.dispatch(actions.serverAction(true))
     // 自定义的 公共接口调用
     promises.push(...clinetRouters.commonLoadData(store))
 
@@ -53,6 +55,9 @@ router.get(matchRouter, async (ctx, next) => {
 
     await Promise.all(promises)
         .then((data) => {
+            // 记录总请求时长
+            log.info(`请求时长 -- pid: ${ctx.cookies.get('pid')}, time: ${Date.now() - time}ms, url: ${ctx.url}`);
+
             axios.interceptors.request.eject(interceptor);
             ctx.set('Content-Type', 'text/html; charset=utf-8');
             if (!checkResult(data)) {
@@ -81,7 +86,6 @@ router.get(matchRouter, async (ctx, next) => {
                 // Somewhere a `<Redirect>` was rendered
                 ctx.redirect(context.url)
             } else {
-                // we're good, send the response
                 currentTemp = currentTemp.replace('<div id="root"></div>', `<div id="root">${markup}</div>`)
                     .replace("window.__PRELOADED_STATE__", `window.__PRELOADED_STATE__=${JSON.stringify(preloadedState)}`);
 

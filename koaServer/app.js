@@ -21,8 +21,8 @@ app.use(async function (ctx, next) {
 });
 
 app.use(err)
+app.use(cache)
 app.use(renderTime)
-// app.use(cache)
 app.use(etag)
 
 app.use(router.routes())
@@ -39,13 +39,9 @@ app.listen(3000, () => {
 })
 
 process.on('unhandledRejection', (err) => {
-    // console.log("unhandledRejection", err)
     log.error(`type: unhandledRejection, error: ${err.message}, stack: ${err.stack}`)
-    // logger.fatal(`unhandledRejection: ${err.message}, stack: ${err.stack}`);
 });
 
 process.on('uncaughtException', (err) => {
-    // console.log("uncaughtException", err)
     log.error(`type: uncaughtException, error: ${err.message}, stack: ${err.stack}`)
-    // logger.fatal(`uncaughtException: ${err.message}, stack: ${err.stack}`);
 });

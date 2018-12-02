@@ -17,6 +17,18 @@ const uploadAsync = (params) => () => {
             }
         }).catch(promiseCatch)
 }
+
+const getUploadFileListAsync = (params) => () => {
+    return axios.get(`${config.basicsUrl}/api/file/list`, {
+        params
+    })
+        .then(data => {
+            if (data.state === 1) {
+                return data
+            }
+        }).catch(promiseCatch)
+}
 export default {
+    getUploadFileListAsync,
     uploadAsync
 }

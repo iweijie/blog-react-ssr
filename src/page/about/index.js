@@ -1,45 +1,66 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "tool/dispatchAction"
-import history from "tool/history"
-import Topnav from "../comom/topNav"
+import Topnav from "../comom/topNav";
+import {
+    Row,
+    Col
+} from "antd";
 import logo from "../../images/logo.jpg"
-// import bgAbout from "../../images/bg-about.jpg"
 import "./css.scss"
-class App extends Component {
+class About extends PureComponent {
     constructor(props, context) {
         super(props, context);
     }
-    tagsListPromise = null
-    UNSAFE_componentWillMount() {
-    }
-    goback = () => {
-        history.go(-1)
-    }
     render() {
-        let { height } = this.props.browserInfo;
         return (
             <div>
                 <Topnav isFixed />
-                <div className="pt20" style={{ minHeight: height - 56 + "px",backgroundImage: " linear-gradient(to right, rgb(23,44,60) 0%, #517fa4 100%)"  }}>
-                    <div className="about-wrap">
+                <div className="about-wrap">
+                    <div className="about-wrap-top">
                         <div className="user-via tac">
                             <img src={logo} alt="" />
                         </div>
                         <p className="about-author-name">weijie</p>
-                        <p className="tac">一个很怂很怂的渣渣前端</p>
+                        <p className="tac">一个小渣渣前端，正在努力学习中</p>
                         <i className="about-line"></i>
-                        <p >理想：不闻不问，不管不顾，做一个安安静静的咸鱼</p>
-                        <div className="user-hobby">
-                            <div>喜好：</div>
-                            <ul>
-                                <li>健身（如果我能坚持的话）</li>
-                                <li>看书（希望每次不要睡的那么死）</li>
-                                <li>睡觉（因为每晚失眠 o(╥﹏╥)o）</li>
-                                <li>吃（也就每月发工资的那天可以吃好吃的）</li>
-                            </ul>
-                        </div>
                     </div>
+                    <Row className="about-wrap-body">
+                        <Row className="mb20">
+                            <Col className="fsz16 tar" span={10}>关于我：</Col>
+                            <Col span={16}></Col>
+                            <Col className="" offset={9} span={19}>
+                                <div className="mt6">weijie</div>
+                                <div className="mt6">Web前端开发,慢慢学习后台中</div>
+                                <div className="mt6">来自湖北，现居深圳</div>
+                                <div className="mt6">Email：375030086@qq.com</div>
+                            </Col>
+                        </Row>
+                        <Row className="mb20">
+                            <Col className="fsz16 tar" span={10}>关于本站：</Col>
+                            <Col span={16}></Col>
+                            <Col className="" offset={9} span={19}>
+                                <div className="mt6">本站代码托管于<a target="_blank" href="https://github.com/weijie9520/blog-react-ssr">Github</a>（简单的SSR版本）</div>
+                                <div className="mt6">原版本代码托管于<a target="_blank" href="https://github.com/weijie9520/blog-react">Github</a>（已停止更新）</div>
+                                <div className="mt6">后台代码<a target="_blank" href="https://github.com/weijie9520/blog-koa2-api">Github</a></div>
+                                <div className="mt6">折腾开始于2018年3月，而后至今修修改改。</div>
+                            </Col>
+                        </Row>
+                        <Row className="mb20">
+                            <Col className="fsz16 tar" span={10}>其他流言：</Col>
+                            <Col span={16}></Col>
+                            <Col className="" offset={9} span={19}>
+                                <div className="mt6">DNF 18级狂战士</div>
+                                <div className="mt6">LOL 远超青铜级选手</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="fsz16 tar" span={10}>瞎说大实话：</Col>
+                            <Col span={16}></Col>
+                            <Col className="" offset={9} span={19}>
+                                <div className="mt6">努力，终会有所收获！或早或晚！亦或明日的朝阳！</div>
+                            </Col>
+                        </Row>
+                    </Row>
                 </div>
             </div>
         )
@@ -48,11 +69,8 @@ class App extends Component {
 
 const mapStateToProps = (store) => {
     return {
-        userInfo: store.userInfoModel,
-        browserInfo: store.browserInfo,
+        userInfo: store.userInfoModel
     }
 }
 
-export default connect(mapStateToProps, dispatchAction)(App)
-
-// background: `url(${bgAbout}) no-repeat fixed top`
+export default connect(mapStateToProps)(About)

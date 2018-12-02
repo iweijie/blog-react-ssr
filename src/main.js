@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Share from './page/comom/share'
+import Loading from './page/comom/loading'
 // import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import routers from './routers'
@@ -15,6 +16,7 @@ export default class Main extends Component {
         return (
             <div>
                 <Share />
+                <Loading />
                 <Switch>
                     {
                         routers.map((route, i) => (

@@ -183,7 +183,9 @@ routers.commonLoadData = (store) => {
     const { dispatch } = store
     const promiseAll = [
         actions.getHomeBgImageActionASync()(dispatch),
-        actions.syncuserInfoCheckAction()(dispatch)
+        // dispatch(actions.isServerRendering(true)),
+        // 登入状态改为客户端去验证
+        // actions.syncuserInfoCheckAction()(dispatch)
     ]
 
     return promiseAll

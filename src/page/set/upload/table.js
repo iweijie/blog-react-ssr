@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
-import { timestampFromat } from "tool/baseTool"
+import { timestampFromat, copyToShearplate } from "tool/baseTool"
 import {
     Table,
+    Pagination,
+    message,
+    Button
 } from "antd"
 
 
@@ -37,6 +40,9 @@ class TableCom extends PureComponent {
         title: '路径',
         dataIndex: 'path',
         key: 'path',
+        render: (text) => {
+            return <Button type="primary" size="small" onClick={() => this.copyText(text)}>复制路径</Button>
+        }
     }, {
         title: 'MIME类型',
         dataIndex: 'mimeType',
@@ -52,25 +58,33 @@ class TableCom extends PureComponent {
         render: (text) => {
             return timestampFromat(text)
         }
-    }, {
-        title: '操作',
-        key: 'handle',
-        render: (t, r) => {
-            let { creatorId } = r;
-            let { userId } = this.props.userInfo;
-            return creatorId === userId ? <span className="set-tags-edit" onClick={() => this.editHandle(r)}>编辑</span> : ""
-        }
     }];
+
+    style = { margin: '10px 0', textAlign: 'right' }
+
+    copyText = (path) => {
+        copyToShearplate(`http://file.iweijie.cn${path}`)
+        message.success("复制成功")
+    }
+
     render() {
-        let { list } = this.props
+        let { list, statePage, count, getList } = this.props
         return (
-            <div className="set-tags-wrap">
+            <div className="set-tags-table-wrap">
                 <Table
                     size={"small"}
                     bordered
                     pagination={false}
                     dataSource={list}
                     columns={this.columns} />
+                <Pagination
+                    style={this.style}
+                    size="small"
+                    showQuickJumper
+                    defaultCurrent={statePage}
+                    total={count}
+                    onChange={getList}
+                />
             </div>
         );
     }

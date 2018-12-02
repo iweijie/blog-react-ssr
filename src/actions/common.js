@@ -3,15 +3,15 @@ var {basicsUrl} = config
 
 import {filterMenu} from "tool/baseTool"
 import axios from "tool/axios"
-import { log, promiseCatch } from 'tool/baseTool'
+import { promiseCatch } from 'tool/baseTool'
 
 export const menuInfo = "menuInfo"
 export const userInfo = "userInfo"
 export const mannerInfo = "mannerInfo"
 export const menutoggle = "menutoggle"
 export const resize = "resize"
-
-// import { message } from 'antd';
+export const serverInfo = "serverInfo"
+export const isLoadingInfo = "isLoadingInfo"
 
 // 菜单格式化
 var getList = (data,keyname) =>{
@@ -92,6 +92,18 @@ const resizeAction = value => ({
     type:resize ,
     payload: value
 })
+// 判断是否服务端渲染
+const serverAction = value => {
+    return {
+        type:serverInfo ,
+        payload: value
+    }
+}
+// 加载动画
+const isLoadingAction = value => ({
+    type:isLoadingInfo ,
+    payload: value
+})
 
 export default {
     menuAction,
@@ -101,5 +113,7 @@ export default {
     syncuserInfoAction,
     syncuserInfoCheckAction,
     mannerAction,
-    resizeAction
+    resizeAction,
+    serverAction,
+    isLoadingAction
 }
