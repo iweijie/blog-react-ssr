@@ -34,8 +34,8 @@ app.use(async (ctx) => {
     ctx.body = template
 })
 
-app.listen(3000, () => {
-    console.log("listen to port 3000")
+app.listen(8002, () => {
+    console.log("listen to port 8002")
 })
 
 process.on('unhandledRejection', (err) => {
