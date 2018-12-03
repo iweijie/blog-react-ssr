@@ -4,7 +4,7 @@ const linkedList = require('./linkedList');
 let cache = {};
 let link = new linkedList()
 let config = {
-    length: 4,
+    length: 1000,
     expires: 5 * 60 * 60 * 1000,
     cookieKey: [
         "token",
@@ -57,7 +57,7 @@ function getKeys (node){
 function add(ctx) {
     const etag = ctx['etag'];
     if (link.length >= config.length) {
-        let len = config.length * 0.5
+        let len = config.length * 0.7
         const node = link.findByIndex(Math.floor(len));
         link.length = len;
         link.endtNode = node.pre;

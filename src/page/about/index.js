@@ -26,17 +26,16 @@ class About extends PureComponent {
                     </div>
                     <Row className="about-wrap-body">
                         <Row className="mb20">
-                            <Col className="fsz16 tar" span={10}>关于我：</Col>
+                            <Col className="about-title tar" span={10}>关于我：</Col>
                             <Col span={16}></Col>
                             <Col className="" offset={9} span={19}>
-                                <div className="mt6">weijie</div>
                                 <div className="mt6">Web前端开发,慢慢学习后台中</div>
                                 <div className="mt6">来自湖北，现居深圳</div>
                                 <div className="mt6">Email：375030086@qq.com</div>
                             </Col>
                         </Row>
                         <Row className="mb20">
-                            <Col className="fsz16 tar" span={10}>关于本站：</Col>
+                            <Col className="about-title tar" span={10}>关于本站：</Col>
                             <Col span={16}></Col>
                             <Col className="" offset={9} span={19}>
                                 <div className="mt6">本站代码托管于<a target="_blank" href="https://github.com/weijie9520/blog-react-ssr">Github</a>（简单的SSR版本）</div>
@@ -46,18 +45,18 @@ class About extends PureComponent {
                             </Col>
                         </Row>
                         <Row className="mb20">
-                            <Col className="fsz16 tar" span={10}>其他流言：</Col>
+                            <Col className="about-title tar" span={10}>关于性格：</Col>
+                            <Col span={16}></Col>
+                            <Col className="" offset={9} span={19}>
+                                <div className="mt6">不撞南墙，怎知撞不破！</div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="about-title tar" span={10}>关于其他：</Col>
                             <Col span={16}></Col>
                             <Col className="" offset={9} span={19}>
                                 <div className="mt6">DNF 18级狂战士</div>
                                 <div className="mt6">LOL 远超青铜级选手</div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col className="fsz16 tar" span={10}>瞎说大实话：</Col>
-                            <Col span={16}></Col>
-                            <Col className="" offset={9} span={19}>
-                                <div className="mt6">努力，终会有所收获！或早或晚！亦或明日的朝阳！</div>
                             </Col>
                         </Row>
                     </Row>
