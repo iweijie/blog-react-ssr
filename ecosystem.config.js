@@ -32,7 +32,7 @@ module.exports = {
       ref: 'origin/master',
       repo: 'git@github.com:weijie9520/blog-react-ssr.git',
       path: '/weijie/blog-react-ssr',
-      'post-deploy': 'yarn install && yarn build && pm2 delete blog && pm2 start ecosystem.config.js --env production'
+      'post-deploy': 'yarn install && yarn build && pm2 reload ecosystem.config.js --env production'
     },
   }
 };
