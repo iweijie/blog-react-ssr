@@ -26,3 +26,5 @@ yarn-error.log*
 .vscode/
 # 日志文件
 logs/
+
+ecosystem.config.js

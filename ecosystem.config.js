@@ -8,9 +8,9 @@ module.exports = {
     {
       name: 'blog',
       script: './koaServer/index.js',
-      watch: true,
-      ignore_watch: ["node_modules"],
-      max_memory_restart: "200M",
+      watch: false,
+      ignore_watch: ["node_modules","logs"],
+      max_memory_restart: "1000M",
       env: {
         COMMON_VARIABLE: 'true'
       },
