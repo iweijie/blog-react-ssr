@@ -1,6 +1,6 @@
 import axios from "tool/axios"
 import config from "config"
-import { log, promiseCatch } from 'tool/baseTool'
+import { log, promiseCatch, getRandomBgColor, isLight, colorReverse } from 'tool/baseTool'
 export const appendArticleList = "appendArticleList"
 export const replaceArticleList = "replaceArticleList"
 export const cleararticleList = "cleararticleList"
@@ -32,6 +32,16 @@ const getArticleListAsync = (params, pattern) => (dispatch) => {
     return axios.get(`${config.basicsUrl}/api/article/list`, { params })
         .then(data => {
             if (data.state == 1) {
+                data.result = data.result.map(v => {
+                    const bg = getRandomBgColor()
+                    // 背景色
+                    v._bg = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]})`
+                    // 字体色
+                    v._fc =  "#fff"
+                    // v._fc = isLight(bg) ? "#333" : "#fff"
+
+                    return v
+                })
                 pattern ? dispatch(replaceArticleListAction(data)) : dispatch(appendArticleListAction(data));
                 return data
             }

@@ -1,7 +1,7 @@
 import config from "config"
-var {basicsUrl} = config
+var { basicsUrl } = config
 
-import {filterMenu} from "tool/baseTool"
+import { filterMenu } from "tool/baseTool"
 import axios from "tool/axios"
 import { promiseCatch } from 'tool/baseTool'
 
@@ -14,13 +14,13 @@ export const serverInfo = "serverInfo"
 export const isLoadingInfo = "isLoadingInfo"
 
 // 菜单格式化
-var getList = (data,keyname) =>{
+var getList = (data, keyname) => {
     var arr = [];
-    for(var l = data.length,i=0;i<l;i++){
-        data[i].key = keyname+"-"+i
+    for (var l = data.length, i = 0; i < l; i++) {
+        data[i].key = keyname + "-" + i
         arr.push(data[i])
-        if(data[i].childrens && data[i].childrens.length){
-            arr.push( ...(getList(data[i].childrens,data[i].key)))
+        if (data[i].childrens && data[i].childrens.length) {
+            arr.push(...(getList(data[i].childrens, data[i].key)))
         }
     }
     return arr
@@ -34,17 +34,17 @@ const menuAction = value => ({
 const syncMenuAction = (flag) => (dispatch) => {
     return axios.get(`${basicsUrl}/api/menu/list`)
         .then(data => {
-                if(data.state){
-                    var menu = filterMenu(data.result,flag)
-                    var linearArr = getList(menu.origin,"menu")
-                    menu.linearArr = linearArr
-                    dispatch(menuAction(menu))
-                }
-                return data
+            if (data.state) {
+                var menu = filterMenu(data.result, flag)
+                var linearArr = getList(menu.origin, "menu")
+                menu.linearArr = linearArr
+                dispatch(menuAction(menu))
+            }
+            return data
         }).catch(promiseCatch)
 }
 // 菜单切换
-const menutoggleAction = value=>({
+const menutoggleAction = value => ({
     type: menutoggle,
     payload: value
 })
@@ -55,13 +55,13 @@ const userInfoAction = value => ({
 })
 // 获取用户信息
 const syncuserInfoAction = (params) => (dispatch) => {
-    return axios.post(`${basicsUrl}/api/login/account`,params)
+    return axios.post(`${basicsUrl}/api/login/account`, params)
         .then(data => {
-            if(data.state){
+            if (data.state) {
                 dispatch(userInfoAction({
-                    isLogin:true,
-                    userId:data._id,
-                    userName:data.userName,
+                    isLogin: true,
+                    userId: data._id,
+                    userName: data.userName,
                 }))
             }
             return data
@@ -69,15 +69,25 @@ const syncuserInfoAction = (params) => (dispatch) => {
 }
 // 核实用户信息
 const syncuserInfoCheckAction = (params) => (dispatch) => {
-    return axios.post(`${basicsUrl}/api/login/check`,params)
+    return axios.post(`${basicsUrl}/api/login/check`, params)
         .then(data => {
-            if(data._id){
-                dispatch(userInfoAction({
-                    isLogin:true,
-                    userId:data._id,
-                    userName:data.userName,
-                }))
+            let p;
+            if (data._id) {
+                p = {
+                    isLogin: true,
+                    isChecked: true,
+                    userId: data._id,
+                    userName: data.userName,
+                }
+            } else {
+                p = {
+                    isLogin: false,
+                    isChecked: true,
+                    userId: "",
+                    userName: "",
+                }
             }
+            dispatch(userInfoAction(p))
             return data
         }).catch(promiseCatch)
 }
@@ -89,19 +99,19 @@ const mannerAction = value => ({
 })
 // 浏览器 resize
 const resizeAction = value => ({
-    type:resize ,
+    type: resize,
     payload: value
 })
 // 判断是否服务端渲染
 const serverAction = value => {
     return {
-        type:serverInfo ,
+        type: serverInfo,
         payload: value
     }
 }
 // 加载动画
 const isLoadingAction = value => ({
-    type:isLoadingInfo ,
+    type: isLoadingInfo,
     payload: value
 })
 

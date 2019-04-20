@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { throttle } from "tool/baseTool"
 import isServer from 'tool/env'
 
-class Verification extends React.Component {
+class Share extends React.Component {
 
     UNSAFE_componentWillMount() {
         const { isServerRendering } = this.props;
@@ -44,4 +44,4 @@ const mapStateToProps = (store) => {
         isServerRendering: store.isServerRendering
     }
 }
-export default connect(mapStateToProps, dispatchAction)(Verification)
+export default connect(mapStateToProps, dispatchAction)(Share)

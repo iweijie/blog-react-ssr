@@ -15,14 +15,6 @@ class App extends PureComponent {
     constructor(props) {
         super(props);
     }
-    getRandomBgColor = () => {
-        var r = Math.floor(Math.random() * 256),
-            g = Math.floor(Math.random() * 256),
-            b = Math.floor(Math.random() * 256),
-            a = 1;
-        // a = Math.floor((Math.random()*.5 + .5)*10)/10;
-        return `rgba(${r},${g},${b},${a})`
-    }
     goTo = (id) => {
         if (!id) return
         history.push("/article/detail/" + id)
@@ -47,7 +39,7 @@ class App extends PureComponent {
                                         <img src={data.img} alt="" />
                                     </div>
                                     :
-                                    <div className="article-list-item-text img-mask" style={{ backgroundColor: this.getRandomBgColor() }}>{tag}</div>
+                                    <div className="article-list-item-text img-mask" style={{ backgroundColor: data._bg, color: data._fc }}>{tag}</div>
                             }
 
                             <h3 className="display-none">{data.title}</h3>

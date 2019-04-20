@@ -15,7 +15,7 @@ class Whisper extends PureComponent {
     nextCarousel = () => {
         if (!this.carouselList || !this.carouselList.length) return
         this.carouselList.forEach(v => {
-            if(this.refs[v]){
+            if (this.refs[v]) {
                 this.refs[v].next()
             }
         })
@@ -48,30 +48,33 @@ class Whisper extends PureComponent {
         this.clearLoop()
     }
     render() {
-        let {list} = this.props;
+        let { list, isLogin } = this.props;
         this.carouselList = [];
         var str = "whisper";
         this.carouselList.push(str)
         return (<div key={str} className={"home-whisper"}>
-            <Link to="/selftalking"><Icon type="star" theme="filled" />碎碎念</Link>
+            {
+                isLogin ? <Link to="/selftalking"><Icon type="star" theme="filled" />碎碎念</Link> : <a href="javascript:;"><Icon type="star" theme="filled" />碎碎念</a>
+            }
+
             <div className={"home-whisper-content"}
                 onMouseLeave={this.MouseLeaveHandle}
                 onMouseEnter={() => this.MouseEnterHandle(str)}>
                 {
-                    list && list.length?
-                    <Carousel
-                        dots={false}
-                        ref={str}
-                        vertical>
-                        {
-                            list.map((val) => (
-                                <div key={val._id} className={"whisper"}>
-                                    {val.content}
-                                </div>
-                            ))
-                        }
-                    </Carousel>
-                    :null
+                    list && list.length ?
+                        <Carousel
+                            dots={false}
+                            ref={str}
+                            vertical>
+                            {
+                                list.map((val) => (
+                                    <div key={val._id} className={"whisper"}>
+                                        {val.content}
+                                    </div>
+                                ))
+                            }
+                        </Carousel>
+                        : null
                 }
             </div>
         </div>)

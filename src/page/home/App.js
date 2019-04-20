@@ -24,12 +24,12 @@ class Home extends Component {
     pageSize = 10
     UNSAFE_componentWillMount() {
         this.init(this.props)
-        let { selftalking,selftalkingListActionAsync,AsyncrecommendList,recommendListModel } = this.props;
+        let { selftalking, selftalkingListActionAsync, AsyncrecommendList, recommendListModel } = this.props;
         if (!recommendListModel || !recommendListModel.length) {
             AsyncrecommendList()
         }
         if (!selftalking.count || !selftalking.result.length) {
-            selftalkingListActionAsync({page:1,pageSize:999})
+            selftalkingListActionAsync({ page: 1, pageSize: 999 })
         }
     }
     init = (params) => {
@@ -76,20 +76,25 @@ class Home extends Component {
                         this.flag = true
                     })
             } else {
-                this.page = Math.ceil(articleList.length / pageSize)
+                this.page = Math.ceil(articleList.length / pageSize) || 1
             }
         }
     }
-    // changeDate = (time) => {
-    //     console.log(time)
-    // }
+
     pagination = (total) => {
+        let { match } = this.props;
+        let id = match.params.id;
         let { page, pageSize } = this;
         let max = Math.ceil(total / pageSize);
         if (max <= page) return;
-        this.props.getArticleListAsync({
-            page: ++this.page, pageSize
-        })
+        const params = {
+            page: ++this.page,
+            pageSize
+        }
+        if (id) {
+            params.tag = id
+        }
+        this.props.getArticleListAsync(params)
     }
     componentDidMount() {
         window.addEventListener("scroll", this.scroll)
@@ -102,10 +107,19 @@ class Home extends Component {
         let id = match.params.id;
         if (next.userInfo !== this.props.userInfo) {
             this.init(next)
+            this.resetWidthAndHeight()
         }
         if (id !== this.tag) {
             this.getArticleList(next)
         }
+    }
+    resetWidthAndHeight = () => {
+        let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+        this.props.resizeAction({
+            height,
+            width
+        })
     }
     scrollHandle = () => {
         let top = document.documentElement.scrollTop || document.body.scrollTop;
@@ -113,7 +127,7 @@ class Home extends Component {
     }
     scroll = throttle(this.scrollHandle, 100);
     render() {
-        let { homeBgList, browserInfo, homeScrollToTop, articleList, total, tags ,userInfo,selftalking,recommendList } = this.props;
+        let { homeBgList, browserInfo, homeScrollToTop, articleList, total, tags, userInfo, selftalking, recommendList } = this.props;
         let { page, pageSize } = this
         let isFixed = browserInfo.height - homeScrollToTop <= 56;
         const content = (
@@ -123,7 +137,7 @@ class Home extends Component {
                 <div style={{ backgroundColor: "#f1f1f1" }}>
                     <div className="home-content">
                         <div className="home-content-left">
-                            <Whisper list={selftalking.result}></Whisper>
+                            <Whisper list={selftalking.result} isLogin={!!userInfo._id}></Whisper>
                             <ArticleList userInfo={userInfo} list={articleList} />
                             {
                                 total && total > (page * pageSize) ?

@@ -3,42 +3,59 @@ import React from "react"
 import { connect } from 'react-redux';
 import history from "tool/history"
 import isServer from "tool/env"
+import { getControlPromise } from "tool/control"
 
-class Verification extends React.Component {
+class Verification extends React.PureComponent {
 
-    constructor(props) {
-        super(props);
-    }
     state = {
-        sign: null
+        sign: false,
+        ...getControlPromise()
     }
-    delayed = 2000;
 
-    UNSAFE_componentWillMount() {
+    done = true
+
+    componentDidMount() {
+        const { resolve, promise } = this.state
         let { verify, userInfo } = this.props;
         !isServer && window.Pace.start()
-        if (verify && !userInfo.isLogin) {
-            let tmp = setTimeout(() => {
-                history.replace("/404")
-            }, this.delayed)
+        promise.then((r) => {
             this.setState({
-                sign: tmp
+                sign: r
             })
+            if (!r) {
+                history.replace("/404")
+            }
+        })
+        if (verify) {
+            if (userInfo && userInfo.isChecked) {
+                if (userInfo.isLogin) {
+                    resolve(true)
+                } else {
+                    resolve()
+                }
+            }
+        } else {
+            resolve(true)
+
         }
     }
+
     UNSAFE_componentWillReceiveProps(newPros) {
+        const { resolve } = this.state
+        const { verify } = newPros
         var p = this.props
-        if (newPros.userInfo != p.userInfo && newPros.userInfo && newPros.userInfo.isLogin) {
-            clearTimeout(this.state.sign)
-            this.setState({
-                sign: null
-            })
+        if (verify && newPros.userInfo != p.userInfo && !newPros.userInfo.isChecked) {
+            if (newPros.userInfo && newPros.userInfo.isLogin) {
+                resolve(true)
+            } else {
+                resolve(false)
+            }
         }
     }
 
     render() {
         let { sign } = this.state;
-        return !!sign ? null : this.props.children
+        return sign ? this.props.children : null
     }
 }
 const mapStateToProps = (store, own) => {

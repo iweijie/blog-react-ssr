@@ -4,11 +4,6 @@ import Loadable from 'react-loadable';
 import Verification from "page/comom/Verification";
 import actions from "actions/index"
 
-// {
-//     selftalkingListActionAsync,
-//     AsyncrecommendList,
-//     getArticleListAsync,
-// }
 /**
  * 首页
  */
@@ -51,7 +46,7 @@ const AsyncSelftalking = Loadable({
     loading: () => null,
     render(loaded, props) {
         let Component = loaded.default;
-        return <Verification><Component {...props} /></Verification>
+        return <Verification verify><Component {...props} /></Verification>
     }
 })
 // /**
@@ -61,8 +56,9 @@ const AsyncSet = Loadable({
     loader: () => import(/* webpackChunkName: "set" */ '../page/set'),
     loading: () => null,
     render(loaded, props) {
+        debugger
         let Component = loaded.default;
-        return <Verification><Component {...props} /></Verification>
+        return <Verification verify><Component {...props} /></Verification>
     }
 })
 // /**

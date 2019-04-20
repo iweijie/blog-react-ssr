@@ -253,6 +253,33 @@ export function copyToShearplate(str) {
     document.execCommand("copy")
     document.body.removeChild(input)
 }
+// 获取随机色
+export function getRandomBgColor() {
+    var r = Math.floor(Math.random() * 256),
+        g = Math.floor(Math.random() * 256),
+        b = Math.floor(Math.random() * 256),
+        a = 1;
+    // a = Math.floor((Math.random()*.5 + .5)*10)/10;
+    return [r, g, b, a]
+}
+
+// 获取能很好显示的 字体色
+// https://blog.csdn.net/wpwalter/article/details/78671680
+export function isLight(rgb) {
+    return (
+        0.213 * rgb[0] +
+        0.715 * rgb[1] +
+        0.072 * rgb[2] >
+        255 / 2
+    );
+}
+// 色值取反
+export function colorReverse(OldColorValue) {
+    OldColorValue = "0x" + OldColorValue.replace(/#/g, "");
+    var str = "000000" + (0xFFFFFF - OldColorValue).toString(16);
+    return str.substring(str.length - 6, str.length);
+}
+
 /**
  *作者: weijie
  *功能描述: 页面不兼容CSS3的提示信息
