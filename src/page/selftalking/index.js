@@ -54,17 +54,6 @@ class App extends Component {
                                 })
                             }
                         </ul>
-
-                        {
-                            // count && count > (page * pageSize) ?
-                            //     <p className="pagination" onClick={() => this.pagination(count)}>
-                            //         或许有更多
-                            // </p>
-                            //     :
-                            //     <p className="pagination disabled">
-                            //         这是我的底线
-                            // </p>
-                        }
                     </div>
                 </div>
             </div>

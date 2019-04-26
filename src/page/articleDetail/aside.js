@@ -17,20 +17,20 @@ class Aside extends PureComponent {
     }
     scrollHandle = () => {
     }
-    getNav = (arr, level = 1, per = "") => {
+    getNav = (arr, level = 1, per) => {
         var className = "articl-aside-level-" + level
         return <ol className="articl-aside-ol">
             {
                 arr.map((v, k) => {
+                    let prefix = per ?  per + "." + (k + 1) : k + 1 + "";
                     return (<li key={v.id}>
                         <p className={className}>
-                            {per ? <span>{per}</span> : null}
-                            <span style={{ paddingRight: "15px" }}>{k + 1}.</span>
+                            <span style={{ paddingRight: "15px" }}>{prefix}</span>
                             <span className="articl-aside-name" onClick={() => this.gotoDom(v.id)}>{v.name}</span>
                         </p>
                         {
                             v.child && v.child.length ?
-                                this.getNav(v.child, level + 1, per + level + ".")
+                                this.getNav(v.child, level + 1, prefix)
                                 : null
 
                         }

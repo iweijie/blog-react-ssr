@@ -20,7 +20,12 @@ export default class Main extends Component {
                 <Switch>
                     {
                         routers.map((route, i) => (
-                            <Route key={i} exact={route.exact} path={route.path} component={route.component} />
+                            <Route
+                                key={i} 
+                                exact={route.exact} 
+                                path={route.path} 
+                                component={route.component} 
+                            />
                         ))
                     }
                 </Switch>

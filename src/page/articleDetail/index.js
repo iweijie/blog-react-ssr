@@ -17,6 +17,9 @@ import highlight from "tool/highlight/highlight.pack"
 import "tool/highlight/styles/arta.css"
 import "./css.scss"
 
+// language: javascript style: atom-one-dark
+
+
 // if (isServer) {
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -57,21 +60,6 @@ class ArticleDetail extends Component {
         } else if (detial && detial._id) {
             this.setHtml(detial)
         }
-        // marked.setOptions({
-        //     renderer: new marked.Renderer(),
-        //     highlight: function (code) {
-        //         return highlight.highlightAuto(code).value;
-        //     },
-        //     pedantic: false,
-        //     // headerPrefix: "mk-wj",
-        //     gfm: true,
-        //     tables: true,
-        //     breaks: false,
-        //     sanitize: false,
-        //     smartLists: true,
-        //     smartypants: true,
-        //     xhtml: false
-        // });
     }
     match = (html) => {
         var arr = [];
