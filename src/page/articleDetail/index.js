@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import dispatchAction from "tool/dispatchAction"
-import { timestampFromat } from "tool/baseTool"
+import { timestampFromat, popUpImage } from "tool/baseTool"
 import Messageboard from "./messageBoard"
 import TopNav from "../comom/topNav"
 import Aside from "./aside"
@@ -101,6 +101,13 @@ class ArticleDetail extends Component {
         }
         return arr
     }
+
+    popUpImage = (event)=>{
+        if(event.target.tagName ===  "IMG"){
+            const src = event.target.src
+            popUpImage(src,true)
+        }
+    }
     // updateTime = (id, time) => {
     //     var { asyncArticlTime } = this.props
     //     if (!localStorage) {
@@ -178,7 +185,7 @@ class ArticleDetail extends Component {
                 <h1 className="display-none">{data.title}</h1>
                 <div className="article-detail-warp" style={isShowNav ? null : { paddingRight: 0 }}>
                     <div className="article-detail">
-                        <div className="box-shadow box-shadow-mb">
+                        <div onClick={this.popUpImage} className="box-shadow box-shadow-mb">
                             <div className="article-title">
                                 <div className="item-title">
                                     {data.title}

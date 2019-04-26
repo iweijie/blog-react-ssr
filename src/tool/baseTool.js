@@ -282,6 +282,133 @@ export function colorReverse(OldColorValue) {
 
 /**
  *作者: weijie
+ *时间: 2018/8/16
+ *描述: 图片弹框展示
+ * @param {string} 图片地址
+ * @param {Boolean} 浏览器宽高变化时重新计算
+ **/
+export const popUpImage = function () {
+    var imgStie = null;
+    var maskStyle = {
+        position: "fixed",
+        top: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        zIndex: 10000,
+        left: 0,
+        fontSize: "12px",
+        display: "none",
+        alignItems: "center",
+        justifyContent: "center",
+    }
+    var wrapStyle = {
+        position: "relative",
+        padding: "5px",
+        backgroundColor: "#fff",
+        boxShadow: "0 2px 14px 2px rgba(0, 0, 0, 0.20)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        boxSizing: "border-box",
+    }
+    var imgStyle = {
+        display: "block",
+        width: "100%",
+        height: "100%",
+    }
+    var flexStyle = { "display": "flex" }
+    var noneStyle = { "display": "none" }
+    // 间距
+    var space = 10;
+
+    var mask = document.createElement("div")
+    var sh = window.innerHeight || document.documentElement.clientheight;
+    var sw = window.innerWidth || document.documentElement.clientWidth;
+    mask.style.width = sw + "px"
+    mask.style.height = sh + "px"
+    css(mask, maskStyle)
+
+    var close = document.createElement("div");
+    close.innerText = "×";
+    var closeStyle = {
+        width: '50px',
+        height: '50px',
+        position: 'absolute',
+        right: '0',
+        top: '0',
+        color: '#fff',
+        cursor: 'pointer',
+        'font-size': '35px',
+        'text-align': 'center'
+    }
+    css(close, closeStyle);
+    mask.appendChild(close);
+    mask.setAttribute('class', 'preview-mask');
+
+    var wrap = document.createElement("div")
+    css(wrap, wrapStyle)
+    close.addEventListener("click", function () {
+        css(mask, noneStyle)
+        if (imgStie) {
+            wrap.removeChild(imgStie)
+            imgStie = null
+        }
+    })
+    mask.appendChild(wrap)
+    document.body.appendChild(mask)
+    function popUp(src, flag = false) {
+        var previewMask = document.querySelector('.preview-mask').children[1];
+        previewMask.innerHTML = '';
+        if (!src) return;
+        if (flag) {
+            sh = window.innerHeight || document.documentElement.clientheight;
+            sw = window.innerWidth || document.documentElement.clientWidth;
+            mask.style.width = sw + "px"
+            mask.style.height = sh + "px"
+        }
+        var img = imgStie = new Image()
+        css(img, imgStyle)
+        img.addEventListener("load", function (e) {
+            var w = e.target.width;
+            var h = e.target.height;
+            var obj = {}
+            if (!(w + 2 * space <= sw) || !(h + 2 * space <= sh)) {
+                var wratio = w / sw;
+                var hratio = h / sh;
+                if (hratio > wratio) {
+                    // 宽
+                    obj.height = sh - 2 * space
+                    var actualwidth = Math.floor(w / h * obj.height)
+                    obj.width = actualwidth
+                } else {
+                    obj.width = sw - 2 * space
+                    var actualHeight = Math.floor(h / w * obj.width)
+                    obj.height = actualHeight
+                }
+                obj.width += "px"
+                obj.height += "px"
+            } else {
+                obj.width = w + "px"
+                obj.height = h + "px"
+            }
+            css(wrap, obj)
+            wrap.appendChild(img)
+            css(mask, flexStyle)
+        })
+        img.addEventListener("error", function () {
+            wrap.appendChild("图片加载失败,请尝试刷新")
+            css(mask, flexStyle)
+        })
+        img.setAttribute('src', src);
+    }
+    function css(dom, obj) {
+        for (var k in obj) {
+            dom.style[k] = obj[k]
+        }
+    }
+    return popUp
+}();
+
+/**
+ *作者: weijie
  *功能描述: 页面不兼容CSS3的提示信息
  *参数说明:
  *时间: 2018/4/2 16:22
