@@ -53,12 +53,18 @@ router.get(matchRouter, async (ctx, next) => {
         return match;
     });
 
+    promises.push(new Promise((resolve)=>{
+        axios.interceptors.request.eject(interceptor);
+        resolve()
+    }))
+
     await Promise.all(promises)
         .then((data) => {
             // 记录总请求时长
+            data = data.pop()
+            
             log.info(`请求时长 -- pid: ${ctx.cookies.get('pid')}, time: ${Date.now() - time}ms, url: ${ctx.url}`);
 
-            axios.interceptors.request.eject(interceptor);
             ctx.set('Content-Type', 'text/html; charset=utf-8');
             if (!checkResult(data)) {
                 ctx.body = currentTemp
