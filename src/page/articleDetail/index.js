@@ -14,7 +14,12 @@ import {
 } from "antd"
 // import { setLocation, getLocation } from "tool/baseTool"
 import highlight from "tool/highlight/highlight.pack"
-import "tool/highlight/styles/arta.css"
+// import "tool/highlight/styles/arta.css"
+import "tool/highlight/styles/github.css"
+
+// import "tool/highlight/styles/vs2015.css"
+// import "tool/highlight/styles/atom-one-dark.css"
+
 import "./css.scss"
 
 // language: javascript style: atom-one-dark
@@ -24,10 +29,9 @@ import "./css.scss"
 marked.setOptions({
     renderer: new marked.Renderer(),
     highlight: function (code) {
-        return highlight.highlightAuto(code).value;
+        return highlight.highlightAuto(code,["javascript","css","html"]).value;
     },
     pedantic: false,
-    // headerPrefix: "mk-wj",
     gfm: true,
     tables: true,
     breaks: false,
