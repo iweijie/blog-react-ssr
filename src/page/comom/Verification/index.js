@@ -27,16 +27,11 @@ class Verification extends React.PureComponent {
             }
         })
         if (verify) {
-            if (userInfo && userInfo.isChecked) {
-                if (userInfo.isLogin) {
-                    resolve(true)
-                } else {
-                    resolve()
-                }
+            if (userInfo.isLogin) {
+                resolve(true)
             }
         } else {
             resolve(true)
-
         }
     }
 
@@ -44,7 +39,7 @@ class Verification extends React.PureComponent {
         const { resolve } = this.state
         const { verify } = newPros
         var p = this.props
-        if (verify && newPros.userInfo != p.userInfo && !newPros.userInfo.isChecked) {
+        if (verify && newPros.userInfo != p.userInfo) {
             if (newPros.userInfo && newPros.userInfo.isLogin) {
                 resolve(true)
             } else {

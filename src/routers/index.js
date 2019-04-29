@@ -56,7 +56,6 @@ const AsyncSet = Loadable({
     loader: () => import(/* webpackChunkName: "set" */ '../page/set'),
     loading: () => null,
     render(loaded, props) {
-        debugger
         let Component = loaded.default;
         return <Verification verify><Component {...props} /></Verification>
     }

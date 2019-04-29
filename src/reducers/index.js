@@ -20,7 +20,6 @@ import server from "./server"
 
 function userInfoModel(state = {
     isLogin: false,
-    isChecked: false,
 }, action) {
     switch (action.type) {
         case userInfo:

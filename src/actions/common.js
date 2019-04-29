@@ -75,14 +75,12 @@ const syncuserInfoCheckAction = (params) => (dispatch) => {
             if (data._id) {
                 p = {
                     isLogin: true,
-                    isChecked: true,
                     userId: data._id,
                     userName: data.userName,
                 }
             } else {
                 p = {
                     isLogin: false,
-                    isChecked: true,
                     userId: "",
                     userName: "",
                 }

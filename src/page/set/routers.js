@@ -34,3 +34,13 @@ export const AsyncFile = (props) => (
         {(Article) => <Article {...props} />}
     </Bundle>
 )
+
+
+/**
+ * 上传文件列表
+ */
+export const AsyncMemo = (props) => (
+    <Bundle load={() => import("./memo/index")}>
+        {(Article) => <Article {...props} />}
+    </Bundle>
+)
