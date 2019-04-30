@@ -37,10 +37,10 @@ export const AsyncFile = (props) => (
 
 
 /**
- * 上传文件列表
+ * 记录列表
  */
-export const AsyncMemo = (props) => (
-    <Bundle load={() => import("./memo/index")}>
+export const AsyncRecord = (props) => (
+    <Bundle load={() => import("./record")}>
         {(Article) => <Article {...props} />}
     </Bundle>
 )

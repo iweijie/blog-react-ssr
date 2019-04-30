@@ -9,6 +9,7 @@ import articleAction from "./article"
 import home from "./home"
 import fileUpload from "./fileUpload"
 import selftalking from "./selftalking"
+import record from "./record"
 import server from "./server"
 
 
@@ -19,6 +20,7 @@ const actions = {
     ...home,
     ...fileUpload,
     ...selftalking,
+    ...record,
     // ...server 
 }
 

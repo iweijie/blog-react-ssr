@@ -12,6 +12,8 @@ import Loadable from 'react-loadable';
 import Main from './main'
 import configureStore from './store'
 import history from "tool/history";
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import "tool/pace.js"
 import "tool/pace/themes/blue/pace-theme-minimal.css"
 import "style/basics.scss"
@@ -19,11 +21,13 @@ import "./font/Offline-Rough.otf"
 import "tool/love"
 
 const App = (
-    <Provider store={configureStore()}>
-        <Router history={history}>
-            <Main />
-        </Router>
-    </Provider>
+    <LocaleProvider locale={zhCN}>
+        <Provider store={configureStore()}>
+            <Router history={history}>
+                <Main />
+            </Router>
+        </Provider>
+    </LocaleProvider>
 )
 
 const root = document.querySelector('#root');

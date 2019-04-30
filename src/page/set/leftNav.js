@@ -31,6 +31,11 @@ class Left extends Component {
             icon: "upload"
         },
         {
+            name: "记忆箱",
+            path: "/set/record",
+            icon: "clock-circle"
+        },
+        {
             name: "备忘录",
             path: "/set/memo",
             icon: "dashboard"

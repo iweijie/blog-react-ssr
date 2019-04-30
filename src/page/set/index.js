@@ -10,7 +10,7 @@ import {
     AsyncTags,
     AsyncSelftalking,
     AsyncFile,
-    AsyncMemo
+    AsyncRecord
 } from "./routers"
 import "./css.scss"
 
@@ -36,8 +36,8 @@ class App extends Component {
                             <Route key="AsyncSelftalking" exact path={`${url}/selftalking`} component={AsyncSelftalking} />
                             <Route key="AsyncFile" exact path={`${url}/upload`} component={AsyncFile} />
                             <Route key="Asynctags" exact path={`${url}/tags`} component={AsyncTags} />
-                            <Route key="Asynctags" exact path={`${url}/memo`} component={AsyncMemo} />
-                            <Redirect  to={`${url}/selftalking`} />
+                            <Route key="AsyncRecord" exact path={`${url}/record`} component={AsyncRecord} />
+                            <Redirect to={`${url}/selftalking`} />
                         </Switch>
                     </div>
                 </div>

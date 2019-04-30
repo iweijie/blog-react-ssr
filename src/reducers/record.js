@@ -1,31 +1,25 @@
-import {recordConfigInfo,recordlistInfo,clearRecordInfo} from "actions/record"
+import { getRecordCategoryList, getRecordList } from "actions/record"
 
-function recordconfModel(state = {
-    showField:[]
-}, action) {
+
+function memoCategoryList(state = [], action) {
     switch (action.type) {
-        case recordConfigInfo:
-            return action.payload;
-        case clearRecordInfo:
-            return {
-                showField:[]
-            }
+        case getRecordCategoryList:
+            return action.payload
         default:
             return state;
     }
 }
-function recordListModel(state =[], action) {
+
+function memoList(state = [], action) {
     switch (action.type) {
-        case recordlistInfo:
-            return action.payload;
-        case clearRecordInfo:
-            return []
+        case getRecordList:
+            return action.payload
         default:
             return state;
     }
 }
 
 export default {
-    recordconfModel,
-    recordListModel
+    memoList,
+    memoCategoryList
 }

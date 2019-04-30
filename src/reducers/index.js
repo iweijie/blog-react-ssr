@@ -16,6 +16,7 @@ import home from "./home"
 import article from "./article"
 import common from "./common"
 import selftalking from "./selftalking"
+import record from "./record"
 import server from "./server"
 
 function userInfoModel(state = {
@@ -48,7 +49,8 @@ const rootReducer = combineReducers({
     ...article,
     ...common,
     ...selftalking,
-    ...server
+    ...server,
+    ...record
 })
 
 export default rootReducer

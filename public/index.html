@@ -325,7 +325,7 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
-  <div id="loading">
+  <!-- <div id="loading">
     <div id="global-loading" class="global-loading">
       <div class="global-loading-body">
         <span>
@@ -347,45 +347,45 @@
       </div>
       <div class="global-loading-text">do or die</div>
     </div>
-  </div>
+  </div> -->
   <div id="root"></div>
   <script>
     window.__PRELOADED_STATE__
   </script>
   <!-- 关闭加载动画 -->
   <script>
-    var loading_start_time = Date.now();
-    document.addEventListener('DOMContentLoaded', function (e) {
-      var loading = document.getElementById("loading");
-      var globalLoading = document.getElementById("global-loading");
-      var parent = loading.parentNode;
-      var delayed = Date.now() - loading_start_time;
-      loading_start_time = undefined
+    // var loading_start_time = Date.now();
+    // document.addEventListener('DOMContentLoaded', function (e) {
+    //   var loading = document.getElementById("loading");
+    //   var globalLoading = document.getElementById("global-loading");
+    //   var parent = loading.parentNode;
+    //   var delayed = Date.now() - loading_start_time;
+    //   loading_start_time = undefined
 
-      function fun() {
-        hidden(globalLoading, 1, -0.02);
-      }
+    //   function fun() {
+    //     hidden(globalLoading, 1, -0.02);
+    //   }
 
-      function hidden(o, i, s) {
-        t = setInterval(function () {
-          i += s;
-          o.style.opacity = i;
-          if (i < 0) {
-            window.clearInterval(t)
-            parent.removeChild(loading)
-          };
-        }, 1);
-      };
-      if (delayed < 1000) {
-        setTimeout(function () {
-          fun()
-        }, 1000 - delayed)
-      } else {
-        fun()
-      }
-    }, {
-      once: true
-    });
+    //   function hidden(o, i, s) {
+    //     t = setInterval(function () {
+    //       i += s;
+    //       o.style.opacity = i;
+    //       if (i < 0) {
+    //         window.clearInterval(t)
+    //         parent.removeChild(loading)
+    //       };
+    //     }, 1);
+    //   };
+    //   if (delayed < 1000) {
+    //     setTimeout(function () {
+    //       fun()
+    //     }, 1000 - delayed)
+    //   } else {
+    //     fun()
+    //   }
+    // }, {
+    //   once: true
+    // });
   </script>
 </body>
 

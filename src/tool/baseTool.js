@@ -172,20 +172,6 @@ export const timestampFromat = (v, t = 1, interval = '-') => {
 
 /**
  *作者: weijie
- *功能描述:Array 每项添加 Key 值
- *参数说明:
- * @param {number} v 毫秒数
- */
-export const setKey = (arr = []) => {
-    arr.forEach((v, k) => {
-        if (v.key === undefined) {
-            v.key = k
-        }
-    })
-    return arr
-}
-/**
- *作者: weijie
  *功能描述: 防抖
  */
 export function debounce(fn, delay = 200) {
@@ -414,7 +400,7 @@ export const popUpImage = function () {
                         wrap.style.top = topValue + "px"
                         wrap.style.left = leftValue + "px"
                     }
-                    document.addEventListener("mouseup", (e) => {
+                    document.addEventListener("mouseup", () => {
                         document.removeEventListener("mousemove", move)
                     }, { once: true })
                     document.addEventListener("mousemove", move)
@@ -495,6 +481,11 @@ export const popUpImage = function () {
     }
     return popUp
 }();
+
+export function distinct(arr = []) {
+    var set = new Set(arr);
+    return Array.from(set)
+}
 
 /**
  *作者: weijie
