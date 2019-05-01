@@ -10,7 +10,7 @@ import { log, promiseCatch } from './baseTool'
 import history from "tool/history"
 import isServer from "tool/env"
 
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 

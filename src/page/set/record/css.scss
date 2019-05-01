@@ -4,6 +4,15 @@
 }
 
 .record-btn-wrap {
+    margin-bottom: 10px;
+    position: relative;
+    .ant-btn {
+        position: absolute;
+        top: 4px;
+        right: 0;
+    }
+}
+.record-category-btn-wrap {
     text-align: right;
     margin-bottom: 10px;
 }
@@ -18,4 +27,18 @@
     .ant-form-item {
         margin-bottom: 0px;
     }
+}
+
+.set-record-search {
+    .ant-form-item {
+        margin-bottom: 0px;
+    }
+    .ant-calendar-picker {
+        text-align: left;
+    }
+}
+#set-record-graph {
+    width: 800px;
+    height: 600px;
+    margin-top: 20px;
 }

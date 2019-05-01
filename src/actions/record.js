@@ -52,7 +52,10 @@ const getRecordListAsyncAction = (params) => (dispatch) => {
         .then(data => {
             const { state, result } = data
             if (state === 1) {
-                dispatch(getRecordListAction(result))
+                dispatch(getRecordListAction({
+                    list: result,
+                    params
+                }))
             }
             return data
         }).catch(promiseCatch)
