@@ -97,6 +97,7 @@ class Home extends Component {
         this.props.getArticleListAsync(params)
     }
     componentDidMount() {
+        this.scrollHandle()
         window.addEventListener("scroll", this.scroll)
     }
     componentWillUnmount() {
@@ -137,7 +138,7 @@ class Home extends Component {
                 <div style={{ backgroundColor: "#f1f1f1" }}>
                     <div className="home-content">
                         <div className="home-content-left">
-                            <Whisper list={selftalking.result} isLogin={!!userInfo._id}></Whisper>
+                            <Whisper list={selftalking.result} isLogin={!!userInfo.userId}></Whisper>
                             <ArticleList userInfo={userInfo} list={articleList} />
                             {
                                 total && total > (page * pageSize) ?

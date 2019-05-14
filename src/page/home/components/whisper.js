@@ -49,6 +49,7 @@ class Whisper extends PureComponent {
     }
     render() {
         let { list, isLogin } = this.props;
+        console.log("isLogin",isLogin)
         this.carouselList = [];
         var str = "whisper";
         this.carouselList.push(str)
