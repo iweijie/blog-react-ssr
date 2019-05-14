@@ -1,7 +1,7 @@
 import { getRecordCategoryList, getRecordList } from "actions/record"
 
 
-function memoCategoryList(state = [], action) {
+function recordCategoryList(state = [], action) {
     switch (action.type) {
         case getRecordCategoryList:
             return action.payload
@@ -10,7 +10,10 @@ function memoCategoryList(state = [], action) {
     }
 }
 
-function memoList(state = [], action) {
+function recordList(state = {
+    list: [],
+    params: {}
+}, action) {
     switch (action.type) {
         case getRecordList:
             return action.payload
@@ -20,6 +23,6 @@ function memoList(state = [], action) {
 }
 
 export default {
-    memoList,
-    memoCategoryList
+    recordList,
+    recordCategoryList
 }

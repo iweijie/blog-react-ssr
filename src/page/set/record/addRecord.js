@@ -11,7 +11,7 @@ import {
     InputNumber
 } from "antd"
 import { distinct } from "tool/baseTool"
-import { Object } from 'core-js';
+import moment from 'moment';
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group;
@@ -46,7 +46,7 @@ class AddRecord extends Component {
             key: 'category',
             width: 100,
             render: (t, r) => {
-                const { memoCategoryList } = this.props;
+                const { recordCategoryList } = this.props;
                 const { getFieldDecorator } = this.props.form
                 return <FormItem>
                     {getFieldDecorator(`[${r.id}].category`, {
@@ -54,7 +54,7 @@ class AddRecord extends Component {
                     })(
                         <Select style={style.w100}>
                             {
-                                memoCategoryList.map(v => <Option key={v._id} value={v._id}>{v.name}</Option>)
+                                recordCategoryList.map(v => <Option key={v._id} value={v._id}>{v.name}</Option>)
                             }
                         </Select>
                     )}
@@ -67,10 +67,10 @@ class AddRecord extends Component {
             key: 'tag',
             width: 100,
             render: (t, r) => {
-                const { memoCategoryList } = this.props;
+                const { recordCategoryList } = this.props;
                 const { getFieldDecorator, getFieldValue } = this.props.form
                 const c = getFieldValue(`[${r.id}].category`)
-                const item = memoCategoryList.find(v => v._id === c)
+                const item = recordCategoryList.find(v => v._id === c)
                 let list = [], disabled = true;
                 if (item) {
                     list = item.tags
@@ -115,6 +115,7 @@ class AddRecord extends Component {
                 return <FormItem>
                     {getFieldDecorator(`[${r.id}].time`, {
                         rules: [{ required: true, message: '请选择时间' }],
+                        initialValue: moment()
                     })(
                         <DatePicker style={style.w100} />
                     )}
@@ -160,24 +161,14 @@ class AddRecord extends Component {
         onCancel && onCancel()
     }
 
-    toFormat = (mo) => {
-        const obj = mo.toObject()
-        let { years, months, date } = obj
-        years += ""
-        months += 1
-        months = months > 9 ? "" + months : "0" + months
-        date = date > 9 ? "" + date : "0" + date
-        return Number(years + months + date)
-    }
-
     handleOk = () => {
-        const { handleOk } = this.props;
+        const { handleOk, toFormat } = this.props;
         const { validateFields } = this.props.form
         validateFields((err, value) => {
             if (err) return;
             let data = Object.keys(value).map(v => {
                 const d = value[v];
-                d.time = this.toFormat(d.time)
+                d.time = toFormat(d.time)
                 return d
             })
             handleOk && handleOk(data)
