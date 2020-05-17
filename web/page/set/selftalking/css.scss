@@ -1,0 +1,24 @@
+.set-selftalking-wrap {
+    padding: 10px;
+    background-color: #fff;
+    .ant-table {
+        table {
+            text-align: center;
+        }
+    }
+    .ant-table-thead{
+        > tr {
+            > th {
+                text-align: center;
+            }
+        }
+    } 
+}
+.set-selftalking-add {
+    padding-bottom: 10px;
+    text-align: right;
+}
+.set-selftalking-edit {
+    color:#1890ff;
+    cursor: pointer;
+}
