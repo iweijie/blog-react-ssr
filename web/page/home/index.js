@@ -71,7 +71,7 @@ class Home extends Component {
     const { result, total, page, pageSize, currentTag, hasMore } = articleList;
     const isFixed = browserInfo.height - homeScrollToTop <= 56;
     return (
-      <div ref="home" className="home">
+      <div className="home">
         <Bg list={homeBgList} browserInfo={browserInfo}></Bg>
         <Topnav userInfo={userInfo} isFixed={isFixed} />
         <div style={{ backgroundColor: "#f1f1f1" }}>

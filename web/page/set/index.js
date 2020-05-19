@@ -20,18 +20,14 @@ class App extends Component {
     super(props);
   }
   render() {
-    let { height } = this.props.browserInfo;
-    const content = (
-      <div ref="set" className="set">
+    return (
+      <div className="set">
         <Topnav isFixed />
         <div className="set-wrap">
           <div className="set-left">
             <LeftNav />
           </div>
-          <div
-            className="set-right"
-            style={{ minHeight: height - 56 - 40 + "px" }}
-          >
+          <div className="set-right">
             <Switch>
               <Route
                 key="AsyncArticleAdd"
@@ -50,14 +46,11 @@ class App extends Component {
         </div>
       </div>
     );
-
-    return content;
   }
 }
 const mapStateToProps = (store) => {
   return {
-    userInfo: store.userInfoModel,
-    browserInfo: store.browserInfo,
+    // userInfo: store.userInfoModel,
   };
 };
 

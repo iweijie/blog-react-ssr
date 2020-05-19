@@ -29,7 +29,7 @@ class TopNav extends React.PureComponent {
     // },
     {
       name: "设置",
-      url: "/set",
+      url: "/set/addArticle",
       icon: "setting",
       state: 2
     },

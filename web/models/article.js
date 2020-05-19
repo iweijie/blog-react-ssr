@@ -20,17 +20,20 @@ export default {
     tagsList: [],
     tagsDetailList: [],
     recommendList: [],
+    editArticle: {
+      isAdd: false,
+    },
   },
 
   effects: {
     /**  文章  */
     *getArticleDetails({ payload }, { call, put }) {
       const data = yield call(apis.getArticleDetails, payload);
-      const { content = "", ...other } = get(data, "result", {});
-      const { html, nav } = parseArticleDetail(content);
-      other.__html = html;
-      other.__nav = nav;
-      yield put({ type: "setArticleDetials", payload: other });
+      const result = get(data, "result", {});
+      const { html, nav } = parseArticleDetail(result.content || "");
+      result.__html = html;
+      result.__nav = nav;
+      yield put({ type: "setArticleDetials", payload: result });
     },
 
     *getArticleList({ payload }, { call, select, put }) {
@@ -76,11 +79,21 @@ export default {
       const data = yield call(apis.getTagList);
       yield put({ type: "setTagsList", payload: get(data, "result", []) });
     },
+    *getTagsDetailList({ payload }, { call, put }) {
+      const data = yield call(apis.getDetailTagList);
+      yield put({
+        type: "setTagsDetailList",
+        payload: get(data, "result", []),
+      });
+    },
   },
 
   reducers: {
     setTagsList(state, action) {
       return { ...state, tagsList: action.payload };
+    },
+    setTagsDetailList(state, action) {
+      return { ...state, tagsDetailList: action.payload };
     },
     setArticleDetials(state, action) {
       return { ...state, articleDetials: action.payload };

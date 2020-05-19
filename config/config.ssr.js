@@ -1,68 +1,74 @@
-const resolvePath = (path) => require('path').resolve(__dirname, path)
+const resolvePath = (path) => require("path").resolve(__dirname, path);
 
 module.exports = {
-  type: 'ssr', // 指定运行类型可设置为csr切换为客户端渲染
+  type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
   routes: [
     {
-      path: '/', 
+      path: "/",
       exact: true,
-      Component: () => (require('@/page/home').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/home").default,
+      controller: "page",
+      handler: "index",
     },
     {
-      path: '/tags/:id',
+      path: "/tags/:id",
       exact: true,
-      Component: () => (require('@/page/home').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/home").default,
+      controller: "page",
+      handler: "index",
     },
     {
-      path: '/article/detail/:id',
+      path: "/article/detail/:id",
       exact: true,
-      Component: () => (require('@/page/articleDetail').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/articleDetail").default,
+      controller: "page",
+      handler: "index",
     },
     {
-      path: '/about',
+      path: "/about",
       exact: true,
-      Component: () => (require('@/page/about').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/about").default,
+      controller: "page",
+      handler: "index",
     },
     {
-      path: '/selftalking',
+      path: "/selftalking",
       exact: true,
-      Component: () => (require('@/page/selftalking').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/selftalking").default,
+      controller: "page",
+      handler: "index",
     },
     {
-      path: '/login',
+      path: "/login",
       exact: true,
-      Component: () => (require('@/page/login').default),
-      controller: 'page',
-      handler: 'index'
+      Component: () => require("@/page/login").default,
+      controller: "page",
+      handler: "index",
     },
-    // {
-    //   path: '/set',
-    //   // exact: true,
-    //   Component: () => (require('@/page/set').default),
-    //   controller: 'page',
-    //   handler: 'index'
-    // }
+    {
+      path: "/set/article/add",
+      exact: true,
+      Component: () => require("@/page/set/addArticle").default,
+      controller: "page",
+      handler: "index",
+    },
+    {
+      path: "/set/article/edit/:id",
+      exact: true,
+      Component: () => require("@/page/set/addArticle").default,
+      controller: "page",
+      handler: "index",
+    },
+    // /set/article/edit/5ec3f189c49f9909ccfab531
   ],
-  baseDir: resolvePath('../'),
-  injectCss: [
-    `/static/css/Page.chunk.css`
-  ], // 客户端需要加载的静态样式表
+  baseDir: resolvePath("../"),
+  injectCss: [`/static/css/Page.chunk.css`], // 客户端需要加载的静态样式表
   injectScript: [
     `<script src='/static/js/runtime~Page.js'></script>`,
     `<script src='/static/js/vendor.chunk.js'></script>`,
-    `<script src='/static/js/Page.chunk.js'></script>`
+    `<script src='/static/js/Page.chunk.js'></script>`,
   ], // 客户端需要加载的静态资源文件表
   serverJs: resolvePath(`../dist/Page.server.js`),
   layout: resolvePath(`../dist/Layout.server.js`),
-  useCDN: false
-}
+  useCDN: false,
+};
