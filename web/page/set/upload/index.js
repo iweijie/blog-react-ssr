@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import dispatchAction from "tool/dispatchAction"
+// import dispatchAction from "tool/dispatchAction"
 import Add from "./add"
 import TableCom from "./table"
 import {
     Tabs
 } from "antd"
 
-import "./css.scss"
+import "./css.less"
 const TabPane = Tabs.TabPane;
 
 
@@ -104,8 +104,8 @@ class App extends Component {
 }
 const mapStateToProps = (store) => {
     return {
-        userInfo: store.userInfoModel
+        userInfo: store.common.userInfo
     }
 }
 
-export default connect(mapStateToProps, dispatchAction)(App)
+export default connect(mapStateToProps)(App)

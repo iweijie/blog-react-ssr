@@ -12,6 +12,7 @@
     "marked": "^1.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
+    "react-helmet": "^6.0.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^4.4.1",

@@ -44,7 +44,6 @@ class App extends Component {
         return message.warning("请填写完整");
       }
     }
-    debugger;
     apis
       .login(data)
       .then((result) => {

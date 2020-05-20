@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Prompt } from "react-router-dom";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Prompt } from 'react-router-dom';
 // import dispatchAction from "tool/dispatchAction"
-import Edit from "./components/edit";
-import Select from "./components/select";
-import observer from "../../../utils/observer";
-import SetLayout from "../SetLayout";
-import { Button, message, Modal } from "antd";
-import apis from "../../../apis/index";
-import { isEmpty } from "lodash";
-import "./css.less";
+import Edit from './components/edit';
+import Select from './components/select';
+import observer from '../../../utils/observer';
+import SetLayout from '../SetLayout';
+import { Button, message, Modal } from 'antd';
+import apis from '../../../apis/index';
+import './css.less';
 
 class App extends Component {
   constructor(props) {
@@ -26,11 +25,10 @@ class App extends Component {
 
   componentDidMount() {
     if (__isBrowser__) {
-      debugger;
       const { match, dispatch } = this.props;
       var reg = /^\/set\/article\/edit\/([A-z0-9]+)$/;
       let id;
-      if (match.url == "/set/article/add") {
+      if (match.url == '/set/article/add') {
         this.isAdd = true;
       } else if (match.url.match(reg)) {
         this.isAdd = false;
@@ -38,11 +36,11 @@ class App extends Component {
       }
       if (id && !this.isAdd) {
         dispatch({
-          type: "article/getArticleDetails",
+          type: 'article/getArticleDetails',
           payload: { id },
         });
       } else {
-        var data = localStorage.getItem("addarticle");
+        var data = localStorage.getItem('addarticle');
         if (data) {
           this.setState({
             setDefault: true,
@@ -50,7 +48,7 @@ class App extends Component {
         }
       }
       dispatch({
-        type: "article/getTagsDetailList",
+        type: 'article/getTagsDetailList',
       });
       this.timerId = setInterval(this.saveLocal, 2 * 60 * 1000);
     }
@@ -64,27 +62,27 @@ class App extends Component {
       params.id = id;
     }
     for (var k in params) {
-      if (params[k] === "" || params[k] === undefined) {
-        return message.warning(k + "  不能为空");
+      if (params[k] === '' || params[k] === undefined) {
+        return message.warning(k + '  不能为空');
       }
     }
     apis.addArticle(params).then((result) => {
       if (result.state === 1) {
         this.when = true;
-        localStorage.removeItem("addarticle");
+        localStorage.removeItem('addarticle');
 
         message.success(result.msg, 2, () => {
           history.go(-1);
         });
         return;
       }
-      message.error(result.msg || "新增文章错误");
+      message.error(result.msg || '新增文章错误');
     });
   };
   getContent = () => {
     var { userInfo } = this.props;
-    var content = observer.emit("addArticleEdit")[0];
-    var params = observer.emit("addArticleSelect")[0];
+    var content = observer.emit('addArticleEdit')[0];
+    var params = observer.emit('addArticleSelect')[0];
     params.content = content;
     params.autor = userInfo.userId;
     return params;
@@ -93,20 +91,20 @@ class App extends Component {
     var params = this.getContent();
     delete params.autor;
     var str = JSON.stringify(params);
-    localStorage.setItem("addarticle", str);
+    localStorage.setItem('addarticle', str);
   };
   location = (location) => {
     if (!location.pathname.match(/\/set\/article\/.+/)) {
       if (this.when) {
         return true;
       }
-      return "当前文章没有保存，请先保存在离开哦！是否离开？";
+      return '当前文章没有保存，请先保存在离开哦！是否离开？';
     }
     return true;
   };
   handleOk = () => {
     try {
-      var data = JSON.parse(localStorage.getItem("addarticle"));
+      var data = JSON.parse(localStorage.getItem('addarticle'));
       this.setState({
         defaultData: data,
         setDefault: false,
@@ -123,7 +121,7 @@ class App extends Component {
   };
   componentWillUnmount() {
     this.props.dispatch({
-      type: "article/setArticleDetials",
+      type: 'article/setArticleDetials',
       payload: {},
     });
     clearInterval(this.timerId);
@@ -138,12 +136,12 @@ class App extends Component {
       } else {
         defualtvalue = {};
       }
-      headtitle = "新增界面";
+      headtitle = '新增界面';
     } else {
       defualtvalue = detial;
-      headtitle = "修改界面";
+      headtitle = '修改界面';
     }
-    console.log("defualtvalue:", defualtvalue);
+    console.log('defualtvalue:', defualtvalue);
     let { tags = [], content, description, ispublic, title } = defualtvalue;
     params = { tags, description, ispublic, title };
 
@@ -153,11 +151,7 @@ class App extends Component {
         <h3>{headtitle}</h3>
         <Select defualtvalue={params} {...this.props} />
         <Edit defualtvalue={content} />
-        <Button
-          onClick={this.submitHandle}
-          type="primary"
-          className="edit-submit mt20"
-        >
+        <Button onClick={this.submitHandle} type="primary" className="edit-submit mt20">
           提交
         </Button>
         <Modal
@@ -186,4 +180,4 @@ const mapStateToProps = (store, own) => {
   };
 };
 
-export default connect(mapStateToProps)(SetLayout(App));
+export default SetLayout(connect(mapStateToProps)(App));

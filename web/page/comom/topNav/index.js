@@ -29,7 +29,7 @@ class TopNav extends React.PureComponent {
     // },
     {
       name: "设置",
-      url: "/set/addArticle",
+      url: "/set/selftalking",
       icon: "setting",
       state: 2
     },

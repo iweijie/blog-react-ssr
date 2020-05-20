@@ -13,8 +13,10 @@ import "./index.less";
 
 class Home extends Component {
   componentDidMount() {
-    this.scrollHandle();
-    window.addEventListener("scroll", this.scroll);
+    if(__isBrowser__){
+      this.scrollHandle();
+      window.addEventListener("scroll", this.scroll);
+    }
   }
 
   getArticleList = (isChangeTag) => {
