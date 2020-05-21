@@ -1,4 +1,4 @@
-@import "../../style/css.less";
+@import '../../style/css.less';
 
 :global {
   .home-bg {
@@ -41,7 +41,7 @@
 
       .title {
         font-size: 5rem;
-        font-family: Offline, "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-family: Offline, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         text-shadow: 0.1rem 0.1rem #fff, -0.1rem -0.1rem rgba(68, 68, 68, 0.5);
         transition: 0.3s;
         padding: 0;
@@ -58,6 +58,7 @@
   }
 
   .home-content {
+    position: relative;
     background-color: #f1f1f1;
     padding: 20px 0;
     width: 900px;
@@ -138,6 +139,13 @@
         font-size: 14px;
       }
     }
+  }
+
+  .label-is-fixed {
+    width: 280px;
+    position: fixed;
+    top: 76px;
+    left: 0;
   }
 
   .calendar {

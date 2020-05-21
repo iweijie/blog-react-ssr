@@ -37,9 +37,6 @@ export default {
   },
 
   reducers: {
-    setHomeScrollTopAction(state, action) {
-      return { ...state, homeScrollToTop: action.payload };
-    },
     setInitBrowserInfo(state) {
       return {
         ...state,

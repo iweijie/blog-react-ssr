@@ -1,30 +1,40 @@
-import React, { Component } from "react";
-import { size, throttle, get, isEmpty } from "lodash";
-import { connect } from "dva";
-import Bg from "./components/homeBg";
-import Topnav from "../comom/topNav";
-import Recommend from "./components/recommend";
-import ArticleList from "../comom/articleList/index";
-import Whisper from "./components/whisper";
-import Calendar from "./components/calendar";
-import Tags from "./components/tags";
-import { Icon } from "antd";
-import "./index.less";
+import React, { Component } from 'react';
+import { size, throttle, get, isEmpty } from 'lodash';
+import { connect } from 'dva';
+import Bg from './components/homeBg';
+import Topnav from '../comom/topNav';
+import Recommend from './components/recommend';
+import ArticleList from '../comom/articleList/index';
+import Whisper from './components/whisper';
+import Calendar from './components/calendar';
+import Tags from './components/tags';
+import { Helmet } from 'react-helmet';
+import { os } from '../../utils/index';
+import { Icon } from 'antd';
+import './index.less';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.timerId = null;
+    this.timerTIme = 3;
+    this.state = {};
+  }
+
   componentDidMount() {
-    if(__isBrowser__){
+    if (__isBrowser__) {
       this.scrollHandle();
-      window.addEventListener("scroll", this.scroll);
+      window.addEventListener('scroll', this.scroll);
+      this.timerId = setTimeout(this.setLabelFixed, 100);
     }
   }
 
   getArticleList = (isChangeTag) => {
     const { dispatch, articleList, match } = this.props;
     const { result, total, hasMore, page, pageSize } = articleList;
-    const id = get(match, "params.id");
+    const id = get(match, 'params.id');
     dispatch({
-      type: "article/getArticleList",
+      type: 'article/getArticleList',
       payload: {
         page: isChangeTag ? 1 : page + 1,
         pageSize,
@@ -34,17 +44,28 @@ class Home extends Component {
   };
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.scroll);
+    window.removeEventListener('scroll', this.scroll);
+    clearInterval(this.timerId);
   }
+
+  setLabelFixed = () => {
+    // --this.timerTIme;
+    if (!this.label) return;
+    // if (!this.timerTIme) {
+    //   clearInterval(this.timerId);
+    //   return;
+    // }
+    const top = this.getTopPoint(this.label);
+    const left = this.getLeftPoint(this.label);
+    this.setState({
+      labelTop: top,
+      labelLeft: left,
+    });
+  };
+
   resetWidthAndHeight = () => {
-    let height =
-      window.innerHeight ||
-      document.documentElement.clientHeight ||
-      document.body.clientHeight;
-    let width =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
+    let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     this.props.resizeAction({
       height,
       width,
@@ -53,11 +74,26 @@ class Home extends Component {
   scrollHandle = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: "home/setHomeScrollTopAction",
+      type: 'home/setHomeScrollTopAction',
       payload: document.documentElement.scrollTop || document.body.scrollTop,
     });
   };
   scroll = throttle(this.scrollHandle, 100);
+
+  getTopPoint = (obj) => {
+    let t = obj.offsetTop;
+    while ((obj = obj.offsetParent)) {
+      t += obj.offsetTop;
+    }
+    return t;
+  };
+  getLeftPoint = (obj) => {
+    let t = obj.offsetLeft;
+    while ((obj = obj.offsetParent)) {
+      t += obj.offsetLeft;
+    }
+    return t;
+  };
 
   render() {
     const {
@@ -69,23 +105,27 @@ class Home extends Component {
       userInfo,
       selftalking,
       recommendList,
+      match,
     } = this.props;
+    const { labelTop, labelLeft } = this.state;
     const { result, total, page, pageSize, currentTag, hasMore } = articleList;
     const isFixed = browserInfo.height - homeScrollToTop <= 56;
+    const labelIsFixed = labelTop <= homeScrollToTop + 56 + 20;
     return (
       <div className="home">
+        <Helmet>
+          <title>weijie ❤ feng</title>
+          <meta name="keywords" content="iweijie与小凤凤的个人小网站，怀抱着对于未来的无限期待！" />
+        </Helmet>
         <Bg list={homeBgList} browserInfo={browserInfo}></Bg>
         <Topnav userInfo={userInfo} isFixed={isFixed} />
-        <div style={{ backgroundColor: "#f1f1f1" }}>
+        <div style={{ backgroundColor: '#f1f1f1' }}>
           <div className="home-content">
             <div className="home-content-left">
               <Whisper list={selftalking} isLogin={!!userInfo.userId}></Whisper>
               <ArticleList userInfo={userInfo} list={result} />
               {hasMore ? (
-                <p
-                  className="pagination"
-                  onClick={() => this.getArticleList(false)}
-                >
+                <p className="pagination" onClick={() => this.getArticleList(false)}>
                   或许有更多
                 </p>
               ) : (
@@ -100,7 +140,12 @@ class Home extends Component {
                 </p>
                 <Calendar changeDate={this.changeDate} />
               </div>
-              <div className="unification-title ">
+              <div
+                id="label"
+                ref={(ref) => (this.label = ref)}
+                className={`unification-title ${labelIsFixed ? 'label-is-fixed' : ''}`}
+                style={{ left: labelLeft }}
+              >
                 <p>
                   <Icon type="read" theme="filled" /> 标签
                 </p>
@@ -136,17 +181,17 @@ Home.getInitialProps = async (ctx) => {
     }
     requestList.push(
       dispatch({
-        type: "article/getArticleList",
+        type: 'article/getArticleList',
         payload,
-      })
+      }),
     );
   }
 
   if (isEmpty(tagsList)) {
     requestList.push(
       dispatch({
-        type: "article/getTagList",
-      })
+        type: 'article/getTagList',
+      }),
     );
   }
 
@@ -154,24 +199,24 @@ Home.getInitialProps = async (ctx) => {
   if (isEmpty(homeBgList)) {
     requestList.push(
       dispatch({
-        type: "home/getBgImageList",
-      })
+        type: 'home/getBgImageList',
+      }),
     );
   }
 
   if (isEmpty(recommendList)) {
     requestList.push(
       dispatch({
-        type: "home/getRecommendArticl",
-      })
+        type: 'home/getRecommendArticl',
+      }),
     );
   }
 
   if (isEmpty(selftalking.result)) {
     requestList.push(
       dispatch({
-        type: "home/getSelftalkingList",
-      })
+        type: 'home/getSelftalkingList',
+      }),
     );
   }
 

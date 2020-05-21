@@ -39,6 +39,7 @@ const clientRender = async () => {
   const store = app._store;
 
   store.dispatch({ type: "common/getUserInfo" });
+  store.dispatch({ type: "common/setInitBrowserInfo" });
 
   app.router(() => (
     <BrowserRouter>

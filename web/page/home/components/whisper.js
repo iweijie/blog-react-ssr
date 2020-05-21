@@ -1,13 +1,13 @@
-import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
-import { Icon, Carousel } from "antd";
+import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
+import { Icon, Carousel } from 'antd';
 
 class Whisper extends PureComponent {
   constructor(props) {
     super(props);
   }
   carouselList = [];
-  selectedCarousel = "";
+  selectedCarousel = '';
   timerId = null;
   nextCarousel = () => {
     if (!this.carouselList || !this.carouselList.length) return;
@@ -28,7 +28,7 @@ class Whisper extends PureComponent {
   MouseLeaveHandle = () => {
     if (!this.selectedCarousel) return;
     this.carouselList.push(this.selectedCarousel);
-    this.selectedCarousel = "";
+    this.selectedCarousel = '';
   };
   startLoop = (time = 4000) => {
     this.timerId = setInterval(() => {
@@ -47,24 +47,24 @@ class Whisper extends PureComponent {
   render() {
     let { list, isLogin } = this.props;
     this.carouselList = [];
-    var str = "whisper";
+    var str = 'whisper';
     this.carouselList.push(str);
     return (
-      <div key={str} className={"home-whisper"}>
+      <div key={str} className={'home-whisper'}>
         <Link to="/selftalking">
           <Icon type="star" theme="filled" />
           碎碎念
         </Link>
 
         <div
-          className={"home-whisper-content"}
+          className={'home-whisper-content'}
           onMouseLeave={this.MouseLeaveHandle}
           onMouseEnter={() => this.MouseEnterHandle(str)}
         >
           {list && list.length ? (
-            <Carousel dots={false} ref={str} vertical>
+            <Carousel dots={false} ref={str} dotPosition="left">
               {list.map((val) => (
-                <div key={val._id} className={"whisper"}>
+                <div key={val._id} className={'whisper'}>
                   {val.content}
                 </div>
               ))}

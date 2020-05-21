@@ -102,9 +102,6 @@ export default {
       // const { payload, isAppend } = action
       return { ...state, articleList: action.payload };
     },
-    setHomeScrollTopAction(state, action) {
-      return { ...state, homeScrollToTop: action.payload };
-    },
     setInitArticleList(state) {
       return {
         page: 0,
