@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { withRouter } from 'react-router-dom';
 import { timestampFromat, popUpImage } from '../../utils/index';
 import Messageboard from './messageBoard';
 import TopNav from '../comom/topNav';
@@ -14,14 +15,14 @@ class ArticleDetail extends Component {
     isShowNav: true,
   };
 
+  componentWillUnmount() {}
+
   popUpImage = (event) => {
     if (event.target.tagName === 'IMG') {
       const src = event.target.src;
       popUpImage(src, true);
     }
   };
-
-  componentWillUnmount() {}
 
   toTop = () => {
     window.scrollTo({
@@ -30,6 +31,7 @@ class ArticleDetail extends Component {
     });
   };
   goBack = () => {
+    const { history } = this.props;
     history.goBack();
   };
   toggleNav = () => {
@@ -118,4 +120,4 @@ const mapStateToProps = (store) => {
     userInfo: store.common.userInfo,
   };
 };
-export default connect(mapStateToProps)(ArticleDetail);
+export default connect(mapStateToProps)(withRouter(ArticleDetail));

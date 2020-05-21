@@ -10886,13 +10886,13 @@ react-error-overlay@^5.1.4:
 
 react-fast-compare@^2.0.4:
   version "2.0.4"
-  resolved "http://172.16.8.10:8081/repository/npm-all/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
-  integrity sha1-6EtNRVsP7BE+BALDKTUnFRlvgfk=
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-helmet@^6.0.0:
   version "6.0.0"
-  resolved "http://172.16.8.10:8081/repository/npm-all/react-helmet/-/react-helmet-6.0.0.tgz#fcb93ebaca3ba562a686eb2f1f9d46093d83b5f8"
-  integrity sha1-/Lk+uso7pWKmhusvH51GCT2Dtfg=
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-6.0.0.tgz#fcb93ebaca3ba562a686eb2f1f9d46093d83b5f8"
+  integrity sha512-My6S4sa0uHN/IuVUn0HFmasW5xj9clTkB9qmMngscVycQ5vVG51Qp44BEvLJ4lixupTwDlU9qX1/sCrMN4AEPg==
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.7.2"
@@ -10996,8 +10996,8 @@ react-router@^4.2.0, react-router@^4.3.1:
 
 react-side-effect@^2.1.0:
   version "2.1.0"
-  resolved "http://172.16.8.10:8081/repository/npm-all/react-side-effect/-/react-side-effect-2.1.0.tgz#1ce4a8b4445168c487ed24dab886421f74d380d3"
-  integrity sha1-HOSotERRaMSH7STauIZCH3TTgNM=
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.0.tgz#1ce4a8b4445168c487ed24dab886421f74d380d3"
+  integrity sha512-IgmcegOSi5SNX+2Snh1vqmF0Vg/CbkycU9XZbOHJlZ6kMzTmi3yc254oB1WCkgA7OQtIAoLmcSFuHTc/tlcqXg==
 
 react-slick@~0.25.2:
   version "0.25.2"

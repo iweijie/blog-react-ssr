@@ -1,19 +1,7 @@
-import fetch from "dva/fetch";
-import {
-  map,
-  merge,
-  isEmpty,
-  isArray,
-  forEach,
-  split,
-  get,
-  set,
-  size,
-  first,
-  slice,
-} from "lodash";
-import { prefix, apis, defaultOptions } from "./constant";
-import { uuidName, globalServerRenderCtxDataName } from "../utils/index";
+import fetch from 'dva/fetch';
+import { map, merge, isEmpty, isArray, forEach, split, get, set, size, first, slice } from 'lodash';
+import { prefix, apis, defaultOptions } from './constant';
+import { uuidName, globalServerRenderCtxDataName } from '../utils/index';
 
 function parseJSON(response) {
   return response.json();
@@ -30,21 +18,21 @@ function checkStatus(response) {
 }
 
 const parseCookie = (str) => {
-  console.log("parseCookie:", str);
+  console.log('parseCookie:', str);
   const cookie = [];
   const options = {};
   if (!size(str)) return cookie;
 
-  const strList = split(str, "; ");
+  const strList = split(str, '; ');
 
-  const [name, value = ""] = split(first(strList), "=");
+  const [name, value = ''] = split(first(strList), '=');
   cookie.push(name, value);
   forEach(slice(strList, 1), (item, index) => {
     if (!item) return;
-    if (!item.includes("=")) {
+    if (!item.includes('=')) {
       options[item] = true;
     } else {
-      const [name, value] = split(item, "=");
+      const [name, value] = split(item, '=');
       options[name] = value;
     }
   });
@@ -63,7 +51,7 @@ const parseCookie = (str) => {
 
 export default Object.keys(apis)
   .map((key) => {
-    let { url = "", method = "GET", ...other } = apis[key];
+    let { url = '', method = 'GET', ...other } = apis[key];
     method = method.toUpperCase();
     return {
       key,
@@ -71,68 +59,77 @@ export default Object.keys(apis)
         const configList = [{}, defaultOptions, other, config];
 
         /**   服务端请求添加Cookie   */
+
         if (!__isBrowser__) {
-          const serverConfig = get(
-            global,
-            `${globalServerRenderCtxDataName}.${get(params, uuidName)}.request`,
-            {}
-          );
+          const serverConfig = get(global, `${globalServerRenderCtxDataName}.${get(params, uuidName)}.request`, {});
+          // console.log('------111111111----', JSON.stringify(serverConfig));
           configList.push(serverConfig);
+        }
+
+        if (params && params[uuidName]) {
+          delete params[uuidName];
         }
 
         config = merge(...configList);
 
         let prefixUrl = `${prefix.basicsUrl}${url}`;
 
-        if (method === "GET") {
+        if (method === 'GET') {
           const getParams = size(params)
             ? map(Object.keys(params), (key) => {
                 return params[key] ? `${key}=${params[key]}` : undefined;
               })
                 .filter(Boolean)
-                .join("&")
-            : "";
-          prefixUrl = prefixUrl + "?" + getParams;
+                .join('&')
+            : '';
+          prefixUrl = prefixUrl + '?' + getParams;
         } else {
-          config["method"] = method;
+          config['method'] = method;
           try {
             if (params) {
-              config["body"] = JSON.stringify(params);
+              config['body'] = JSON.stringify(params);
             }
           } catch (err) {
             console.log(err);
           }
         }
 
-        return fetch(prefixUrl, config)
-          .then(checkStatus)
-          .then((response) => {
-            // console.log(response.headers["_headers"]["set-cookie"]);
-            // /**   服务端请求 Set-Cookie   */
-            // if (!__isBrowser__) {
-            //   let setCookie = get(response, "headers._headers.set-cookie", []);
-            //   const path = `${globalServerRenderCtxDataName}.${get(
-            //     params,
-            //     uuidName
-            //   )}.setCookies`;
+        // console.log('-----------------------------');
+        // console.log(`${prefixUrl}`);
+        // console.log(JSON.stringify(config));
+        // console.log('-----------------------------');
 
-            //   if (isEmpty(setCookie) || !isArray(setCookie)) {
-            //     setCookie = [];
+        return (
+          fetch(prefixUrl, config)
+            .then(checkStatus)
+            // .then((response) => {
+            //   console.log(response.headers["_headers"]["set-cookie"]);
+            //   /**   服务端请求 Set-Cookie   */
+            //   if (!__isBrowser__) {
+            //     let setCookie = get(response, "headers._headers.set-cookie", []);
+            //     const path = `${globalServerRenderCtxDataName}.${get(
+            //       params,
+            //       uuidName
+            //     )}.setCookies`;
+
+            //     if (isEmpty(setCookie) || !isArray(setCookie)) {
+            //       setCookie = [];
+            //     }
+            //     const setCookies = get(global, path);
+
+            //     const list = map(setCookie, (item) => {
+            //       return parseCookie(item);
+            //     });
+            //     setCookies.push(...list);
             //   }
-            //   const setCookies = get(global, path);
-
-            //   const list = map(setCookie, (item) => {
-            //     return parseCookie(item);
-            //   });
-            //   setCookies.push(...list);
-            // }
-            return response;
-          })
-          .then(parseJSON)
-          .catch((err) => {
-            console.log(err);
-            throw err;
-          });
+            //   return response;
+            // })
+            .then(parseJSON)
+            .catch((err) => {
+              console.log(err);
+              throw err;
+            })
+        );
       },
     };
   })

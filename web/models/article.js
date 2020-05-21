@@ -1,10 +1,10 @@
-import apis from "../apis";
-import { getRandomBgColor } from "../utils/index";
-import parseArticleDetail from "../utils/parseArticleDetail";
-import { get } from "lodash";
+import apis from '../apis';
+import { getRandomBgColor } from '../utils/index';
+import parseArticleDetail from '../utils/parseArticleDetail';
+import { get } from 'lodash';
 
 export default {
-  namespace: "article",
+  namespace: 'article',
 
   state: {
     articleList: {
@@ -14,7 +14,7 @@ export default {
       total: 0,
       hasMore: true,
       loading: false,
-      currentTag: "",
+      currentTag: '',
     },
     articleDetials: {},
     tagsList: [],
@@ -29,11 +29,11 @@ export default {
     /**  文章  */
     *getArticleDetails({ payload }, { call, put }) {
       const data = yield call(apis.getArticleDetails, payload);
-      const result = get(data, "result", {});
-      const { html, nav } = parseArticleDetail(result.content || "");
+      const result = get(data, 'result', {});
+      const { html, nav } = parseArticleDetail(result.content || '');
       result.__html = html;
       result.__nav = nav;
-      yield put({ type: "setArticleDetials", payload: result });
+      yield put({ type: 'setArticleDetials', payload: result });
     },
 
     *getArticleList({ payload }, { call, select, put }) {
@@ -44,23 +44,21 @@ export default {
         const bg = getRandomBgColor();
         // 背景色
         // v._bg = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]})`
-        v._bg = `rgba(${bg.join(",")})`;
+        v._bg = `rgba(${bg.join(',')})`;
         // 字体色
-        v._fc = "#fff";
+        v._fc = '#fff';
         // v._fc = isLight(bg) ? "#333" : "#fff"
         return v;
       });
 
-      const oldResult = yield select(
-        (state) => state.article.articleList.result
-      );
+      const oldResult = yield select((state) => state.article.articleList.result);
 
       result = page === 1 ? result : [...oldResult, ...result];
 
       yield put({
-        type: "setArticleList",
+        type: 'setArticleList',
         payload: {
-          currentTag: tag ? decodeURIComponent(tag) : "",
+          currentTag: tag ? decodeURIComponent(tag) : '',
           result,
           page,
           pageSize,
@@ -76,14 +74,14 @@ export default {
     },
     /**  标签  */
     *getTagList({ payload }, { call, put }) {
-      const data = yield call(apis.getTagList);
-      yield put({ type: "setTagsList", payload: get(data, "result", []) });
+      const data = yield call(apis.getTagList, payload);
+      yield put({ type: 'setTagsList', payload: get(data, 'result', []) });
     },
     *getTagsDetailList({ payload }, { call, put }) {
       const data = yield call(apis.getDetailTagList);
       yield put({
-        type: "setTagsDetailList",
-        payload: get(data, "result", []),
+        type: 'setTagsDetailList',
+        payload: get(data, 'result', []),
       });
     },
   },
