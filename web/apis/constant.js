@@ -87,7 +87,7 @@ export const apis = {
 export const prefix =
   process.env.NODE_ENV !== "production"
     ? {
-        basicsUrl: "http://localhost:8002",
+        basicsUrl: "http://localhost:8000",
         fileUrl: "http://localhost:8001",
       }
     : {
