@@ -25,7 +25,7 @@
     "start": "rimraf dist && concurrently \"npm run ssr\" \" npm run csr \"",
     "ssr": "concurrently \"egg-bin dev\" \"cross-env NODE_ENV=development webpack --watch --config ./build/webpack.config.server.js\"",
     "csr": "cross-env NODE_ENV=development ykcli dev",
-    "prod": "cross-env NODE_ENV=production eggctl start",
+    "prod": "cross-env NODE_ENV=production eggctl start --workers=1 --daemon",
     "stop": "egg-scripts stop",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
     "build:client": "cross-env NODE_ENV=production ykcli build",
