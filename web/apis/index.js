@@ -87,7 +87,12 @@ export default Object.keys(apis)
           config['method'] = method;
           try {
             if (params) {
-              config['body'] = JSON.stringify(params);
+              const isUpload =
+                get(config, 'headers.Content-Type') === 'multipart/form-data' && params instanceof FormData;
+              config['body'] = isUpload ? params : JSON.stringify(params);
+              if (isUpload) {
+                delete config.headers['Content-Type'];
+              }
             }
           } catch (err) {
             console.log(err);

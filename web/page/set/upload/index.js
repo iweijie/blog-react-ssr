@@ -87,7 +87,7 @@ class App extends Component {
     let { list, statePage, statePageSize, count } = this.state;
     return (
       <div className="set-upload-wrap">
-        <Add userInfo={userInfo} uploadAsync={uploadAsync}></Add>
+        <Add userInfo={userInfo} getList={this.getList} uploadAsync={uploadAsync}></Add>
         <div>
           <Tabs defaultActiveKey={'0'} onChange={this.tabsChange}>
             {this.tabList.map((v, index) => (
