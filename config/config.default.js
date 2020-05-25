@@ -7,6 +7,6 @@ module.exports = {
     dir: [resolvePath('../dist'), resolvePath('../app/public')],
   },
   siteFile: {
-    '/favicon.ico': 'https://file.iweijie.cn/static/uploads/2020-05/image/08c412220bcb93d2c351ecaefa6616129.png',
+    '/favicon.ico': 'https://file.iweijie.cn/static/uploads/2020-05/image/000.png',
   },
 };
