@@ -98,7 +98,6 @@ const serverRender = async (ctx) => {
   /**  重写dispatch方法，用于注入一个标识  */
   const dispatch = store.dispatch;
   store.dispatch = function (action, ...other) {
-    console.log('-----------', action);
     // payload 为对象；添加一个属性
     if (isObject(get(action, 'payload'))) {
       action.payload[uuidName] = uuid;
@@ -124,8 +123,6 @@ const serverRender = async (ctx) => {
   // );
 
   delete global[globalServerRenderCtxDataName][uuid];
-  console.log(global[globalServerRenderCtxDataName]);
-
   const storeState = store.getState();
   ctx.serverData = storeState;
 

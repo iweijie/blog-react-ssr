@@ -18,7 +18,6 @@ function checkStatus(response) {
 }
 
 const parseCookie = (str) => {
-  console.log('parseCookie:', str);
   const cookie = [];
   const options = {};
   if (!size(str)) return cookie;
@@ -98,12 +97,6 @@ export default Object.keys(apis)
             console.log(err);
           }
         }
-
-        // console.log('-----------------------------');
-        // console.log(`${prefixUrl}`);
-        // console.log(JSON.stringify(config));
-        // console.log('-----------------------------');
-
         return (
           fetch(prefixUrl, config)
             .then(checkStatus)

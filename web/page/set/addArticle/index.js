@@ -141,7 +141,6 @@ class App extends Component {
       defualtvalue = detial;
       headtitle = '修改界面';
     }
-    console.log('defualtvalue:', defualtvalue);
     let { tags = [], content, description, ispublic, title } = defualtvalue;
     params = { tags, description, ispublic, title };
 
