@@ -1,7 +1,7 @@
-import apis from "../apis";
-import { get, size } from "lodash";
+import apis from '../apis';
+import { get, size } from 'lodash';
 export default {
-  namespace: "home",
+  namespace: 'home',
 
   state: {
     homeBgList: [],
@@ -13,17 +13,20 @@ export default {
   effects: {
     *getBgImageList({ payload }, { call, put }) {
       const data = yield call(apis.getBgImageList, payload);
-      yield put({ type: "setHomeBgList", payload: get(data, "result", []) });
+      yield put({ type: 'setHomeBgList', payload: get(data, 'result', []) });
     },
     *getRecommendArticl({ payload }, { call, put }) {
       const data = yield call(apis.getRecommendArticl, payload);
-      yield put({ type: "setRecommendList", payload: get(data, "result", []) });
+      yield put({ type: 'setRecommendList', payload: get(data, 'result', []) });
     },
     *getSelftalkingList({ payload }, { call, put }) {
-      const data = yield call(apis.getSelftalkingList, payload);
+      const data = yield call(apis.getSelftalkingList, {
+        page: 1,
+        pageSize: 999,
+      });
       yield put({
-        type: "setSelftalkingList",
-        payload: get(data, "result", []),
+        type: 'setSelftalkingList',
+        payload: get(data, 'result', []),
       });
     },
   },

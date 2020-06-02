@@ -109,7 +109,7 @@ const serverRender = async (ctx) => {
         [uuidName]: uuid,
       };
     }
-
+    console.log('action:', action);
     return dispatch(action);
   };
 
