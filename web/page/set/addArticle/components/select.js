@@ -7,7 +7,7 @@
 import React, { Component } from "react";
 import observer from "../../../../utils/observer";
 import { Form, Input, Select, Row, Col, Radio } from "antd";
-import { map } from "lodash";
+import map from 'lodash/map'
 const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input;

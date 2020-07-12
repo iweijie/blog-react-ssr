@@ -6,7 +6,8 @@ import TableCom from './table';
 import { Tabs } from 'antd';
 import apis from '../../../apis/index';
 import SetLayout from '../SetLayout';
-import { get, map } from 'lodash';
+import get from 'lodash/get'
+import map from 'lodash/map'
 
 import './css.less';
 const TabPane = Tabs.TabPane;
@@ -45,6 +46,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {}
+
   getList = (page, pageSize) => {
     const { statePage, statePageSize, type } = this.state;
     page = page || statePage;

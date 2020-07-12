@@ -89,7 +89,7 @@ module.exports = {
         // require('@/page/login').default,
         __isBrowser__
           ? require('ykfe-utils').Loadable({
-              loader: () => import(/* webpackChunkName: "home" */ '@/page/login'),
+              loader: () => import(/* webpackChunkName: "login" */ '@/page/login'),
               loading: function Loading() {
                 return React.createElement('div');
               },

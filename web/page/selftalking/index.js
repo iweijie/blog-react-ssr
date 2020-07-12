@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Topnav from "../comom/topNav";
 import { timestampFromat } from "../../utils";
-import { isEmpty, get, map } from "lodash";
+import isEmpty from 'lodash/isEmpty'
+import get from 'lodash/get'
+import map from 'lodash/map'
 import "./css.less";
 
 class Selftalking extends Component {

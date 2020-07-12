@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import observer from "tool/observer"
+import apis from '../../../apis/index';
 import { timestampFromat } from '../../../utils/index';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty'
 import SetLayout from '../SetLayout';
 import { Button, Table, message, Input, Row, Col, Radio, Form, Modal } from 'antd';
 import './css.less';
@@ -102,7 +103,7 @@ class App extends Component {
         value.id = data._id;
         value.creator = userInfo.userId;
       }
-      asyncSetTag(value).then((result) => {
+      apis.addOrUpdateTag(value).then((result) => {
         if (result) {
           message.success(result.msg);
           this.handleCancel();

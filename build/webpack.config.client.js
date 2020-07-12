@@ -18,6 +18,7 @@ const optimization = {
   runtimeChunk: true,
   splitChunks: {
     chunks: 'all',
+    // chunks: 'async',
     name: false,
     cacheGroups: {
       vendors: {
@@ -97,7 +98,8 @@ if (process.env.npm_config_report === 'true') {
 module.exports = merge(baseConfig, {
   devtool: devtool,
   entry: {
-    Page: ['@babel/polyfill', paths.entry]
+    Page: ['@babel/polyfill', paths.entry],
+    codemirror:'codemirror'
   },
   resolve: {
     alias: {

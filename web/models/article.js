@@ -1,7 +1,7 @@
 import apis from '../apis';
 import { getRandomBgColor } from '../utils/index';
 import parseArticleDetail from '../utils/parseArticleDetail';
-import { get } from 'lodash';
+import get from 'lodash/get'
 
 export default {
   namespace: 'article',

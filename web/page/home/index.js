@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { size, throttle, get, isEmpty } from 'lodash';
+import throttle from 'lodash/throttle'
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
+
 import { connect } from 'dva';
 import Bg from './components/homeBg';
 import Topnav from '../comom/topNav';

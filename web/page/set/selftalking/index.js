@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import dispatchAction from 'tool/dispatchAction';
-// import observer from "tool/observer"
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty'
 import { timestampFromat } from '../../../utils/index';
 import SetLayout from '../SetLayout';
 import { Button, Table, message, Input, Row, Col, Form, Modal } from 'antd';
@@ -55,18 +53,19 @@ class Selftalking extends Component {
   // };
   handleOk = () => {
     const { validateFields } = this.props.form;
-    let { userInfo, addSelftalkingAsync } = this.props;
+    let { userInfo, dispatch, addSelftalkingAsync } = this.props;
+
     if (!userInfo.isLogin) return;
     validateFields((err, value) => {
       if (err) {
         return;
       }
-      addSelftalkingAsync(value).then((result) => {
-        if (result) {
-          message.success(result.msg);
+      dispatch({
+        type: 'home/addSelftalking',
+        payload: value,
+      }).then((result) => {
+          message.success("添加成功");
           this.handleCancel();
-          this.getSelftalkingList();
-        }
       });
     });
   };

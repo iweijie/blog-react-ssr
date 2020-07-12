@@ -1,7 +1,7 @@
 
 import React, { PureComponent } from 'react';
-import { get, first } from 'lodash'
-
+import first from 'lodash/first'
+import get from 'lodash/get'
 class Bg extends PureComponent {
 
   render() {

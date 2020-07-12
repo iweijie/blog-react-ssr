@@ -8,7 +8,10 @@ import { routes as Routes } from '../config/config.ssr';
 import { recomposeStore, uuidName, globalServerRenderCtxDataName } from './utils';
 import defaultLayout from '@/layout';
 import models from './models';
-import { get, isEmpty, set, isObject } from 'lodash';
+import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
+import isObject from 'lodash/isObject'
+
 import { v4 as uuidv4 } from 'uuid';
 
 const initDva = (options) => {

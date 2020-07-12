@@ -1,5 +1,6 @@
 import apis from '../apis';
-import { get, size } from 'lodash';
+import get from 'lodash/get'
+
 export default {
   namespace: 'home',
 
@@ -28,6 +29,10 @@ export default {
         type: 'setSelftalkingList',
         payload: get(data, 'result', []),
       });
+    },
+    *addSelftalking({ payload }, { call, put }) {
+      yield call(apis.addSelftalking, payload);
+      yield put({ type: 'getSelftalkingList' });
     },
   },
 

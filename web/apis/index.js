@@ -1,5 +1,14 @@
 import fetch from 'dva/fetch';
-import { map, merge, isEmpty, isArray, forEach, split, get, set, size, first, slice } from 'lodash';
+
+import map from 'lodash/map'
+import merge from 'lodash/merge'
+import forEach from 'lodash/forEach'
+import split from 'lodash/split'
+import get from 'lodash/get'
+import size from 'lodash/size'
+import first from 'lodash/first'
+import slice from 'lodash/slice'
+
 import { prefix, apis, defaultOptions } from './constant';
 import { uuidName, globalServerRenderCtxDataName } from '../utils/index';
 
