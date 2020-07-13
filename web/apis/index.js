@@ -70,7 +70,6 @@ export default Object.keys(apis)
 
         if (!__isBrowser__) {
           const serverConfig = get(global, `${globalServerRenderCtxDataName}.${get(params, uuidName)}.request`, {});
-          console.log('------111111111----', JSON.stringify(serverConfig));
           configList.push(serverConfig);
         }
 

@@ -84,7 +84,10 @@ export const apis = {
 
 export const prefix =
   process.env.NODE_ENV !== 'production'
-    ? {
+    ?{
+      basicsUrl: 'https://blogapi.iweijie.cn',
+      fileUrl: 'https://file.iweijie.cn',
+    } || {
         basicsUrl: 'http://localhost:8002',
         fileUrl: 'http://localhost:8001',
       }
