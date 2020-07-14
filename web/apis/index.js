@@ -1,13 +1,14 @@
 import fetch from 'dva/fetch';
 
-import map from 'lodash/map'
-import merge from 'lodash/merge'
-import forEach from 'lodash/forEach'
-import split from 'lodash/split'
-import get from 'lodash/get'
-import size from 'lodash/size'
-import first from 'lodash/first'
-import slice from 'lodash/slice'
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+import forEach from 'lodash/forEach';
+import split from 'lodash/split';
+import get from 'lodash/get';
+import size from 'lodash/size';
+import first from 'lodash/first';
+import slice from 'lodash/slice';
+import noop from 'lodash/noop';
 
 import { prefix, apis, defaultOptions } from './constant';
 import { uuidName, globalServerRenderCtxDataName } from '../utils/index';
@@ -46,6 +47,15 @@ const parseCookie = (str) => {
   });
   cookie.push(options);
   return cookie;
+};
+
+const createAbort = () => {
+  if (__isBrowser__ ? window.AbortController : global.AbortController) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    return controller;
+  }
+  return {};
 };
 
 /**
@@ -105,8 +115,9 @@ export default Object.keys(apis)
             console.log(err);
           }
         }
+        const { signal, abort } = createAbort();
         return (
-          fetch(prefixUrl, config)
+          fetch(prefixUrl, { signal, ...config })
             .then(checkStatus)
             // .then((response) => {
             //   console.log(response.headers["_headers"]["set-cookie"]);
@@ -136,6 +147,44 @@ export default Object.keys(apis)
               throw err;
             })
         );
+        return Promise.race([
+          fetch(prefixUrl, { signal, ...config })
+            .then(checkStatus)
+            // .then((response) => {
+            //   console.log(response.headers["_headers"]["set-cookie"]);
+            //   /**   服务端请求 Set-Cookie   */
+            //   if (!__isBrowser__) {
+            //     let setCookie = get(response, "headers._headers.set-cookie", []);
+            //     const path = `${globalServerRenderCtxDataName}.${get(
+            //       params,
+            //       uuidName
+            //     )}.setCookies`;
+
+            //     if (isEmpty(setCookie) || !isArray(setCookie)) {
+            //       setCookie = [];
+            //     }
+            //     const setCookies = get(global, path);
+
+            //     const list = map(setCookie, (item) => {
+            //       return parseCookie(item);
+            //     });
+            //     setCookies.push(...list);
+            //   }
+            //   return response;
+            // })
+            .then(parseJSON)
+            .catch((err) => {
+              console.log(err);
+              throw err;
+            }),
+          new Promise((resove, reject) => {
+            if (config.timeout) {
+              setTimeout(() => {
+                abort ? abort() : reject();
+              }, config.timeout);
+            }
+          }),
+        ]);
       },
     };
   })

@@ -11,7 +11,7 @@ class Bg extends PureComponent {
     return (
       <div className="home-bg img-mask">
         <div className="home-bg-img opacity-1">
-          <img src={get(first(list), 'fullUrl', 'https://w.wallhaven.cc/full/54/wallhaven-54lqq0.jpg')} alt="" />
+          <img src={get(first(list), 'fullUrl', '')} alt="" />
         </div>
         <div className="say">
           <div className="title">WEIJIE</div>

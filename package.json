@@ -26,6 +26,7 @@
     "ssr": "concurrently \"egg-bin dev\" \"cross-env NODE_ENV=development webpack --watch --config ./build/webpack.config.server.js\"",
     "csr": "cross-env NODE_ENV=development ykcli dev",
     "prod": "cross-env NODE_ENV=production eggctl start  --workers=1",
+    "prod1": "cross-env EGG_SERVER_ENV=prod pm2 start server.js",
     "stop": "egg-scripts stop",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
     "build:client": "cross-env NODE_ENV=production ykcli build",
