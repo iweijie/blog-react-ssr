@@ -1,11 +1,15 @@
 import apis from '../apis';
-import get from 'lodash/get'
+import get from 'lodash/get';
 
 export default {
   namespace: 'home',
 
   state: {
-    homeBgList: [],
+    homeBgList: [
+      {
+        fullUrl: 'http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl',
+      },
+    ],
     homeScrollToTop: 0,
     selftalking: [],
     recommendList: [],
@@ -14,10 +18,12 @@ export default {
   effects: {
     *getBgImageList({ payload }, { call, put }) {
       // const data = yield call(apis.getBgImageList, payload);
-      const data = [{
-        fullUrl:"http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl"
-      }]
-      yield put({ type: 'setHomeBgList', payload: get(data, 'result', []) });
+      const data = [
+        {
+          fullUrl: 'http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl',
+        },
+      ];
+      // yield put({ type: 'setHomeBgList', payload: get(data, 'result', []) });
     },
     *getRecommendArticl({ payload }, { call, put }) {
       const data = yield call(apis.getRecommendArticl, payload);

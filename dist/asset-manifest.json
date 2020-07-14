@@ -1,0 +1,20 @@
+{
+  "vendor.js": "/static/js/vendor.chunk.js",
+  "Page.css": "/static/css/Page.chunk.css",
+  "Page.js": "/static/js/Page.chunk.js",
+  "about.css": "/static/css/about.chunk.css",
+  "about.js": "/static/js/about.chunk.js",
+  "articleDetail.css": "/static/css/articleDetail.chunk.css",
+  "articleDetail.js": "/static/js/articleDetail.chunk.js",
+  "codemirror.js": "/static/js/codemirror.chunk.js",
+  "home.css": "/static/css/home.chunk.css",
+  "home.js": "/static/js/home.chunk.js",
+  "login.css": "/static/css/login.chunk.css",
+  "login.js": "/static/js/login.chunk.js",
+  "runtime~Page.js": "/static/js/runtime~Page.js",
+  "selftalking.css": "/static/css/selftalking.chunk.css",
+  "selftalking.js": "/static/js/selftalking.chunk.js",
+  "set.css": "/static/css/set.chunk.css",
+  "set.js": "/static/js/set.chunk.js",
+  "static/media/common.less": "/static/media/Offline-Rough.d389a1af.otf"
+}

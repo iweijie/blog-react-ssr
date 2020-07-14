@@ -1,12 +1,10 @@
-
 import React, { PureComponent } from 'react';
-import first from 'lodash/first'
-import get from 'lodash/get'
+import first from 'lodash/first';
+import get from 'lodash/get';
 class Bg extends PureComponent {
-
   render() {
     const { browserInfo, list } = this.props;
-    const { height } = browserInfo
+    const { height } = browserInfo;
     // const style = height ? { height: height - 56 } : {}
     return (
       <div className="home-bg img-mask">
@@ -22,4 +20,4 @@ class Bg extends PureComponent {
   }
 }
 
-export default Bg
+export default Bg;
