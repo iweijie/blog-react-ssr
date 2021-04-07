@@ -1,10 +1,14 @@
-'use strict'
+'use strict';
 
-const paths = require('./paths')
+const paths = require('./paths');
+const config = require('../config/config.ssr');
 // style files regexes
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const getStyleLoaders = require('./util').getStyleLoaders
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const getStyleLoaders = require('./util').getStyleLoaders;
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const { version, jsPrefix, cssPrefix } = config;
+
+console.log(config)
 
 const webpackModule = {
   strictExportPresence: true,
@@ -17,8 +21,8 @@ const webpackModule = {
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]'
-          }
+            name: `static/media/[name].[hash:8].[ext]`,
+          },
         },
 
         {
@@ -32,10 +36,10 @@ const webpackModule = {
               [
                 '@babel/preset-env',
                 {
-                  modules: false
-                }
+                  modules: false,
+                },
               ],
-              '@babel/preset-react'
+              '@babel/preset-react',
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
@@ -44,26 +48,26 @@ const webpackModule = {
                 {
                   libraryName: 'antd',
                   libraryDirectory: 'es',
-                  style: 'css'
-                }
-              ]
-            ]
-          }
+                  style: 'css',
+                },
+              ],
+            ],
+          },
         },
         {
           test: /\.css$/,
           exclude: /\.module\.css$/,
           use: getStyleLoaders({
-            importLoaders: 1
-          })
+            importLoaders: 1,
+          }),
         },
         {
           test: /\.module\.css$/,
           use: getStyleLoaders({
             importLoaders: 1,
             modules: true,
-            getLocalIdent: getCSSModuleLocalIdent
-          })
+            getLocalIdent: getCSSModuleLocalIdent,
+          }),
         },
         {
           test: /\.less$/,
@@ -71,11 +75,11 @@ const webpackModule = {
           use: getStyleLoaders(
             {
               importLoaders: 2,
-              localIdentName: '[local]'
+              localIdentName: '[local]',
             },
-            'less-loader'
+            'less-loader',
           ),
-          sideEffects: true
+          sideEffects: true,
         },
         {
           test: /\.module\.less$/,
@@ -83,42 +87,41 @@ const webpackModule = {
             {
               importLoaders: 2,
               modules: true,
-              getLocalIdent: getCSSModuleLocalIdent
+              getLocalIdent: getCSSModuleLocalIdent,
             },
-            'less-loader'
-          )
+            'less-loader',
+          ),
         },
         {
           exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
           loader: require.resolve('file-loader'),
           options: {
-            name: 'static/media/[name].[hash:8].[ext]'
-          }
-        }
-      ]
-    }
-  ]
-}
+            name: `static/media/[name].[hash:8].[ext]`,
+          },
+        },
+      ],
+    },
+  ],
+};
 
 module.exports = {
   stats: {
     children: false,
-    entrypoints: false
+    entrypoints: false,
   },
   mode: process.env.NODE_ENV,
   resolve: {
     alias: {
-      '@': paths.appSrc
+      '@': paths.appSrc,
     },
-    extensions: paths.moduleFileExtensions
-      .map(ext => `.${ext}`)
+    extensions: paths.moduleFileExtensions.map((ext) => `.${ext}`),
   },
   module: webpackModule,
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].css',
-      chunkFilename: 'static/css/[name].chunk.css'
-    })
+      filename: `${cssPrefix.slice(1)}/[name].css`,
+      chunkFilename: `${cssPrefix.slice(1)}/[name].chunk.css`,
+    }),
   ],
-  performance: false
-}
+  performance: false,
+};

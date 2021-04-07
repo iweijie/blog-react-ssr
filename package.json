@@ -75,6 +75,6 @@
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2",
-    "yk-cli": "^2.0.0"
+    "yk-cli": "^2.8.18"
   }
 }

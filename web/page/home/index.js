@@ -12,7 +12,6 @@ import Whisper from './components/whisper';
 import Calendar from './components/calendar';
 import Tags from './components/tags';
 import { Helmet } from 'react-helmet';
-import { os } from '../../utils/index';
 import { Icon } from 'antd';
 import './index.less';
 

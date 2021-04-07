@@ -2,17 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import dva from 'dva';
 import { BrowserRouter, StaticRouter, Route, Switch } from 'react-router-dom';
-import { getWrappedComponent, getComponent } from 'ykfe-utils';
+import { getWrappedComponent, getComponent, preloadComponent } from 'ykfe-utils';
 import { createMemoryHistory, createBrowserHistory } from 'history';
-import { routes as Routes } from '../config/config.ssr';
+import config from '../config/config.ssr';
 import { recomposeStore, uuidName, globalServerRenderCtxDataName } from './utils';
 import defaultLayout from '@/layout';
 import models from './models';
-import get from 'lodash/get'
-import isEmpty from 'lodash/isEmpty'
-import isObject from 'lodash/isObject'
+import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
+import isObject from 'lodash/isObject';
 
 import { v4 as uuidv4 } from 'uuid';
+
+const Routes = config.routes;
 
 const initDva = (options) => {
   const app = dva(options);
@@ -37,13 +39,17 @@ const clientRender = async () => {
   });
   const store = app._store;
 
+  window.store = store;
+
   store.dispatch({ type: 'common/getUserInfo' });
   store.dispatch({ type: 'common/setInitBrowserInfo' });
+
+  const clientRoutes = await preloadComponent(Routes, config);
 
   app.router(() => (
     <BrowserRouter>
       <Switch>
-        {Routes.map(({ path, exact, Component }) => {
+        {clientRoutes.map(({ path, exact, Component }) => {
           const ActiveComponent = Component();
           const Layout = ActiveComponent.Layout || defaultLayout;
           const WrappedComponent = getWrappedComponent(ActiveComponent);
@@ -100,7 +106,7 @@ const serverRender = async (ctx) => {
 
   /**  重写dispatch方法，用于注入一个标识  */
   const dispatch = store.dispatch;
-  store.dispatch = function (action, ...other) {
+  store.dispatch = function(action, ...other) {
     // payload 为对象；添加一个属性
     if (isObject(get(action, 'payload'))) {
       action.payload[uuidName] = uuid;
@@ -117,12 +123,7 @@ const serverRender = async (ctx) => {
 
   const ActiveComponent = getComponent(Routes, ctx.path)();
   const Layout = ActiveComponent.Layout || defaultLayout;
-  ActiveComponent.getInitialProps ? await Promise.all([ActiveComponent.getInitialProps(ctx)]) : {}; // eslint-disable-line
-
-  // const setCookies = get(
-  //   global,
-  //   `${globalServerRenderCtxDataName}.${uuid}.setCookies`
-  // );
+  ActiveComponent.getInitialProps ? await Promise.all([ActiveComponent.getInitialProps(ctx)]) : {}; //
 
   delete global[globalServerRenderCtxDataName][uuid];
   const storeState = store.getState();

@@ -1,5 +1,11 @@
 const resolvePath = (path) => require('path').resolve(__dirname, path);
 const React = require('react');
+const isDev = process.env.NODE_ENV === 'development';
+
+  // 版本控制，可以用于修改版本，修改资源引用缓存问题
+const version = '0.0.1';
+const jsPrefix = isDev ? `/static/js` : `/static/${version}/js`;
+const cssPrefix = isDev ? `/static/css` : `/static/${version}/css`;
 
 module.exports = {
   type: 'ssr', // 指定运行类型可设置为csr切换为客户端渲染
@@ -10,7 +16,7 @@ module.exports = {
       Component: () =>
         __isBrowser__
           ? require('ykfe-utils').Loadable({
-              loader: () => import(/* webpackChunkName: "home" */ '@/page/home'),
+              loader: () => import(/* webpackChunkName: "tags" */ '@/page/home'),
               loading: function Loading() {
                 return React.createElement('div');
               },
@@ -25,7 +31,7 @@ module.exports = {
       Component: () =>
         __isBrowser__
           ? require('ykfe-utils').Loadable({
-              loader: () => import(/* webpackChunkName: "home" */ '@/page/home'),
+              loader: () => import(/* webpackChunkName: "tags" */ '@/page/home'),
               loading: function Loading() {
                 return React.createElement('div');
               },
@@ -41,7 +47,7 @@ module.exports = {
         // require('@/page/articleDetail').default,
         __isBrowser__
           ? require('ykfe-utils').Loadable({
-              loader: () => import(/* webpackChunkName: "articleDetail" */ '@/page/articleDetail'),
+              loader: () => import(/* webpackChunkName: "article" */ '@/page/articleDetail'),
               loading: function Loading() {
                 return React.createElement('div');
               },
@@ -188,13 +194,17 @@ module.exports = {
     // },
   ],
   baseDir: resolvePath('../'),
-  injectCss: [`/static/css/Page.chunk.css`], // 客户端需要加载的静态样式表
+  injectCss: [`${cssPrefix}/Page.chunk.css`], // 客户端需要加载的静态样式表
   injectScript: [
-    `<script src='/static/js/runtime~Page.js'></script>`,
-    `<script src='/static/js/vendor.chunk.js'></script>`,
-    `<script src='/static/js/Page.chunk.js'></script>`,
+    `<script src='${jsPrefix}/runtime~Page.js'></script>`,
+    `<script src='${jsPrefix}/vendor.chunk.js'></script>`,
+    `<script src='${jsPrefix}/Page.chunk.js'></script>`,
   ], // 客户端需要加载的静态资源文件表
-  serverJs: resolvePath(`../dist/Page.server.js`),
-  layout: resolvePath(`../dist/Layout.server.js`),
+  serverJs: resolvePath(`../dist/Page${isDev ? '' : version}.server.js`),
+  layout: resolvePath(`../dist/Layout${isDev ? '' : version}.server.js`),
   useCDN: false,
+  version,
+  jsPrefix,
+  cssPrefix,
+  isDev,
 };

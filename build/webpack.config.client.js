@@ -11,7 +11,9 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const safePostCssParser = require('postcss-safe-parser');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const publicPath = '/';
-const isDev = process.env.NODE_ENV === 'development';
+const config = require('../config/config.ssr');
+const { version, jsPrefix, cssPrefix, isDev } = config;
+
 const shouldUseSourceMap = isDev || process.env.GENERATE_SOURCEMAP;
 const devtool = isDev ? 'cheap-module-source-map' : shouldUseSourceMap ? 'source-map' : false;
 
@@ -141,6 +143,9 @@ module.exports = merge(baseConfig, {
     pathinfo: true,
     filename: 'static/js/[name].js',
     chunkFilename: 'static/js/[name].chunk.js',
+    
+    // filename: `${jsPrefix.slice(1)}/[name].js`,
+    // chunkFilename: `${jsPrefix.slice(1)}/[name].chunk.js`,
     publicPath: publicPath,
     hotUpdateChunkFilename: '[hash].hot-update.js',
     devtoolModuleFilenameTemplate: (info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
