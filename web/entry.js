@@ -1,144 +1,92 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import dva from 'dva';
-import { BrowserRouter, StaticRouter, Route, Switch } from 'react-router-dom';
-import { getWrappedComponent, getComponent, preloadComponent } from 'ykfe-utils';
-import { createMemoryHistory, createBrowserHistory } from 'history';
-import config from '../config/config.ssr';
-import { recomposeStore, uuidName, globalServerRenderCtxDataName } from './utils';
-import defaultLayout from '@/layout';
-import models from './models';
-import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
-import isObject from 'lodash/isObject';
-
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter, StaticRouter, Route, Switch } from "react-router-dom";
+import { createMemoryHistory, createBrowserHistory } from "history";
+import defaultLayout from "@/layout";
+import {
+    getWrappedComponent,
+    getComponent,
+    preloadComponent,
+} from "ykfe-utils";
+import {
+    recomposeStore,
+    uuidName,
+    globalServerRenderCtxDataName,
+} from "./utils";
+import config from "../config/config.ssr";
+import models from "./models";
+import createStore from "./createStore";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import isObject from "lodash/isObject";
 
 const Routes = config.routes;
 
-const initDva = (options) => {
-  const app = dva(options);
-  models.forEach((m) => app.model(m));
-  app.router(() => {});
-  app.start();
-  return app;
-};
-
 const clientRender = async () => {
-  let initialState = window.__INITIAL_DATA__ || {};
-  if (process.env.NODE_ENV === 'production') {
-    delete window.__INITIAL_DATA__;
-  }
-  const history = createBrowserHistory();
-  // 用于改写 initialState
-  // initialState = await recomposeClientStore(initialState);
+    const initialState = window.__INITIAL_DATA__ || {};
 
-  const app = initDva({
-    initialState,
-    history: history,
-  });
-  const store = app._store;
+    const { store } = createStore(initialState);
 
-  window.store = store;
+    const clientRoutes = await preloadComponent(Routes, config);
 
-  store.dispatch({ type: 'common/getUserInfo' });
-  store.dispatch({ type: 'common/setInitBrowserInfo' });
+    // 客户端渲染||hydrate
+    ReactDOM[window.__USE_SSR__ ? "hydrate" : "render"](
+        <Provider store={store}>
+            <BrowserRouter>
+                <Switch>
+                    {// 使用高阶组件getWrappedComponent使得csr首次进入页面以及csr/ssr切换路由时调用getInitialProps
+                    clientRoutes.map(({ path, exact, Component }) => {
+                        const activeComponent = Component();
+                        const WrappedComponent = getWrappedComponent(
+                            activeComponent
+                        );
+                        const Layout = WrappedComponent.Layout || defaultLayout;
+                        return (
+                            <Route
+                                exact={exact}
+                                key={path}
+                                path={path}
+                                render={() => (
+                                    <Layout>
+                                        <WrappedComponent store={store} />
+                                    </Layout>
+                                )}
+                            />
+                        );
+                    })}
+                </Switch>
+            </BrowserRouter>
+        </Provider>,
+        document.getElementById("app")
+    );
 
-  const clientRoutes = await preloadComponent(Routes, config);
-
-  app.router(() => (
-    <BrowserRouter>
-      <Switch>
-        {clientRoutes.map(({ path, exact, Component }) => {
-          const ActiveComponent = Component();
-          const Layout = ActiveComponent.Layout || defaultLayout;
-          const WrappedComponent = getWrappedComponent(ActiveComponent);
-          return (
-            <Route
-              exact={exact}
-              key={path}
-              path={path}
-              render={(props) => {
-                return (
-                  <Layout key={get(props, 'match.url')}>
-                    <WrappedComponent store={store} />
-                  </Layout>
-                );
-              }}
-            />
-          );
-        })}
-      </Switch>
-    </BrowserRouter>
-  ));
-  const DvaApp = app.start();
-
-  ReactDOM[window.__USE_SSR__ ? 'hydrate' : 'render'](<DvaApp />, document.getElementById('app'));
-
-  if (process.env.NODE_ENV === 'development' && module.hot) {
-    module.hot.accept();
-  }
+    if (process.env.NODE_ENV === "development" && module.hot) {
+        module.hot.accept();
+    }
 };
 
 const serverRender = async (ctx) => {
-  /**   添加全局标识，用于服务端请求添加 Cookie等信息   */
-  const uuid = uuidv4();
-  if (isEmpty(get(global, globalServerRenderCtxDataName))) {
-    global[globalServerRenderCtxDataName] = {};
-  }
-  global[globalServerRenderCtxDataName][uuid] = {
-    request: {
-      headers: {
-        Cookie: get(ctx, 'headers.cookie'),
-      },
-    },
-    setCookies: [],
-  };
+    const { store } = createStore();
 
-  /**   init Dva    */
-  const app = initDva({
-    history: createMemoryHistory({
-      initialEntries: [ctx.req.url],
-    }),
-  });
-  const store = app._store;
-  ctx.store = store;
+    ctx.store = store;
 
-  /**  重写dispatch方法，用于注入一个标识  */
-  const dispatch = store.dispatch;
-  store.dispatch = function(action, ...other) {
-    // payload 为对象；添加一个属性
-    if (isObject(get(action, 'payload'))) {
-      action.payload[uuidName] = uuid;
-    }
-
-    // payload 为空；添加默认对象以及添加一个属性
-    if (!isEmpty(action) && isEmpty(get(action, 'payload'))) {
-      action.payload = {
-        [uuidName]: uuid,
-      };
-    }
-    return dispatch(action);
-  };
-
-  const ActiveComponent = getComponent(Routes, ctx.path)();
-  const Layout = ActiveComponent.Layout || defaultLayout;
-  ActiveComponent.getInitialProps ? await Promise.all([ActiveComponent.getInitialProps(ctx)]) : {}; //
-
-  delete global[globalServerRenderCtxDataName][uuid];
-  const storeState = store.getState();
-  ctx.serverData = storeState;
-
-  app.router(() => (
-    <StaticRouter location={ctx.req.url} context={storeState}>
-      <Layout layoutData={ctx}>
-        <ActiveComponent {...storeState} />
-      </Layout>
-    </StaticRouter>
-  ));
-
-  const DvaApp = app.start();
-  return <DvaApp />;
+    // 服务端渲染 根据ctx.path获取请求的具体组件，调用getInitialProps并渲染
+    const ActiveComponent = getComponent(Routes, ctx.path)();
+    const serverData = ActiveComponent.getInitialProps
+        ? await ActiveComponent.getInitialProps(ctx)
+        : {};
+    const Layout = ActiveComponent.Layout || defaultLayout;
+    ctx.serverData = serverData;
+    return (
+        <Provider store={store}>
+            <StaticRouter location={ctx.req.url} context={serverData}>
+                <Layout layoutData={ctx}>
+                    <ActiveComponent {...serverData} />
+                </Layout>
+            </StaticRouter>
+        </Provider>
+    );
 };
 
 export default __isBrowser__ ? clientRender() : serverRender;

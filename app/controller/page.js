@@ -14,7 +14,6 @@ class PageController extends Controller {
       const stream = await renderToStream(ctx, ctx.app.config)
       ctx.body = stream
     } catch (error) {
-      console.log(error.stack)
       ctx.logger.error(`Page Controller renderToStream Error ${error}`)
     }
   }

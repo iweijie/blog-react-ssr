@@ -1,259 +1,259 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
 body {
-  color: #333;
-  font-size: 12px;
-  font-family: DINRegular, -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI,
-    Microsoft YaHei, sans-serif;
-  width: 100%;
-  height: 100%;
+    color: #333;
+    font-size: 12px;
+    font-family: DINRegular, -apple-system, BlinkMacSystemFont, PingFang SC,
+        Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
 a {
-  color: #333;
+    color: #333;
 }
 
 @media screen and (max-width: 800px) {
-  body {
-    font-size: 12px !important;
-  }
+    body {
+        font-size: 12px !important;
+    }
 }
 
 ::-webkit-scrollbar-track-piece {
-  background-color: #f8f8f8;
+    background-color: #f8f8f8;
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-  background-color: #222;
+    width: 7px;
+    height: 7px;
+    background-color: #222;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
-  background-clip: padding-box;
-  min-height: 28px;
+    background-color: #888;
+    background-clip: padding-box;
+    min-height: 28px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #666;
+    background-color: #666;
 }
 
 ul,
 li,
 ol {
-  list-style: none;
+    list-style: none;
 }
 
 /* 防止布局被撑开 */
 
 .overflow-hidden {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 /* 超出省略显示 */
 
 .ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* 下划线动效 */
 .underline {
-  position: relative;
+    position: relative;
 }
 
 .underline::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 1px;
-  /* background: rgba(68,68,68,.1); */
-  background-color: #ffffff;
-  transition: transform 0.5s;
-  transform: scaleX(0);
-  transform-origin: 100% 0;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    /* background: rgba(68,68,68,.1); */
+    background-color: #ffffff;
+    transition: transform 0.5s;
+    transform: scaleX(0);
+    transform-origin: 100% 0;
 }
 
 .underline:hover::before {
-  transform: scaleX(1);
-  transform-origin: 0 0;
+    transform: scaleX(1);
+    transform-origin: 0 0;
 }
 
 .mt5 {
-  margin-top: 5px;
+    margin-top: 5px;
 }
 
 .select-description {
-  line-height: 24px;
-  margin: 0;
-  color: #d9d9d9;
-  font-size: 12px;
-  display: inline-block;
+    line-height: 24px;
+    margin: 0;
+    color: #d9d9d9;
+    font-size: 12px;
+    display: inline-block;
 }
 
 .handle-btn {
-  padding: 5px 8px;
-  cursor: pointer;
-  display: inline-block;
+    padding: 5px 8px;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .handle-btn:hover {
-  color: #1890ff;
+    color: #1890ff;
 }
 
 .fl {
-  float: left;
+    float: left;
 }
 
 .fr {
-  float: right;
+    float: right;
 }
 
 .mr10 {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .mt20 {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .mr20 {
-  margin-right: 20px;
+    margin-right: 20px;
 }
 
 .mb20 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .ml20 {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .por {
-  position: relative;
+    position: relative;
 }
 
 .pr5 {
-  padding-right: 5px;
+    padding-right: 5px;
 }
 
 .pr10 {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 
 .pt20 {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .tac {
-  text-align: center;
+    text-align: center;
 }
 
 .tar {
-  text-align: right;
+    text-align: right;
 }
 
 .fsz18 {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 .fsz14 {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .mt10 {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .display-none {
-  display: none;
+    display: none;
 }
 
 /* 遮罩 */
 .img-mask {
-  position: relative;
+    position: relative;
 }
 
 .img-mask::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  opacity: 0.35;
-  background-attachment: fixed;
-  background-image: url(../assets/images/grid.png);
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    opacity: 0.35;
+    background-attachment: fixed;
+    background-image: url(../assets/images/grid.png);
 }
 
 /* 清除浮动 */
 .clearfix:after {
-  content: ' ';
-  display: block;
-  line-height: 0;
-  height: 0;
-  visibility: hidden;
-  clear: both;
+    content: " ";
+    display: block;
+    line-height: 0;
+    height: 0;
+    visibility: hidden;
+    clear: both;
 }
 
 .pagination {
-  cursor: pointer;
-  padding: 10px;
-  margin: 20px 0 0;
-  font-size: 14px;
-  text-align: center;
-  background-color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    margin: 20px 0 0;
+    font-size: 14px;
+    text-align: center;
+    background-color: #fff;
 
-  &:hover {
-    background-color: rgba(196, 196, 196, 0.5);
-  }
+    &:hover {
+        background-color: rgba(196, 196, 196, 0.5);
+    }
 
-  &.disabled {
-    background-color: #e1e1e1;
-    cursor: not-allowed;
-  }
+    &.disabled {
+        background-color: #e1e1e1;
+        cursor: not-allowed;
+    }
 }
 
 .ant-table table {
-  text-align: center !important;
+    text-align: center !important;
 }
 
 .ant-table-thead > tr > th {
-  text-align: center !important;
+    text-align: center !important;
 }
 
 .red {
-  color: red;
+    color: red;
 }
 
 .blue {
-  color: #1890ff;
+    color: #1890ff;
 }
 
 .table-fixed {
-  table-layout: fixed;
+    table-layout: fixed;
 }
 
 .table-fixed table {
-  table-layout: fixed;
+    table-layout: fixed;
 }
 
 .fs12 {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .ant-modal-close-x {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

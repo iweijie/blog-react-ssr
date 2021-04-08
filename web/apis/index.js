@@ -1,4 +1,4 @@
-import fetch from 'dva/fetch';
+import fetch from 'isomorphic-fetch';
 
 import map from 'lodash/map';
 import merge from 'lodash/merge';
