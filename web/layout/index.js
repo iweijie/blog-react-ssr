@@ -1,6 +1,7 @@
 import React from "react";
 import "@/assets/common.less";
 import "./index.less";
+import isEmpty from "lodash/isEmpty";
 import { Link } from "react-router-dom";
 import serialize from "serialize-javascript";
 
@@ -15,13 +16,10 @@ const Layout = (props) => {
     if (__isBrowser__) {
         return commonNode(props);
     } else {
-
-
         const { serverData, req } = props.layoutData;
         const { injectCss, injectScript } = props.layoutData.app.config;
 
-        
-        console.log('iweijie:', JSON.stringify(serverData))
+        console.log("iweijie:", JSON.stringify(serverData));
 
         const chunkName = req ? req.url.split("/")[1] : "";
         return (
@@ -49,7 +47,7 @@ const Layout = (props) => {
                 </head>
                 <body>
                     <div id="app">{commonNode(props)}</div>
-                    {serverData && (
+                    {!isEmpty(serverData) && (
                         <script
                             dangerouslySetInnerHTML={{
                                 __html: `window.__USE_SSR__=true; window.__INITIAL_DATA__ =${serialize(

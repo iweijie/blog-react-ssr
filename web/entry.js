@@ -67,16 +67,19 @@ const clientRender = async () => {
 };
 
 const serverRender = async (ctx) => {
-    const { store } = createStore();
+    const { store, reducers } = createStore();
 
     ctx.store = store;
+    ctx._reducers = reducers;
 
     // 服务端渲染 根据ctx.path获取请求的具体组件，调用getInitialProps并渲染
     const ActiveComponent = getComponent(Routes, ctx.path)();
-    const serverData = ActiveComponent.getInitialProps
+    ActiveComponent.getInitialProps
         ? await ActiveComponent.getInitialProps(ctx)
         : {};
     const Layout = ActiveComponent.Layout || defaultLayout;
+    const serverData = undefined;
+    //  {} || store.getState();
     ctx.serverData = serverData;
     return (
         <Provider store={store}>

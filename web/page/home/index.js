@@ -195,7 +195,7 @@ class Home extends Component {
 
 Home.getInitialProps = async (ctx) => {
     const id = __isBrowser__ ? ctx.match.params.id : ctx.params.id;
-    const { store } = ctx;
+    const { store, _reducers } = ctx;
 
     const { dispatch, getState } = store;
     const { article, home, common } = getState();
@@ -204,8 +204,12 @@ Home.getInitialProps = async (ctx) => {
     const { tagsList, articleList } = article;
     const { page, pageSize, total, currentTag } = articleList;
 
-    const requestList = [];
+    const payload = { page: 1, pageSize: 10 };
 
+    const requestList = [
+        // _reducers.article.getArticleList({ page: 1, pageSize: 10 }),
+    ];
+    debugger
     requestList.push(
         dispatch({
             type: "article/getArticleList",
@@ -213,32 +217,30 @@ Home.getInitialProps = async (ctx) => {
         })
     );
 
-    requestList.push(
-        dispatch({
-            type: "article/getTagList",
-        })
-    );
+    // requestList.push(
+    //     dispatch({
+    //         type: "article/getTagList",
+    //     })
+    // );
 
-    requestList.push(
-        dispatch({
-            type: "home/getBgImageList",
-        })
-    );
+    // requestList.push(
+    //     dispatch({
+    //         type: "home/getBgImageList",
+    //     })
+    // );
 
-    requestList.push(
-        dispatch({
-            type: "home/getRecommendArticl",
-        })
-    );
+    // requestList.push(
+    //     dispatch({
+    //         type: "home/getRecommendArticl",
+    //     })
+    // );
 
-    requestList.push(
-        dispatch({
-            type: "home/getSelftalkingList",
-        })
-    );
+    // requestList.push(
+    //     dispatch({
+    //         type: "home/getSelftalkingList",
+    //     })
+    // );
     await Promise.all(requestList);
-
-    console.log(JSON.stringify(getState()));
 };
 
 const mapStateToProps = (store) => {

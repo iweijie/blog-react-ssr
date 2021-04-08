@@ -27,7 +27,7 @@ export default {
 
     effects: {
         /**  文章  */
-        async getArticleDetails({ payload }, { call, push }) {
+        async getArticleDetails({ call, push }, payload) {
             const data = await apis.getArticleDetails(payload);
             const result = get(data, "result", {});
             const { html, nav } = parseArticleDetail(result.content || "");
@@ -36,8 +36,7 @@ export default {
             push({ type: "article/setArticleDetials", payload: result });
         },
 
-        async getArticleList({ state, call, select, put }, payload) {
-            console.log(JSON.stringify(payload));
+        async getArticleList({ state, push }, payload) {
             const oldResult = state.articleList.result;
             const data = await apis.getArticleList(payload);
             const { page, pageSize, tag } = payload;
@@ -54,7 +53,7 @@ export default {
             });
 
             result = page === 1 ? result : [...oldResult, ...result];
-
+            debugger
             push({
                 type: "article/setArticleList",
                 payload: {
