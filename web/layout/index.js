@@ -1,7 +1,9 @@
 import React from "react";
-import "./index.less";
+import "antd/lib/style/css";
+import "../style/basics.less";
 import isEmpty from "lodash/isEmpty";
 import serialize from "serialize-javascript";
+import { __INITIAL_DATA__ } from "../createStore";
 
 const commonNode = (props) =>
     // 为了同时兼容ssr/csr请保留此判断，如果你的layout没有内容请使用 props.children ? { props.children } : ''
@@ -16,8 +18,6 @@ const Layout = (props) => {
     } else {
         const { serverData, req } = props.layoutData;
         const { injectCss, injectScript } = props.layoutData.app.config;
-
-        console.log("iweijie:", JSON.stringify(serverData));
 
         const chunkName = req ? req.url.split("/")[1] : "";
         return (
@@ -48,7 +48,7 @@ const Layout = (props) => {
                     {!isEmpty(serverData) && (
                         <script
                             dangerouslySetInnerHTML={{
-                                __html: `window.__USE_SSR__=true; window.__INITIAL_DATA__ =${serialize(
+                                __html: `window.__USE_SSR__=true; window.${__INITIAL_DATA__} =${serialize(
                                     serverData
                                 )}`,
                             }}

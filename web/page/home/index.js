@@ -48,9 +48,7 @@ class Home extends Component {
             },
         }).then((data) => {
             // 回到顶部
-            setTimeout(() => {
-                
-            });
+            setTimeout(() => {});
         });
     };
 
@@ -61,8 +59,6 @@ class Home extends Component {
 
     setLabelFixed = () => {
         if (!this.label) return;
-
-        console.log("---------");
 
         const top = this.getTopPoint(this.label);
         const left = this.getLeftPoint(this.label);
@@ -158,9 +154,6 @@ class Home extends Component {
         } = articleList;
 
         const isFixed = browserInfo.height - homeScrollToTop <= 56;
-        const labelIsFixed = labelTop <= homeScrollToTop + 56 + 20;
-
-        console.log(isFixed, "-------", browserInfo.height, homeScrollToTop);
 
         return (
             <div className="home">
@@ -196,9 +189,7 @@ class Home extends Component {
                             <div
                                 id="label"
                                 ref={(ref) => (this.label = ref)}
-                                className={`unification-title  mb20 ${
-                                    labelIsFixed ? "label-is-fixed" : ""
-                                }`}
+                                className={`unification-title  mb20 `}
                                 style={{ left: labelLeft }}
                             >
                                 <p>
@@ -230,50 +221,51 @@ class Home extends Component {
 
 Home.getInitialProps = async (ctx) => {
     const { id, page } = __isBrowser__ ? ctx.match.params : ctx.params;
-    const { store, _reducers } = ctx;
+    const { store } = ctx;
 
-    const { dispatch, getState } = store;
-    const { article, home, common } = getState();
+    const cookies = get(ctx, "req.headers.cookie", "");
 
-    const { homeBgList, selftalking, recommendList } = home;
-    const { tagsList, articleList } = article;
-    const { pageSize, total, currentTag } = articleList;
+    const { dispatch } = store;
 
     const payload = { page, pageSize: 10, id };
 
-    const requestList = [
-        // _reducers.article.getArticleList({ page: 1, pageSize: 10 }),
-    ];
+    const requestList = [];
+
     requestList.push(
         dispatch({
             type: "article/getArticleList",
             payload,
+            cookies,
         })
     );
 
-    // requestList.push(
-    //     dispatch({
-    //         type: "article/getTagList",
-    //     })
-    // );
+    requestList.push(
+        dispatch({
+            type: "article/getTagList",
+            cookies,
+        })
+    );
 
-    // requestList.push(
-    //     dispatch({
-    //         type: "home/getBgImageList",
-    //     })
-    // );
+    requestList.push(
+        dispatch({
+            type: "home/getBgImageList",
+            cookies,
+        })
+    );
 
-    // requestList.push(
-    //     dispatch({
-    //         type: "home/getRecommendArticl",
-    //     })
-    // );
+    requestList.push(
+        dispatch({
+            type: "home/getRecommendArticl",
+            cookies,
+        })
+    );
 
-    // requestList.push(
-    //     dispatch({
-    //         type: "home/getSelftalkingList",
-    //     })
-    // );
+    requestList.push(
+        dispatch({
+            type: "home/getSelftalkingList",
+            cookies,
+        })
+    );
     await Promise.all(requestList);
 };
 

@@ -1,18 +1,13 @@
 import React from "react";
-// import topNav from "../comom/topNav/index";
+import TopNav from "../comom/topNav/index";
 import { Row, Col } from "antd";
 import logo from "../../assets/images/logo.jpg";
 import "./css.less";
 
 export default () => {
-
-  const handle = ()=>{
-    return    console.log(1)
-  }
-
     return (
         <div>
-            {/* <topNav isFixed /> */}
+            <TopNav isFixed />
             <div className="about-wrap">
                 <div className="about-wrap-top">
                     <div className="user-via tac">
@@ -28,7 +23,7 @@ export default () => {
                             关于我：
                         </Col>
                         <Col span={16}></Col>
-                        <Col className="" offset={9} span={19} onClick={handle}>
+                        <Col className="" offset={9} span={19}>
                             <div className="mt6">
                                 Web前端开发,慢慢学习后台中
                             </div>

@@ -17,50 +17,47 @@ export default {
     },
 
     effects: {
-        *getBgImageList({ payload }, { call, put }) {
-            // const data = yield call(apis.getBgImageList, payload);
-            const data = [
-                {
-                    fullUrl:
-                        "http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl",
-                },
-            ];
-            // yield put({ type: 'setHomeBgList', payload: get(data, 'result', []) });
-        },
-        *getRecommendArticl({ payload }, { call, put }) {
-            const data = yield call(apis.getRecommendArticl, payload);
-            yield put({
-                type: "setRecommendList",
+        async getBgImageList({ call, put }, payload) {
+            const data = await apis.getBgImageList(payload);
+            put({
+                type: "home/homeBgList",
                 payload: get(data, "result", []),
             });
         },
-        *getSelftalkingList({ payload }, { call, put }) {
-            const data = yield call(apis.getSelftalkingList, {
+        async getRecommendArticl({ call, put }, payload) {
+            const data = await apis.getRecommendArticl(payload);
+            put({
+                type: "home/recommendList",
+                payload: get(data, "result", []),
+            });
+        },
+        async getSelftalkingList({ call, put }, payload) {
+            const data = await apis.getSelftalkingList({
                 page: 1,
                 pageSize: 999,
             });
-            yield put({
-                type: "setSelftalkingList",
+            put({
+                type: "home/selftalking",
                 payload: get(data, "result", []),
             });
         },
-        *addSelftalking({ payload }, { call, put }) {
-            yield call(apis.addSelftalking, payload);
-            yield put({ type: "getSelftalkingList" });
+        async addSelftalking({ call, put }, payload) {
+            await apis.addSelftalking(payload);
+            await call({ type: "home/getSelftalkingList" });
         },
     },
 
     reducers: {
-        setHomeScrollTopAction(state, payload) {
+        setHomeScrollTopAction({ state }, payload) {
             return { ...state, homeScrollToTop: payload };
         },
-        setHomeBgList(state, payload) {
+        setHomeBgList({ state }, payload) {
             return { ...state, homeBgList: payload };
         },
-        setRecommendList(state, payload) {
+        setRecommendList({ state }, payload) {
             return { ...state, recommendList: payload };
         },
-        setSelftalkingList(state, payload) {
+        setSelftalkingList({ state }, payload) {
             return { ...state, selftalking: payload };
         },
     },

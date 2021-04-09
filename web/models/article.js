@@ -70,10 +70,10 @@ export default {
             yield call(apis.addArticle, payload);
         },
         /**  标签  */
-        *getTagList({ payload }, { call, put }) {
-            const data = yield call(apis.getTagList, payload);
-            yield put({
-                type: "setTagsList",
+        async getTagList({ call, put }, payload) {
+            const data = await apis.getTagList(payload);
+            put({
+                type: "article/tagsList",
                 payload: get(data, "result", []),
             });
         },
@@ -87,18 +87,17 @@ export default {
     },
 
     reducers: {
-        setTagsList(state, action) {
-            return { ...state, tagsList: action.payload };
+        setTagsList(state, payload) {
+            return { ...state, tagsList: payload };
         },
-        setTagsDetailList(state, action) {
-            return { ...state, tagsDetailList: action.payload };
+        setTagsDetailList(state, payload) {
+            return { ...state, tagsDetailList: payload };
         },
-        setArticleDetials(state, action) {
-            return { ...state, articleDetials: action.payload };
+        setArticleDetials(state, payload) {
+            return { ...state, articleDetials: payload };
         },
-        setArticleList(state, action) {
-            // const { payload, isAppend } = action
-            return { ...state, articleList: action.payload };
+        setArticleList(state, payload) {
+            return { ...state, articleList: payload };
         },
         setInitArticleList(state) {
             return {

@@ -2,7 +2,7 @@
   "name": "egg-ssr-loadable",
   "version": "2.0.0",
   "dependencies": {
-    "antd": "3.8",
+    "antd": "^3.26.19",
     "classnames": "^2.3.1",
     "egg": "^2.21.0",
     "egg-scripts": "^2.11.0",
@@ -16,6 +16,7 @@
     "react-redux": "^7.2.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.0",
+    "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "serialize-javascript": "^2.1.2",
     "ykfe-utils": "^3.0.0"

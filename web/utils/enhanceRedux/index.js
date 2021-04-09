@@ -14,12 +14,13 @@ import {
 } from "./namespace";
 import { checkModel, checkType, isSame } from "./check";
 import { createStore, applyMiddleware } from "redux";
+import merge from "lodash/merge";
 
 function enhanceRedux(models = [], options = {}) {
     let {
         enhancer = [],
         reducer,
-        states = {},
+        states: initStates,
         separator = NAMESPACE_SEP,
     } = options;
     const REGISTERED_NAMESPACE = {};
@@ -33,6 +34,7 @@ function enhanceRedux(models = [], options = {}) {
     //   redux 原生 replaceReducer
     // let replaceReducer;
 
+    let states = {};
     /**
      * 自定义 dispatch 函数； 用于分发拦截
      * @param {object} action
@@ -40,14 +42,13 @@ function enhanceRedux(models = [], options = {}) {
 
     function dispatch(action) {
         if (isObject(action) && action.type) {
-            let { type, payload } = action;
-            console.log(JSON.stringify(action));
+            let { type, payload, ...other } = action;
             try {
                 const [namespace, key] = type.split(separator);
                 const callHandle = decorateReducers[namespace][key];
 
                 if (callHandle && typeof callHandle === "function")
-                    return callHandle(payload);
+                    return callHandle(payload, other);
 
                 return reduxDispatch(action);
             } catch (err) {
@@ -64,7 +65,7 @@ function enhanceRedux(models = [], options = {}) {
      */
 
     function decorateReducer(namespace, key, reducerHandle, type) {
-        const anonymous = (payload) => {
+        const anonymous = (payload, other) => {
             if (!isProduction) {
                 print(`${type}--  ${namespace}${separator}${key}`);
             }
@@ -74,7 +75,8 @@ function enhanceRedux(models = [], options = {}) {
                     state: state[namespace],
                     rootState: state,
                 },
-                payload
+                payload,
+                other
             );
             reduxDispatch({
                 type: namespace,
@@ -92,7 +94,7 @@ function enhanceRedux(models = [], options = {}) {
      */
 
     function decorateEffect(namespace, key, effect, type) {
-        const anonymous = (payload) => {
+        const anonymous = (payload, other) => {
             if (!isProduction) {
                 print(`${type} --- ${namespace}${separator}${key}`);
             }
@@ -120,7 +122,8 @@ function enhanceRedux(models = [], options = {}) {
                     state: state[namespace],
                     rootState: state,
                 },
-                payload
+                payload,
+                other
             );
         };
         anonymous[IS_ENHANCE_REDUX_REDUCER] = type;
@@ -147,7 +150,6 @@ function enhanceRedux(models = [], options = {}) {
             checkModel(model, REGISTERED_NAMESPACE);
         }
         const { namespace, state = {}, reducers = {}, effects = {} } = model;
-
         // const states = getState();
         // 初始化state 赋值
         states[namespace] = state;
@@ -266,6 +268,7 @@ function enhanceRedux(models = [], options = {}) {
     models = models.filter(isObject);
 
     models.forEach(registerModel);
+    states = merge(states, initStates);
 
     store = createStore(
         reducer || defaultReduce,

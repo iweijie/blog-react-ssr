@@ -4,24 +4,6 @@ const React = require("react");
 module.exports = {
     type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
     routes: [
-        // {
-        //     path: "/",
-        //     exact: true,
-        //     controller: "page",
-        //     handler: "index",
-        //     Component: () =>
-        //         __isBrowser__
-        //             ? require("ykfe-utils").Loadable({
-        //                   loader: () =>
-        //                       import(
-        //                           /* webpackChunkName: "page" */ "@/page/home"
-        //                       ),
-        //                   loading: function Loading() {
-        //                       return React.createElement("div");
-        //                   },
-        //               })
-        //             : require("@/page/home").default,
-        // },
         {
             path: "/page/:page",
             exact: true,
@@ -41,6 +23,24 @@ module.exports = {
             handler: "index",
         },
         {
+            path: "/article/detail/:id",
+            exact: true,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "article" */ "@/page/articleDetail"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/articleDetail").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
             path: "/about",
             exact: true,
             Component: () =>
@@ -56,6 +56,25 @@ module.exports = {
                           },
                       })
                     : require("@/page/about").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/login",
+            exact: true,
+            Component: () =>
+                // require('@/page/login').default,
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "login" */ "@/page/login"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/login").default,
             controller: "page",
             handler: "index",
         },

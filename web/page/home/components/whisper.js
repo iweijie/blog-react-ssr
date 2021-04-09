@@ -63,7 +63,7 @@ class Whisper extends PureComponent {
                     onMouseEnter={() => this.MouseEnterHandle(str)}
                 >
                     {list && list.length ? (
-                        <Carousel dots={false} ref={str} dotPosition="left">
+                        <Carousel  ref={str} dotPosition="left">
                             {list.map((val) => (
                                 <div key={val._id} className={"whisper"}>
                                     {val.content}

@@ -24,7 +24,6 @@ export function checkType({ state, action, separator }) {
   const { type } = action;
   if (isReduxPrimitiveType(type)) return;
   const namespaceList = type.split(separator);
-  console.log("namespaceList:",namespaceList,namespaceList)
   warning(state[namespaceList[0]], `namespace -- ${namespaceList[0]} 未注册`);
 }
 

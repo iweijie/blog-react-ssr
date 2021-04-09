@@ -14,7 +14,7 @@ import "./css.less";
 const json = [
     {
         name: "首页",
-        url: "/",
+        url: "/page/1",
         icon: "iconhome",
         state: 1,
     },
