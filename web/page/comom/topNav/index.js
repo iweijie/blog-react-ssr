@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Icon } from "antd";
+import classnames from "classnames";
+import Icon from "../../../components/Icon";
 
 import "./css.less";
 /**
@@ -14,7 +15,7 @@ const json = [
     {
         name: "首页",
         url: "/",
-        icon: "home",
+        icon: "iconhome",
         state: 1,
     },
     // {
@@ -26,19 +27,19 @@ const json = [
     {
         name: "设置",
         url: "/set/selftalking",
-        icon: "setting",
+        icon: "iconshezhi",
         state: 2,
     },
     {
         name: "关于",
         url: "/about",
-        icon: "user",
+        icon: "iconcaidaniconwodehui",
         state: 1,
     },
     {
         name: "登入",
         url: "/login",
-        icon: "login",
+        icon: "iconlogin",
         state: 3,
     },
 ];
@@ -62,17 +63,15 @@ class TopNav extends React.PureComponent {
         let className = isFixed ? "top-nav-fixed top-nav" : "top-nav";
         let json = this.getCurrentJson(userInfo);
         return (
-            <nav>
+            <nav id="nav">
                 <ul className={className}>
                     {isFixed ? <h2 className="name">weijie</h2> : null}
                     {json.map((v) => {
                         return (
                             <li key={v.url}>
                                 <Link to={v.url}>
-                                    {" "}
                                     <Icon
                                         type={v.icon}
-                                        theme="outlined"
                                         style={{ marginRight: "5px" }}
                                     />
                                     {v.name}
@@ -85,7 +84,6 @@ class TopNav extends React.PureComponent {
         );
     }
 }
-// export default TopNav
 
 const mapStateToProps = (store, own) => {
     return {

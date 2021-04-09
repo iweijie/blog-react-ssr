@@ -12,7 +12,6 @@ export default {
             pageSize: 10,
             result: [],
             total: 0,
-            hasMore: true,
             loading: false,
             currentTag: "",
         },
@@ -27,19 +26,21 @@ export default {
 
     effects: {
         /**  文章  */
-        async getArticleDetails({ call, push }, payload) {
+        async getArticleDetails({ call, put }, payload) {
             const data = await apis.getArticleDetails(payload);
             const result = get(data, "result", {});
             const { html, nav } = parseArticleDetail(result.content || "");
             result.__html = html;
             result.__nav = nav;
-            push({ type: "article/setArticleDetials", payload: result });
+            put({ type: "article/articleDetials", payload: result });
         },
 
-        async getArticleList({ state, push }, payload) {
-            const oldResult = state.articleList.result;
+        async getArticleList({ state, put }, payload) {
             const data = await apis.getArticleList(payload);
-            const { page, pageSize, tag } = payload;
+            let { page, pageSize, tag } = payload;
+
+            page = Number(page);
+
             let { total = 0, result = [] } = data;
             result = result.map((v) => {
                 const bg = getRandomBgColor();
@@ -52,17 +53,14 @@ export default {
                 return v;
             });
 
-            result = page === 1 ? result : [...oldResult, ...result];
-            debugger
-            push({
-                type: "article/setArticleList",
+            put({
+                type: "article/articleList",
                 payload: {
                     currentTag: tag ? decodeURIComponent(tag) : "",
                     result,
                     page,
                     pageSize,
                     total,
-                    hasMore: page * pageSize < total,
                     loading: false,
                 },
             });
@@ -108,7 +106,6 @@ export default {
                 pageSize: 10,
                 result: [],
                 total: 0,
-                hasMore: true,
             };
         },
     },

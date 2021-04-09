@@ -1,8 +1,6 @@
 import React from "react";
-import "@/assets/common.less";
 import "./index.less";
 import isEmpty from "lodash/isEmpty";
-import { Link } from "react-router-dom";
 import serialize from "serialize-javascript";
 
 const commonNode = (props) =>

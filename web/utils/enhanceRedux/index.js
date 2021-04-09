@@ -39,19 +39,20 @@ function enhanceRedux(models = [], options = {}) {
      */
 
     function dispatch(action) {
-        // 自定义 call 函数
-        if (action && action[IS_ENHANCE_REDUX_CALL]) {
+        if (isObject(action) && action.type) {
             let { type, payload } = action;
+            console.log(JSON.stringify(action));
             try {
                 const [namespace, key] = type.split(separator);
                 const callHandle = decorateReducers[namespace][key];
-                return callHandle(payload);
+
+                if (callHandle && typeof callHandle === "function")
+                    return callHandle(payload);
+
+                return reduxDispatch(action);
             } catch (err) {
                 console.error(err);
             }
-            // 正常 dispatch 事件分发
-        } else if (isObject(action) && action.type) {
-            return reduxDispatch(action);
         } else {
             // 其他； 如：bindActionCreators 包裹后的方法
             return action;
@@ -63,7 +64,7 @@ function enhanceRedux(models = [], options = {}) {
      */
 
     function decorateReducer(namespace, key, reducerHandle, type) {
-        const anonymous = (...payload) => {
+        const anonymous = (payload) => {
             if (!isProduction) {
                 print(`${type}--  ${namespace}${separator}${key}`);
             }
@@ -73,7 +74,7 @@ function enhanceRedux(models = [], options = {}) {
                     state: state[namespace],
                     rootState: state,
                 },
-                ...payload
+                payload
             );
             reduxDispatch({
                 type: namespace,
@@ -99,7 +100,7 @@ function enhanceRedux(models = [], options = {}) {
             return effect(
                 {
                     call: call(namespace, key),
-                    push: push(namespace, key),
+                    put: put(namespace, key),
                     getState: (namespace) => {
                         const state = getState();
                         if (!namespace) return state;
@@ -220,12 +221,8 @@ function enhanceRedux(models = [], options = {}) {
         };
     }
     // origin, oneType
-    function push() {
-        return (namespace, payload) =>
-            dispatch({
-                type: namespace,
-                payload,
-            });
+    function put(namespace, key) {
+        return (action) => reduxDispatch(action);
     }
 
     // react-redux  connect  第二个参数传对象时，会再被dispatch包裹一次

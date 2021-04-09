@@ -4,21 +4,42 @@ const React = require("react");
 module.exports = {
     type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
     routes: [
+        // {
+        //     path: "/",
+        //     exact: true,
+        //     controller: "page",
+        //     handler: "index",
+        //     Component: () =>
+        //         __isBrowser__
+        //             ? require("ykfe-utils").Loadable({
+        //                   loader: () =>
+        //                       import(
+        //                           /* webpackChunkName: "page" */ "@/page/home"
+        //                       ),
+        //                   loading: function Loading() {
+        //                       return React.createElement("div");
+        //                   },
+        //               })
+        //             : require("@/page/home").default,
+        // },
         {
-            path: '/',
+            path: "/page/:page",
             exact: true,
             Component: () =>
-              __isBrowser__
-                ? require('ykfe-utils').Loadable({
-                    loader: () => import(/* webpackChunkName: "tags" */ '@/page/home'),
-                    loading: function Loading() {
-                      return React.createElement('div');
-                    },
-                  })
-                : require('@/page/home').default,
-            controller: 'page',
-            handler: 'index',
-          },
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "page" */ "@/page/home"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/home").default,
+            controller: "page",
+            handler: "index",
+        },
         {
             path: "/about",
             exact: true,

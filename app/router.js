@@ -1,10 +1,15 @@
-'use strict'
+"use strict";
 
-const config = require('../config/config.ssr')
+const config = require("../config/config.ssr");
 
-module.exports = app => {
-  const { router, controller } = app
-  config.routes.map(route => {
-    router.get(`${route.path}`, controller[route.controller][route.handler])
-  })
-}
+module.exports = (app) => {
+    const { router, controller } = app;
+    config.routes.map((route) => {
+        router.get(
+            `${route.path}`,
+            controller[route.controller][route.handler]
+        );
+    });
+
+    router.redirect("/", "/page/1", 302);
+};
