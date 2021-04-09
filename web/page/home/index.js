@@ -223,8 +223,6 @@ Home.getInitialProps = async (ctx) => {
     const { id, page } = __isBrowser__ ? ctx.match.params : ctx.params;
     const { store } = ctx;
 
-    const cookies = get(ctx, "req.headers.cookie", "");
-
     const { dispatch } = store;
 
     const payload = { page, pageSize: 10, id };
@@ -235,35 +233,35 @@ Home.getInitialProps = async (ctx) => {
         dispatch({
             type: "article/getArticleList",
             payload,
-            cookies,
+            ctx,
         })
     );
 
     requestList.push(
         dispatch({
             type: "article/getTagList",
-            cookies,
+            ctx,
         })
     );
 
     requestList.push(
         dispatch({
             type: "home/getBgImageList",
-            cookies,
+            ctx,
         })
     );
 
     requestList.push(
         dispatch({
             type: "home/getRecommendArticl",
-            cookies,
+            ctx,
         })
     );
 
     requestList.push(
         dispatch({
             type: "home/getSelftalkingList",
-            cookies,
+            ctx,
         })
     );
     await Promise.all(requestList);

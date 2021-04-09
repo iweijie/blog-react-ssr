@@ -17,33 +17,36 @@ export default {
     },
 
     effects: {
-        async getBgImageList({ call, put }, payload) {
-            const data = await apis.getBgImageList(payload);
+        async getBgImageList({ call, put }, payload, other) {
+            const data = await apis.getBgImageList(payload, other);
             put({
                 type: "home/homeBgList",
                 payload: get(data, "result", []),
             });
         },
-        async getRecommendArticl({ call, put }, payload) {
-            const data = await apis.getRecommendArticl(payload);
+        async getRecommendArticl({ call, put }, payload, other) {
+            const data = await apis.getRecommendArticl(payload, other);
             put({
                 type: "home/recommendList",
                 payload: get(data, "result", []),
             });
         },
-        async getSelftalkingList({ call, put }, payload) {
-            const data = await apis.getSelftalkingList({
-                page: 1,
-                pageSize: 999,
-            });
+        async getSelftalkingList({ call, put }, payload, other) {
+            const data = await apis.getSelftalkingList(
+                {
+                    page: 1,
+                    pageSize: 999,
+                },
+                other
+            );
             put({
                 type: "home/selftalking",
                 payload: get(data, "result", []),
             });
         },
-        async addSelftalking({ call, put }, payload) {
-            await apis.addSelftalking(payload);
-            await call({ type: "home/getSelftalkingList" });
+        async addSelftalking({ call, put }, payload, other) {
+            await apis.addSelftalking(payload, other);
+            await call({ type: "home/getSelftalkingList", ...other });
         },
     },
 
