@@ -48,7 +48,6 @@ class ArticleDetail extends Component {
       <div>
         <TopNav isFixed></TopNav>
         <Helmet>
-          <meta charSet="utf-8" />
           <title>{data.title}</title>
           <meta name="keywords" content={data.description} />
         </Helmet>
