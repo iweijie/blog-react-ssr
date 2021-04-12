@@ -277,18 +277,12 @@ Home.getInitialProps = async (ctx) => {
         );
     }
 
-    const hasHomeBg = size(get(home, "homeBgList")) > 1;
+    // const hasHomeBg = size(get(home, "homeBgList")) > 1;
 
-    if (!hasHomeBg) {
-        requestList.push(
-            apis.getBgImageList(empty, other).then((data) => {
-                dispatch({
-                    type: "home/homeBgList",
-                    payload: get(data, "result", []),
-                });
-            })
-        );
-    }
+    // if (!hasHomeBg) {
+    //     requestList.push(
+    //     );
+    // }
 
     if (isEmpty(get(home, "recommendList"))) {
         requestList.push(

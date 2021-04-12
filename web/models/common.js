@@ -24,8 +24,8 @@ export default {
 
     effects: {
         async getUserInfo({ call, put }) {
-            // eslint-disable-line
             const data = await apis.getUserInfo();
+
             put({
                 type: "common/userInfo",
                 payload: {

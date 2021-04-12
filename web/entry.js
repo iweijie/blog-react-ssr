@@ -8,6 +8,8 @@ import {
     getComponent,
     preloadComponent,
 } from "ykfe-utils";
+import { get } from "lodash";
+import apis from "./apis/index";
 import { __INITIAL_DATA__ } from "./createStore";
 import config from "../config/config.ssr";
 import createStore from "./createStore";
@@ -75,7 +77,22 @@ const serverRender = async (ctx) => {
     ActiveComponent.getInitialProps
         ? await Promise.all([
               ActiveComponent.getInitialProps(ctx),
-              store.dispatch({}),
+              apis.getUserInfo(undefined, { ctx }).then((data) => {
+                  store.dispatch({
+                      type: "common/userInfo",
+                      payload: {
+                          isLogin: !!data._id,
+                          userId: data._id || "",
+                          userName: data.userName || "",
+                      },
+                  });
+              }),
+              apis.getBgImageList(undefined, { ctx }).then((data) => {
+                  store.dispatch({
+                      type: "home/homeBgList",
+                      payload: get(data, "result", []),
+                  });
+              }),
           ])
         : {};
     const Layout = ActiveComponent.Layout || defaultLayout;
