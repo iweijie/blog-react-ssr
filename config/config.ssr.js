@@ -1,24 +1,31 @@
 const resolvePath = (path) => require("path").resolve(process.cwd(), path);
 const React = require("react");
 
+const pageComponent = () =>
+    __isBrowser__
+        ? require("ykfe-utils").Loadable({
+              loader: () =>
+                  import(/* webpackChunkName: "page" */ "@/page/home"),
+              loading: function Loading() {
+                  return React.createElement("div");
+              },
+          })
+        : require("@/page/home").default;
+
 module.exports = {
     type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
     routes: [
         {
             path: "/page/:page",
             exact: true,
-            Component: () =>
-                __isBrowser__
-                    ? require("ykfe-utils").Loadable({
-                          loader: () =>
-                              import(
-                                  /* webpackChunkName: "page" */ "@/page/home"
-                              ),
-                          loading: function Loading() {
-                              return React.createElement("div");
-                          },
-                      })
-                    : require("@/page/home").default,
+            Component: pageComponent,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/tags/:id/:page",
+            exact: true,
+            Component: pageComponent,
             controller: "page",
             handler: "index",
         },
@@ -75,6 +82,103 @@ module.exports = {
                           },
                       })
                     : require("@/page/login").default,
+            controller: "page",
+            handler: "index",
+        },
+
+        {
+            path: "/set/article/add",
+            exact: true,
+            // Component: () => require('@/page/set/addArticle').default,
+
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "set" */ "@/page/set/addArticle"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/set/addArticle").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/set/article/edit/:id",
+            exact: true,
+            Component: () => require("@/page/set/addArticle").default,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "set" */ "@/page/set/addArticle"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/set/addArticle").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/set/selftalking",
+            exact: true,
+            // Component: () => require('@/page/set/selftalking').default,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "set" */ "@/page/set/selftalking"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/set/selftalking").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/set/tags",
+            exact: true,
+            // Component: () => require('@/page/set/tags').default,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "set" */ "@/page/set/tags"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/set/tags").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/set/upload",
+            exact: true,
+            // Component: () => require('@/page/set/upload').default,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "set" */ "@/page/set/upload"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/set/upload").default,
             controller: "page",
             handler: "index",
         },

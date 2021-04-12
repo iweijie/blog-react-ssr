@@ -24,15 +24,15 @@ export default {
                 payload: get(data, "result", []),
             });
         },
-        async getRecommendArticl({ call, put }, payload, other) {
-            const data = await apis.getRecommendArticl(payload, other);
+        async getRecommendArticle({ call, put }, payload, other) {
+            const data = await apis.getRecommendArticle(payload, other);
             put({
                 type: "home/recommendList",
                 payload: get(data, "result", []),
             });
         },
-        async getSelftalkingList({ call, put }, payload, other) {
-            const data = await apis.getSelftalkingList(
+        async getSelftalkList({ call, put }, payload, other) {
+            const data = await apis.getSelftalkList(
                 {
                     page: 1,
                     pageSize: 999,
@@ -46,7 +46,7 @@ export default {
         },
         async addSelftalking({ call, put }, payload, other) {
             await apis.addSelftalking(payload, other);
-            await call({ type: "home/getSelftalkingList", ...other });
+            await call({ type: "home/getSelftalkList", ...other });
         },
     },
 

@@ -3,6 +3,19 @@ import { getRandomBgColor } from "../utils/index";
 import parseArticleDetail from "../utils/parseArticleDetail";
 import get from "lodash/get";
 
+export const handleFormatList = (result) => {
+    return result.map((v) => {
+        const bg = getRandomBgColor();
+        // 背景色
+        // v._bg = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]})`
+        v._bg = `rgba(${bg.join(",")})`;
+        // 字体色
+        v._fc = "#fff";
+        // v._fc = isLight(bg) ? "#333" : "#fff"
+        return v;
+    });
+};
+
 export default {
     namespace: "article",
 
@@ -18,7 +31,6 @@ export default {
         articleDetials: {},
         tagsList: [],
         tagsDetailList: [],
-        recommendList: [],
         editArticle: {
             isAdd: false,
         },
@@ -42,17 +54,7 @@ export default {
             page = Number(page);
 
             let { total = 0, result = [] } = data;
-            result = result.map((v) => {
-                const bg = getRandomBgColor();
-                // 背景色
-                // v._bg = `rgba(${bg[0]},${bg[1]},${bg[2]},${bg[3]})`
-                v._bg = `rgba(${bg.join(",")})`;
-                // 字体色
-                v._fc = "#fff";
-                // v._fc = isLight(bg) ? "#333" : "#fff"
-                return v;
-            });
-
+            result = handleFormatList(result);
             put({
                 type: "article/articleList",
                 payload: {

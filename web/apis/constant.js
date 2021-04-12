@@ -23,7 +23,7 @@ export const apis = {
     method: 'post',
   },
   // 获取推荐文章列表
-  getRecommendArticl: {
+  getRecommendArticle: {
     url: '/api/article/recommend',
     method: 'post',
   },
@@ -67,7 +67,7 @@ export const apis = {
   },
 
   // 碎碎恋列表
-  getSelftalkingList: {
+  getSelftalkList: {
     url: '/api/selftalking/list',
     method: 'post',
   },

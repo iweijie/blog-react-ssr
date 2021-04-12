@@ -32,17 +32,25 @@ const clientRender = async () => {
                         const WrappedComponent = getWrappedComponent(
                             activeComponent
                         );
+
                         const Layout = WrappedComponent.Layout || defaultLayout;
+
                         return (
                             <Route
                                 exact={exact}
                                 key={path}
                                 path={path}
-                                render={() => (
-                                    <Layout>
-                                        <WrappedComponent store={store} />
-                                    </Layout>
-                                )}
+                                render={(props) => {
+                                    const { location } = props;
+                                    return (
+                                        <Layout>
+                                            <WrappedComponent
+                                                key={location.pathname}
+                                                store={store}
+                                            />
+                                        </Layout>
+                                    );
+                                }}
                             />
                         );
                     })}
@@ -66,11 +74,9 @@ const serverRender = async (ctx) => {
     const ActiveComponent = getComponent(Routes, ctx.path)();
     ActiveComponent.getInitialProps
         ? await Promise.all([
-            ActiveComponent.getInitialProps(ctx),
-            store.dispatch({
-                
-            })
-        ])
+              ActiveComponent.getInitialProps(ctx),
+              store.dispatch({}),
+          ])
         : {};
     const Layout = ActiveComponent.Layout || defaultLayout;
     const serverData = store.getState();

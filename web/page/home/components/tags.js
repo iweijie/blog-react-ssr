@@ -16,7 +16,7 @@ class Tags extends PureComponent {
               className={currentTag === v.tagCode ? "active" : ""}
               key={v.tagCode}
             >
-              <Link to={`/tags/${v.tagCode}`}>
+              <Link to={`/tags/${v.tagCode}/1`}>
                 {v.tagName} <span>[{v.count}]</span>
               </Link>
             </li>

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import throttle from "lodash/throttle";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
+import size from "lodash/size";
+import { handleFormatList } from "../../models/article";
 import { Link } from "react-router-dom";
 import { Pagination } from "antd";
 import { connect } from "react-redux";
@@ -34,22 +36,8 @@ class Home extends Component {
     }
 
     getArticleList = (page) => {
-        // isChangeTag
 
-        const { dispatch, articleList, match } = this.props;
-        const { result, total, pageSize } = articleList;
-        const id = get(match, "params.id");
-        dispatch({
-            type: "article/getArticleList",
-            payload: {
-                page,
-                pageSize,
-                tag: id,
-            },
-        }).then((data) => {
-            // 回到顶部
-            setTimeout(() => {});
-        });
+        setTimeout(() => {});
     };
 
     componentWillUnmount() {
@@ -108,25 +96,41 @@ class Home extends Component {
     };
 
     paginationItemRender = (index, type, reactDom) => {
-        if (type === "prev")
-            return (
-                <div className="pagination-item">
-                    <Icon type="iconicon-test7"></Icon>
-                </div>
-            );
-        if (type === "next")
-            return (
-                <div className="pagination-item">
-                    <Icon type="iconicon-test9"></Icon>
-                </div>
-            );
+        const { dispatch, articleList, match } = this.props;
+        const id = get(match, "params.id");
 
-        if (type === "page")
+        const page = get(articleList, "page");
+
+        if (type === "prev") {
+            const index = page - 1;
+
+            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
             return (
-                <div className="pagination-item">
-                    <Link to={`/page/${index}`}>{index}</Link>
+                <div className="pagination-item" title="上一页">
+                    <Link to={to}>{<Icon type="iconicon-test7"></Icon>}</Link>
                 </div>
             );
+        }
+
+        if (type === "next") {
+            const index = page + 1;
+
+            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
+            return (
+                <div className="pagination-item" title="下一页">
+                    <Link to={to}>{<Icon type="iconicon-test9"></Icon>}</Link>
+                </div>
+            );
+        }
+
+        if (type === "page") {
+            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
+            return (
+                <div className="pagination-item" title={`第${index}页`}>
+                    <Link to={to}>{index}</Link>
+                </div>
+            );
+        }
 
         return null;
     };
@@ -176,12 +180,14 @@ class Home extends Component {
                             <ArticleList userInfo={userInfo} list={result} />
 
                             <div className="pagination">
-                                <Pagination
-                                    current={page}
-                                    total={total}
-                                    itemRender={this.paginationItemRender}
-                                    onChange={this.getArticleList}
-                                />
+                                {total / pageSize > 1 ? (
+                                    <Pagination
+                                        current={page}
+                                        total={total}
+                                        itemRender={this.paginationItemRender}
+                                        onChange={this.getArticleList}
+                                    />
+                                ) : null}
                             </div>
                         </div>
                         <div className="home-content-right">
@@ -220,51 +226,105 @@ class Home extends Component {
 }
 
 Home.getInitialProps = async (ctx) => {
-    const { id, page } = __isBrowser__ ? ctx.match.params : ctx.params;
+    const { id = "", page = 1 } = __isBrowser__ ? ctx.match.params : ctx.params;
     const { store } = ctx;
-
     const { dispatch } = store;
-
-    const payload = { page, pageSize: 10, id };
-
+    const payload = { page, pageSize: 10, tag: encodeURIComponent(id) };
+    const empty = undefined;
+    const other = __isBrowser__ ? {} : { ctx };
     const requestList = [];
 
-    requestList.push(
-        dispatch({
-            type: "article/getArticleList",
-            payload,
-            ctx,
-        })
-    );
+    const state = store.getState();
 
-    requestList.push(
-        dispatch({
-            type: "article/getTagList",
-            ctx,
-        })
-    );
+    const { article, home } = state;
 
-    requestList.push(
-        dispatch({
-            type: "home/getBgImageList",
-            ctx,
-        })
-    );
+    if (
+        +payload.page !== +get(article, "articleList.page") ||
+        payload.id !==
+            encodeURIComponent(get(article, "articleList.currentTag"))
+    ) {
+        requestList.push(
+            apis.getArticleList(payload, other).then((data) => {
+                let { page, pageSize, tag } = payload;
 
-    requestList.push(
-        dispatch({
-            type: "home/getRecommendArticl",
-            ctx,
-        })
-    );
+                page = Number(page);
 
-    requestList.push(
-        dispatch({
-            type: "home/getSelftalkingList",
-            ctx,
-        })
-    );
-    await Promise.all(requestList);
+                let { total = 0, result = [] } = data;
+                result = handleFormatList(result);
+                dispatch({
+                    type: "article/articleList",
+                    payload: {
+                        currentTag: tag ? decodeURIComponent(tag) : "",
+                        result,
+                        page,
+                        pageSize,
+                        total,
+                        loading: false,
+                    },
+                });
+            })
+        );
+    }
+
+    if (isEmpty(get(article, "tagsList"))) {
+        requestList.push(
+            apis.getTagList(empty, other).then((data) => {
+                dispatch({
+                    type: "article/tagsList",
+                    payload: get(data, "result", []),
+                });
+            })
+        );
+    }
+
+    const hasHomeBg = size(get(home, "homeBgList")) > 1;
+
+    if (!hasHomeBg) {
+        requestList.push(
+            apis.getBgImageList(empty, other).then((data) => {
+                dispatch({
+                    type: "home/homeBgList",
+                    payload: get(data, "result", []),
+                });
+            })
+        );
+    }
+
+    if (isEmpty(get(home, "recommendList"))) {
+        requestList.push(
+            apis.getRecommendArticle(empty, other).then((data) => {
+                dispatch({
+                    type: "home/recommendList",
+                    payload: get(data, "result", []),
+                });
+            })
+        );
+    }
+
+    if (isEmpty(get(home, "selftalking"))) {
+        requestList.push(
+            apis
+                .getSelftalkList(
+                    {
+                        page: 1,
+                        pageSize: 999,
+                    },
+                    other
+                )
+                .then((data) => {
+                    dispatch({
+                        type: "home/selftalking",
+                        payload: get(data, "result", []),
+                    });
+                })
+        );
+    }
+
+    try {
+        await Promise.all(requestList);
+    } catch (err) {
+        console.log("home", err);
+    }
 };
 
 const mapStateToProps = (store) => {

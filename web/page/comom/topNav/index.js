@@ -28,7 +28,7 @@ const json = [
         name: "设置",
         url: "/set/selftalking",
         icon: "iconshezhi",
-        state: 2,
+        state: 1,
     },
     {
         name: "关于",

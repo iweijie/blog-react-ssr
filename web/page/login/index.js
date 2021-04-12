@@ -75,8 +75,6 @@ class App extends Component {
         const { getFieldDecorator } = this.props.form;
         var isLogin = this.props.userInfo.isLogin;
 
-        console.log("isLogin", isLogin, this.state.visible);
-
         return (
             <div className={isLogin ? "login hide" : "login"}>
                 <Modal

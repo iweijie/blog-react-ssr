@@ -105,6 +105,7 @@ module.exports = merge(baseConfig, {
     devtool: devtool,
     entry: {
         Page: ["@babel/polyfill", paths.entry],
+        love: [path.resolve(__dirname, '../web/utils/love')]
     },
     resolve: {
         alias: {
