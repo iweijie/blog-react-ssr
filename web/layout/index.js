@@ -28,9 +28,14 @@ const Layout = (props) => {
                         name="viewport"
                         content="width=device-width, initial-scale=1, shrink-to-fit=no"
                     />
-                    <meta name="baidu-site-verification" content="code-dqfGE8zrOx"/>
+                    <meta
+                        name="baidu-site-verification"
+                        content="code-dqfGE8zrOx"
+                    />
                     <meta charSet="utf-8" />
                     <meta name="theme-color" content="#000000" />
+                    <script>var _hmt = _hmt || [];</script>
+                    <script src="https://hm.baidu.com/hm.js?49bf4a5a5df8f68eb21f8ae03221e371"></script>
                     <title>iweijie</title>
                     {injectCss &&
                         injectCss.map((item) => (

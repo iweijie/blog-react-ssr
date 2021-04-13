@@ -89,16 +89,16 @@ export default {
     },
 
     reducers: {
-        setTagsList(state, payload) {
+        setTagsList({state}, payload) {
             return { ...state, tagsList: payload };
         },
-        setTagsDetailList(state, payload) {
+        setTagsDetailList({state}, payload) {
             return { ...state, tagsDetailList: payload };
         },
-        setArticleDetials(state, payload) {
+        setArticleDetails({state}, payload) {
             return { ...state, articleDetials: payload };
         },
-        setArticleList(state, payload) {
+        setArticleList({state}, payload) {
             return { ...state, articleList: payload };
         },
         setInitArticleList(state) {

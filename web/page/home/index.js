@@ -17,6 +17,7 @@ import Tags from "./components/tags";
 import { Helmet } from "react-helmet";
 import Icon from "../../components/Icon";
 import "./index.less";
+import "./index.min.less";
 import apis from "../../apis";
 
 class Home extends Component {
@@ -36,8 +37,14 @@ class Home extends Component {
     }
 
     getArticleList = (page) => {
+        setTimeout(() => {
+            const topNav = document.querySelector("#nav");
 
-        setTimeout(() => {});
+            window.scrollTo({
+                top: topNav.offsetTop,
+                behavior: "smooth",
+            });
+        });
     };
 
     componentWillUnmount() {
@@ -269,6 +276,7 @@ Home.getInitialProps = async (ctx) => {
     if (isEmpty(get(article, "tagsList"))) {
         requestList.push(
             apis.getTagList(empty, other).then((data) => {
+                console.log("data", data);
                 dispatch({
                     type: "article/tagsList",
                     payload: get(data, "result", []),
@@ -276,13 +284,6 @@ Home.getInitialProps = async (ctx) => {
             })
         );
     }
-
-    // const hasHomeBg = size(get(home, "homeBgList")) > 1;
-
-    // if (!hasHomeBg) {
-    //     requestList.push(
-    //     );
-    // }
 
     if (isEmpty(get(home, "recommendList"))) {
         requestList.push(

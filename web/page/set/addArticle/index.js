@@ -121,7 +121,7 @@ class App extends Component {
   };
   componentWillUnmount() {
     this.props.dispatch({
-      type: 'article/setArticleDetials',
+      type: 'article/setArticleDetails',
       payload: {},
     });
     clearInterval(this.timerId);

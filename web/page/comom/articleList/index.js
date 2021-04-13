@@ -32,59 +32,74 @@ class App extends PureComponent {
                         (data.tags[0] && data.tags[0].toUpperCase()) || "JS";
                     return (
                         <div className="article-list-item" key={data._id}>
-                            {data.img ? (
+                            {/* {data.img ? (
                                 <div className="article-list-item-img">
                                     <img src={data.img} alt="" />
                                 </div>
-                            ) : (
-                                <div
-                                    className="article-list-item-text img-mask"
-                                    style={{
-                                        backgroundColor: data._bg,
-                                        color: data._fc,
-                                    }}
-                                >
-                                    {tag}
-                                </div>
-                            )}
-
-                            <h3 className="display-none">{data.title}</h3>
-                            <Link
-                                className="article-list-item-title underline"
-                                to={`/article/detail/${data._id}`}
+                            ) : ( */}
+                            <div
+                                className="article-list-item-text img-mask"
+                                style={{
+                                    backgroundColor: data._bg,
+                                    color: data._fc,
+                                }}
                             >
-                                {data.title}
-                            </Link>
-                            {userId &&
-                            data.autor &&
-                            userId === data.autor._id ? (
-                                <span
-                                    onClick={() => this.gotoEditPag(data._id)}
-                                    className="article-list-item-edit"
+                                {tag}
+                            </div>
+                            {/* )} */}
+
+                            <div className="article-list-item-right">
+                                <h3 className="display-none">{data.title}</h3>
+                                <Link
+                                    className="article-list-item-title underline"
+                                    to={`/article/detail/${data._id}`}
                                 >
-                                    <Icon type="iconedit" theme="outlined" />
-                                </span>
-                            ) : null}
-                            <p className="article-list-item-descrption">
-                                {data.description}
-                            </p>
-                            <div className="article-list-item-author">
-                                <span className="mr10">
-                                    <Icon className="pr5" type="iconcaidaniconwodehui" />
-                                    {data.autor && data.autor.name}
-                                </span>
-                                <span className="mr10">
-                                    <Icon className="pr5" type="iconrili1" />
-                                    {timestampFromat(data.createTime)}
-                                </span>
-                                <span className="article-list-item-tag mr10">
-                                    <Icon type="icontag" className="pr5" />
-                                    {data.tags && data.tags.join("，")}
-                                </span>
-                                <span>
-                                    <Icon className="pr5" type="iconview" />
-                                    {data.time}
-                                </span>
+                                    {data.title}
+                                </Link>
+                                {userId &&
+                                data.autor &&
+                                userId === data.autor._id ? (
+                                    <span
+                                        onClick={() =>
+                                            this.gotoEditPag(data._id)
+                                        }
+                                        className="article-list-item-edit"
+                                    >
+                                        <Icon
+                                            type="iconedit"
+                                            theme="outlined"
+                                        />
+                                    </span>
+                                ) : null}
+                                {/* <div className="article-list-item-descrption omit-wrap"> */}
+                                <p class="article-list-item-description">
+                                    {data.description}
+                                </p>
+                                {/* </div> */}
+                                <div className="article-list-item-author">
+                                    <span className="mr10">
+                                        <Icon
+                                            className="pr5"
+                                            type="iconcaidaniconwodehui"
+                                        />
+                                        {data.autor && data.autor.name}
+                                    </span>
+                                    <span className="mr10">
+                                        <Icon
+                                            className="pr5"
+                                            type="iconrili1"
+                                        />
+                                        {timestampFromat(data.createTime)}
+                                    </span>
+                                    <span className="article-list-item-tag mr10">
+                                        <Icon type="icontag" className="pr5" />
+                                        {data.tags && data.tags.join("，")}
+                                    </span>
+                                    <span>
+                                        <Icon className="pr5" type="iconview" />
+                                        {data.time}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     );
