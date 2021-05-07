@@ -7,7 +7,7 @@
 import React, { PureComponent } from "react";
 import Icon from "../../../components/Icon";
 import { Link, withRouter } from "react-router-dom";
-import { timestampFromat } from "../../../utils/index";
+import { timestampFormat } from "../../../utils/index";
 import "./css.less";
 
 class App extends PureComponent {
@@ -89,7 +89,7 @@ class App extends PureComponent {
                                             className="pr5"
                                             type="iconrili1"
                                         />
-                                        {timestampFromat(data.createTime)}
+                                        {timestampFormat(data.createTime)}
                                     </span>
                                     <span className="article-list-item-tag mr10">
                                         <Icon type="icontag" className="pr5" />

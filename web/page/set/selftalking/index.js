@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty'
-import { timestampFromat } from '../../../utils/index';
+import { timestampFormat } from '../../../utils/index';
 import SetLayout from '../SetLayout';
 import { Button, Table, message, Input, Row, Col, Form, Modal } from 'antd';
 import './css.less';
@@ -34,7 +34,7 @@ class Selftalking extends Component {
       key: 'createTime',
       width: 200,
       render: (text) => {
-        return timestampFromat(text, false);
+        return timestampFormat(text, false);
       },
     },
   ];

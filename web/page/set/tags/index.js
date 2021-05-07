@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import observer from "tool/observer"
 import apis from '../../../apis/index';
-import { timestampFromat } from '../../../utils/index';
+import { timestampFormat } from '../../../utils/index';
 import isEmpty from 'lodash/isEmpty'
 import SetLayout from '../SetLayout';
 import { Button, Table, message, Input, Row, Col, Radio, Form, Modal } from 'antd';
@@ -58,7 +58,7 @@ class App extends Component {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        return timestampFromat(text);
+        return timestampFormat(text);
       },
     },
     {

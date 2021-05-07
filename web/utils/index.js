@@ -147,7 +147,7 @@ export const setLocation = (name, obj) => {
 };
 /**
  *作者: weijie
- *功能描述:timestampFromat 时间格式化 方法
+ *功能描述:timestampFormat 时间格式化 方法
  *参数说明:
  * @param {number} v 毫秒数
  * @param {number} t 类型1 返回年月日 类型2返回年月日时分秒
@@ -155,7 +155,7 @@ export const setLocation = (name, obj) => {
  * @return {string}
  *时间: 2018/4/2 16:22
  */
-export const timestampFromat = (v, t = 1, interval = '-') => {
+export const timestampFormat = (v, t = 1, interval = '-') => {
   if (v == 0 || v == undefined) {
     return null;
   }

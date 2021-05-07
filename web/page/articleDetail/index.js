@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { timestampFromat, popUpImage } from "../../utils/index";
+import { timestampFormat, popUpImage } from "../../utils/index";
 import Messageboard from "./messageBoard";
 import TopNav from "../comom/topNav";
 import Aside from "./aside";
@@ -72,7 +72,7 @@ class ArticleDetail extends Component {
                                     </span>
                                     <span className="mr10">
                                         <Icon className="pr5" type="calendar" />
-                                        发表于{timestampFromat(data.createTime)}
+                                        发表于{timestampFormat(data.createTime)}
                                     </span>
                                     <span className="item-tag">
                                         <Icon type="tag-o" className="pr5" />

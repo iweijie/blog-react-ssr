@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { timestampFromat } from "../../utils/index";
+import { timestampFormat } from "../../utils/index";
 import { Form, Input, Row, Col, Button, message } from "antd";
 
 const FormItem = Form.Item;
@@ -91,7 +91,7 @@ class App extends PureComponent {
                             dangerouslySetInnerHTML={html}
                         ></span>
                         —<span className="green mr10"> {v.name} </span>
-                        <span>{timestampFromat(v.createTime)}</span>
+                        <span>{timestampFormat(v.createTime)}</span>
                         {(userInfo.userId && v.userId === userInfo.userId) ||
                         (!userInfo.isLogin && name === v.name) ? null : (
                             <span

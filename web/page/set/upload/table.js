@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { timestampFromat, copyToShearplate } from '../../../utils/index';
+import { timestampFormat, copyToShearplate } from '../../../utils/index';
 import { Table, Pagination, message, Button } from 'antd';
 
 class TableCom extends PureComponent {
@@ -60,7 +60,7 @@ class TableCom extends PureComponent {
       dataIndex: 'createTime',
       key: 'createTime',
       render: (text) => {
-        return timestampFromat(text);
+        return timestampFormat(text);
       },
     },
   ];
