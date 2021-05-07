@@ -182,6 +182,42 @@ module.exports = {
             controller: "page",
             handler: "index",
         },
+        {
+            path: "/selftalking",
+            exact: true,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "selftalking" */ "@/page/selftalking"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/selftalking").default,
+            controller: "page",
+            handler: "index",
+        },
+        {
+            path: "/game",
+            exact: true,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "selftalking" */ "@/page/game"
+                              ),
+                          loading: function Loading() {
+                              return React.createElement("div");
+                          },
+                      })
+                    : require("@/page/game").default,
+            controller: "page",
+            handler: "index",
+        },
     ],
     baseDir: resolvePath(""),
     injectCss: [`/static/css/Page.chunk.css`], // 客户端需要加载的静态样式表

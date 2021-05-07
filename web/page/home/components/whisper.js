@@ -52,10 +52,17 @@ class Whisper extends PureComponent {
         this.carouselList.push(str);
         return (
             <div key={str} className={"home-whisper"}>
-                <Link to="/selftalking">
-                    <Icon type="iconStar" theme="filled" />
-                    碎碎念
-                </Link>
+                {isLogin ? (
+                    <Link to="/selftalking">
+                        <Icon type="iconStar" theme="filled" />
+                        碎碎念
+                    </Link>
+                ) : (
+                    <a>
+                        <Icon type="iconStar" theme="filled" />
+                        碎碎念
+                    </a>
+                )}
 
                 <div
                     className={"home-whisper-content"}
@@ -63,7 +70,7 @@ class Whisper extends PureComponent {
                     onMouseEnter={() => this.MouseEnterHandle(str)}
                 >
                     {list && list.length ? (
-                        <Carousel  ref={str} dotPosition="left">
+                        <Carousel ref={str} dotPosition="left">
                             {list.map((val) => (
                                 <div key={val._id} className={"whisper"}>
                                     {val.content}

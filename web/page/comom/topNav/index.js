@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import classnames from "classnames";
 import Icon from "../../../components/Icon";
 
 import "./css.less";
@@ -18,12 +17,12 @@ const json = [
         icon: "iconhome",
         state: 1,
     },
-    // {
-    //     name: "标签",
-    //     url: "/label",
-    //     icon: "bars",
-    //     state:1
-    // },
+    {
+        name: "游戏",
+        url: "/game",
+        icon: "icongame",
+        state: 1,
+    },
     {
         name: "设置",
         url: "/set/selftalking",
