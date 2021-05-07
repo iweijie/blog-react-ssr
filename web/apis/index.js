@@ -79,8 +79,8 @@ export default Object.keys(apis)
                 const configList = [{}, defaultOptions, other, otherConfig];
 
                 if (!__isBrowser__ && ctx) {
-                    const cookies = get(ctx, "req.headers.cookie");
-
+                    let cookies = get(ctx, "req.headers.cookie");
+                    console.log("token", cookies)
                     configList.push({
                         headers: {
                             Cookie: cookies,

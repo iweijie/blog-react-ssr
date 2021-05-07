@@ -135,7 +135,6 @@ class ArticleDetail extends Component {
 ArticleDetail.getInitialProps = async (ctx) => {
     const { store } = ctx;
     const id = __isBrowser__ ? ctx.match.params.id : ctx.params.id;
-
     await store.dispatch({
         type: "article/getArticleDetails",
         payload: {

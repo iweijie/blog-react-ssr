@@ -3,23 +3,25 @@ import apis from "../apis";
 export default {
     namespace: "common",
 
-    state: {
-        browserInfo: __isBrowser__
-            ? {
-                  height:
-                      window.innerHeight ||
-                      document.documentElement.clientHeight ||
-                      document.body.clientHeight,
-                  width:
-                      window.innerWidth ||
-                      document.documentElement.clientWidth ||
-                      document.body.clientWidth,
-              }
-            : {},
-        isLoading: false,
-        userInfo: {
-            isLogin: false,
-        },
+    state: () => {
+        return {
+            browserInfo: __isBrowser__
+                ? {
+                      height:
+                          window.innerHeight ||
+                          document.documentElement.clientHeight ||
+                          document.body.clientHeight,
+                      width:
+                          window.innerWidth ||
+                          document.documentElement.clientWidth ||
+                          document.body.clientWidth,
+                  }
+                : {},
+            isLoading: false,
+            userInfo: {
+                isLogin: false,
+            },
+        };
     },
 
     effects: {

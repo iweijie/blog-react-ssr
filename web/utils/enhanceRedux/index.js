@@ -15,6 +15,7 @@ import {
 import { checkModel, checkType, isSame } from "./check";
 import { createStore, applyMiddleware } from "redux";
 import merge from "lodash/merge";
+import noop from "lodash/noop";
 
 function enhanceRedux(models = [], options = {}) {
     let {
@@ -149,10 +150,9 @@ function enhanceRedux(models = [], options = {}) {
             // 检测 model 的结构是否符合 ，以及是否重复注册
             checkModel(model, REGISTERED_NAMESPACE);
         }
-        const { namespace, state = {}, reducers = {}, effects = {} } = model;
-        // const states = getState();
+        const { namespace, state = noop, reducers = {}, effects = {} } = model;
         // 初始化state 赋值
-        states[namespace] = state;
+        states[namespace] = state();
         // 获取 reducer
         if (isObject(reducers)) {
             Object.keys(reducers).forEach((key) => {

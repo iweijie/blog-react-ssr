@@ -10,9 +10,8 @@ import {
 } from "ykfe-utils";
 import { get } from "lodash";
 import apis from "./apis/index";
-import { __INITIAL_DATA__ } from "./createStore";
 import config from "../config/config.ssr";
-import createStore from "./createStore";
+import createStore, { __INITIAL_DATA__ } from "./createStore";
 
 const Routes = config.routes;
 
@@ -28,34 +27,37 @@ const clientRender = async () => {
         <Provider store={store}>
             <BrowserRouter>
                 <Switch>
-                    {// 使用高阶组件getWrappedComponent使得csr首次进入页面以及csr/ssr切换路由时调用getInitialProps
-                    clientRoutes.map(({ path, exact, Component }) => {
-                        const activeComponent = Component();
-                        const WrappedComponent = getWrappedComponent(
-                            activeComponent
-                        );
+                    {
+                        // 使用高阶组件getWrappedComponent使得csr首次进入页面以及csr/ssr切换路由时调用getInitialProps
+                        clientRoutes.map(({ path, exact, Component }) => {
+                            const activeComponent = Component();
+                            const WrappedComponent = getWrappedComponent(
+                                activeComponent
+                            );
 
-                        const Layout = WrappedComponent.Layout || defaultLayout;
+                            const Layout =
+                                WrappedComponent.Layout || defaultLayout;
 
-                        return (
-                            <Route
-                                exact={exact}
-                                key={path}
-                                path={path}
-                                render={(props) => {
-                                    const { location } = props;
-                                    return (
-                                        <Layout>
-                                            <WrappedComponent
-                                                key={location.pathname}
-                                                store={store}
-                                            />
-                                        </Layout>
-                                    );
-                                }}
-                            />
-                        );
-                    })}
+                            return (
+                                <Route
+                                    exact={exact}
+                                    key={path}
+                                    path={path}
+                                    render={(props) => {
+                                        const { location } = props;
+                                        return (
+                                            <Layout key={location.pathname}>
+                                                <WrappedComponent
+                                                    store={store}
+                                                    key={location.pathname}
+                                                />
+                                            </Layout>
+                                        );
+                                    }}
+                                />
+                            );
+                        })
+                    }
                 </Switch>
             </BrowserRouter>
         </Provider>,

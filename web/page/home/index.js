@@ -276,7 +276,6 @@ Home.getInitialProps = async (ctx) => {
     if (isEmpty(get(article, "tagsList"))) {
         requestList.push(
             apis.getTagList(empty, other).then((data) => {
-                console.log("data", data);
                 dispatch({
                     type: "article/tagsList",
                     payload: get(data, "result", []),

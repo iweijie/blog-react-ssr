@@ -4,16 +4,18 @@ import get from "lodash/get";
 export default {
     namespace: "home",
 
-    state: {
-        homeBgList: [
-            {
-                fullUrl:
-                    "http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl",
-            },
-        ],
-        homeScrollToTop: 0,
-        selftalking: [],
-        recommendList: [],
+    state: () => {
+        return {
+            homeBgList: [
+                {
+                    fullUrl:
+                        "http://h1.ioliu.cn/bing/QingMingHuangShan_ZH-CN12993895964_1920x1080.jpg?imagesl",
+                },
+            ],
+            homeScrollToTop: 0,
+            selftalking: [],
+            recommendList: [],
+        };
     },
 
     effects: {
@@ -46,7 +48,7 @@ export default {
         },
         async addSelftalking({ call, put }, payload, other) {
             await apis.addSelftalking(payload, other);
-            await call({ type: "home/getSelftalkList", ...other });
+            await call("home/getSelftalkList");
         },
     },
 

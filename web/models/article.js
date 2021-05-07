@@ -19,7 +19,7 @@ export const handleFormatList = (result) => {
 export default {
     namespace: "article",
 
-    state: {
+    state: () => ({
         articleList: {
             page: 0,
             pageSize: 10,
@@ -34,7 +34,7 @@ export default {
         editArticle: {
             isAdd: false,
         },
-    },
+    }),
 
     effects: {
         /**  文章  */
@@ -89,16 +89,16 @@ export default {
     },
 
     reducers: {
-        setTagsList({state}, payload) {
+        setTagsList({ state }, payload) {
             return { ...state, tagsList: payload };
         },
-        setTagsDetailList({state}, payload) {
+        setTagsDetailList({ state }, payload) {
             return { ...state, tagsDetailList: payload };
         },
-        setArticleDetails({state}, payload) {
+        setArticleDetails({ state }, payload) {
             return { ...state, articleDetials: payload };
         },
-        setArticleList({state}, payload) {
+        setArticleList({ state }, payload) {
             return { ...state, articleList: payload };
         },
         setInitArticleList(state) {

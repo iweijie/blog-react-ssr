@@ -85,10 +85,10 @@ export const apis = {
 export const prefix =
   process.env.NODE_ENV !== 'production'
     ? {
-        basicsUrl: 'https://blogapi.iweijie.cn',
-        fileUrl: 'https://file.iweijie.cn',
-      } || {
-        basicsUrl: 'http://localhost:8002',
+      basicsUrl: 'https://blogapi.iweijie.cn',
+      fileUrl: 'https://file.iweijie.cn',
+    } || {
+        basicsUrl: 'http://localhost:8004',
         fileUrl: 'http://localhost:8001',
       }
     : {

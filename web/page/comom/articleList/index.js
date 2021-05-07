@@ -72,7 +72,7 @@ class App extends PureComponent {
                                     </span>
                                 ) : null}
                                 {/* <div className="article-list-item-descrption omit-wrap"> */}
-                                <p class="article-list-item-description">
+                                <p className="article-list-item-description">
                                     {data.description}
                                 </p>
                                 {/* </div> */}
