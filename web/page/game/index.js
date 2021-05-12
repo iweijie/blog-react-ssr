@@ -23,7 +23,7 @@ const data = [
     {
         id: "gobang",
         name: "五子棋",
-        img: "http://f.iweijie.cn/gobang.jpg",
+        img: "//file.iweijie.cn/static/uploads/2021-05/image/0d105aeea6944743142a6f395d547ba02.png",
         description: "AI 战胜人类，只是时间的问题！！",
         github: "https://github.com/iweijie/gobang",
         url: "http://static.iweijie.cn/gobang/",
@@ -32,7 +32,7 @@ const data = [
     {
         id: "tetris",
         name: "俄罗斯方块",
-        img: "http://f.iweijie.cn/tetris.png",
+        img: "//file.iweijie.cn/static/uploads/2021-05/image/0d5ce2bf3628bce6211a62f4a30e7af72.png",
         description: "童年的回忆！！",
         github: "https://github.com/iweijie/react-tetris",
         url: "http://static.iweijie.cn/tetris/",
