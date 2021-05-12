@@ -68,21 +68,21 @@ export default {
             });
         },
 
-        *addArticle({ payload }, { call, put }) {
-            yield call(apis.addArticle, payload);
+        async addArticle({ call, put }, payload) {
+            await apis.addArticle(payload)
         },
         /**  标签  */
         async getTagList({ call, put }, payload) {
             const data = await apis.getTagList(payload);
             put({
-                type: "article/tagsList",
+                type: "article/setTagsList",
                 payload: get(data, "result", []),
             });
         },
-        *getTagsDetailList({ payload }, { call, put }) {
-            const data = yield call(apis.getDetailTagList);
-            yield put({
-                type: "setTagsDetailList",
+        async getTagsDetailList({ call, put }, payload) {
+            const data = await apis.getDetailTagList();
+            put({
+                type: "article/tagsDetailList",
                 payload: get(data, "result", []),
             });
         },
@@ -93,6 +93,7 @@ export default {
             return { ...state, tagsList: payload };
         },
         setTagsDetailList({ state }, payload) {
+            debugger
             return { ...state, tagsDetailList: payload };
         },
         setArticleDetails({ state }, payload) {

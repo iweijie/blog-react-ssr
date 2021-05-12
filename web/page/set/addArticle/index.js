@@ -51,6 +51,14 @@ class App extends Component {
         type: 'article/getTagsDetailList',
       });
       this.timerId = setInterval(this.saveLocal, 2 * 60 * 1000);
+
+      
+      // apis.getTagList().then((data) => {
+      //   dispatch({
+      //       type: "article/setTagsList",
+      //       payload: get(data, "result", []),
+      //   });
+      // })
     }
   }
 
