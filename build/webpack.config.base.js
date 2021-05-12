@@ -1,10 +1,13 @@
 "use strict";
 
 const paths = require("./paths");
+const packageJson = require("../package.json");
 // style files regexes
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const getStyleLoaders = require("./util").getStyleLoaders;
 const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
+
+const { version } = packageJson;
 
 const webpackModule = {
     strictExportPresence: true,
@@ -114,8 +117,8 @@ module.exports = {
     module: webpackModule,
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "static/css/[name].css",
-            chunkFilename: "static/css/[name].chunk.css",
+            filename: `static/css/[name]_${version}.css`,
+            chunkFilename: `static/css/[name]_${version}.chunk.css`,
         }),
     ],
     performance: false,

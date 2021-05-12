@@ -7,13 +7,15 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const ModuleNotFoundPlugin = require("react-dev-utils/ModuleNotFoundPlugin");
 const safePostCssParser = require("postcss-safe-parser");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-    .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+    require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const packageJson = require("../package.json");
 const baseConfig = require("./webpack.config.base");
 const paths = require("./paths");
 const publicPath = "/";
 const isDev = process.env.NODE_ENV === "development";
 const shouldUseSourceMap = isDev || process.env.GENERATE_SOURCEMAP;
+const { version } = packageJson;
 const devtool = isDev
     ? "cheap-module-source-map"
     : shouldUseSourceMap
@@ -105,7 +107,7 @@ module.exports = merge(baseConfig, {
     devtool: devtool,
     entry: {
         Page: ["@babel/polyfill", paths.entry],
-        love: [path.resolve(__dirname, '../web/utils/love')]
+        love: [path.resolve(__dirname, "../web/utils/love")],
     },
     resolve: {
         alias: {
@@ -116,8 +118,8 @@ module.exports = merge(baseConfig, {
     output: {
         path: paths.appBuild,
         pathinfo: true,
-        filename: "static/js/[name].js",
-        chunkFilename: "static/js/[name].chunk.js",
+        filename: `static/js/[name]_${version}.js`,
+        chunkFilename: `static/js/[name]_${version}.chunk.js`,
         publicPath: publicPath,
         hotUpdateChunkFilename: "[hash].hot-update.js",
         devtoolModuleFilenameTemplate: (info) =>
