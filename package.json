@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "dependencies": {
     "antd": "3.26.16",
-    "codemirror": "^5.53.2",
+    "codemirror": "^5.58.2",
     "dva": "2.4.1",
     "egg": "^2.21.0",
     "egg-scripts": "^2.11.0",
