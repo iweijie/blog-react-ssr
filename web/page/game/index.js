@@ -1,5 +1,6 @@
 import React from "react";
 import TopNav from "../comom/topNav";
+import map from "lodash/map";
 import "./index.less";
 
 const icon = (
@@ -18,31 +19,67 @@ const icon = (
     </svg>
 );
 
+const data = [
+    {
+        id: "gobang",
+        name: "五子棋",
+        img: "http://f.iweijie.cn/gobang.jpg",
+        description: "AI 战胜人类，只是时间的问题！！",
+        github: "https://github.com/iweijie/gobang",
+        url: "http://static.iweijie.cn/gobang/",
+    },
+
+    {
+        id: "tetris",
+        name: "俄罗斯方块",
+        img: "http://f.iweijie.cn/tetris.png",
+        description: "童年的回忆！！",
+        github: "https://github.com/iweijie/react-tetris",
+        url: "http://static.iweijie.cn/tetris/",
+    },
+];
+
 const Game = () => {
     return (
         <div>
             <TopNav isFixed />
-            <ol className="game">
-                <li>
-                    <a target="_blank" href="http://static.iweijie.cn/gobang/">
-                        <span>五子棋</span>
-                    </a>
-                    <a target="_blank" href="https://github.com/iweijie/gobang">
-                        {icon}
-                    </a>
-                </li>
-                <li>
-                    <a target="_blank" href="http://static.iweijie.cn/tetris/">
-                        <span>俄罗斯方块</span>
-                    </a>
-                    <a
-                        target="_blank"
-                        href="https://github.com/iweijie/react-tetris"
-                    >
-                        {icon}
-                    </a>
-                </li>
-            </ol>
+            <ul className="game">
+                {map(data, (item) => {
+                    const { id, img, description, github, url, name } = item;
+                    return (
+                        <div className="article-list-item" key={id}>
+                            <div
+                                className="article-list-item-img"
+                                style={{ backgroundImage: `url(${img})` }}
+                            >
+                            </div>
+                            <div className="article-list-item-right">
+                                <h3 className="display-none">{name}</h3>
+                                <a
+                                    href={url}
+                                    target="_blank"
+                                    className="article-list-item-title underline"
+                                    title={name}
+                                >
+                                    {name}
+                                </a>
+                                <a
+                                    href={github}
+                                    target="_blank"
+                                    className="article-list-item-edit"
+                                    title="github 链接"
+                                >
+                                    {icon}
+                                    {/* <Icon type="iconedit" theme="outlined" /> */}
+                                </a>
+                                <p className="article-list-item-description">
+                                    {description}
+                                </p>
+                            </div>
+                        </div>
+                    );
+                })}
+            </ul>
         </div>
     );
 };

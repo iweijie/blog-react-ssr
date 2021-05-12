@@ -80,7 +80,6 @@ export default Object.keys(apis)
 
                 if (!__isBrowser__ && ctx) {
                     let cookies = get(ctx, "req.headers.cookie");
-                    console.log("token", cookies)
                     configList.push({
                         headers: {
                             Cookie: cookies,

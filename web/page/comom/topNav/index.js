@@ -20,7 +20,7 @@ const json = [
     {
         name: "游戏",
         url: "/game",
-        icon: "icongame",
+        icon: "iconziyuan1",
         state: 1,
     },
     {

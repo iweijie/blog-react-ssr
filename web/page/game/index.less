@@ -1,20 +1,113 @@
 .game {
-    width: 400px;
     margin: 0 auto;
-    list-style: normal;
-    margin-top: 50px;
-    li {
-        height: 50px;
-        display: flex;
-        align-items: center;
-    }
-    a {
-        font-size: 18px;
-        margin-right: 36px;
+    padding-top: 20px;
+    width: 600px;
+
+    .underline::before {
+        background-color: rgba(0, 0, 0, 0.3);
     }
 
-    svg {
-        width: 18px;
-        height: 18px;
+    .article-list-item {
+        line-height: 20px;
+        box-shadow: 0px 0px 6px #e3e3e3;
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 20px;
+        display: flex;
+
+        &:last-child {
+            margin-bottom: 0px;
+        }
+
+        &:hover {
+            background-color: #f9f9f9;
+        }
+
+        .article-list-item-right {
+            flex: 1;
+            position: relative;
+        }
+    }
+
+    .article-list-item-title {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 700;
+        display: inline-block;
+        cursor: pointer;
+        margin: 0.2rem 0 0.4rem;
+        color: #333;
+    }
+
+    .article-list-item-edit {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 16px;
+        color: #e1e1e1;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            color: red;
+        }
+    }
+
+    .article-list-item-img {
+        width: 80px;
+        margin-right: 20px;
+        overflow: hidden;
+        font-size: 20px;
+        font-weight: 700;
+        color: #f1f1f1;
+        line-height: 100px;
+        text-align: center;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        > img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .article-list-item-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
+        height: 40px;
+        line-height: 20px;
+        // overflow: hidden;
+        margin-top: 0.5rem;
+    }
+
+    .article-list-item-author {
+        > span {
+            display: inline-block;
+        }
+    }
+
+    .article-list-item-handle {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        font-size: 18px;
+
+        > i {
+            padding: 5px;
+            cursor: pointer;
+
+            &:hover {
+                color: #1890ff;
+            }
+        }
     }
 }
