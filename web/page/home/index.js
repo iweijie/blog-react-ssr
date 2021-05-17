@@ -104,14 +104,14 @@ class Home extends Component {
 
     paginationItemRender = (index, type, reactDom) => {
         const { dispatch, articleList, match } = this.props;
-        const id = get(match, "params.id");
+        const id = get(match, "params.id", "all");
 
         const page = get(articleList, "page");
 
         if (type === "prev") {
             const index = page - 1;
 
-            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
+            const to = `/tags/${id}/${index}`;
             return (
                 <div className="pagination-item" title="上一页">
                     <Link to={to}>{<Icon type="iconicon-test7"></Icon>}</Link>
@@ -122,7 +122,7 @@ class Home extends Component {
         if (type === "next") {
             const index = page + 1;
 
-            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
+            const to = `/tags/${id}/${index}`;
             return (
                 <div className="pagination-item" title="下一页">
                     <Link to={to}>{<Icon type="iconicon-test9"></Icon>}</Link>
@@ -131,7 +131,7 @@ class Home extends Component {
         }
 
         if (type === "page") {
-            const to = id ? `/tags/${id}/${index}` : `/page/${index}`;
+            const to = `/tags/${id}/${index}`;
             return (
                 <div className="pagination-item" title={`第${index}页`}>
                     <Link to={to}>{index}</Link>
@@ -155,14 +155,8 @@ class Home extends Component {
             match,
         } = this.props;
         const { labelTop, labelLeft } = this.state;
-        const {
-            result,
-            total,
-            page,
-            pageSize,
-            currentTag,
-            hasMore,
-        } = articleList;
+        const { result, total, page, pageSize, currentTag, hasMore } =
+            articleList;
 
         const isFixed = browserInfo.height - homeScrollToTop <= 56;
 
@@ -237,6 +231,7 @@ Home.getInitialProps = async (ctx) => {
     const { store } = ctx;
     const { dispatch } = store;
     const payload = { page, pageSize: 10, tag: encodeURIComponent(id) };
+
     const empty = undefined;
     const other = __isBrowser__ ? {} : { ctx };
     const requestList = [];
@@ -244,32 +239,39 @@ Home.getInitialProps = async (ctx) => {
     const state = store.getState();
 
     const { article, home } = state;
-
     if (
         +payload.page !== +get(article, "articleList.page") ||
-        payload.id !==
+        payload.tag !==
             encodeURIComponent(get(article, "articleList.currentTag"))
     ) {
         requestList.push(
-            apis.getArticleList(payload, other).then((data) => {
-                let { page, pageSize, tag } = payload;
-
-                page = Number(page);
-
-                let { total = 0, result = [] } = data;
-                result = handleFormatList(result);
-                dispatch({
-                    type: "article/articleList",
-                    payload: {
-                        currentTag: tag ? decodeURIComponent(tag) : "",
-                        result,
-                        page,
-                        pageSize,
-                        total,
-                        loading: false,
+            apis
+                .getArticleList(
+                    {
+                        ...payload,
+                        tag: payload.tag === "all" ? undefined : payload.tag,
                     },
-                });
-            })
+                    other
+                )
+                .then((data) => {
+                    let { page, pageSize, tag } = payload;
+
+                    page = Number(page);
+
+                    let { total = 0, result = [] } = data;
+                    result = handleFormatList(result);
+                    dispatch({
+                        type: "article/articleList",
+                        payload: {
+                            currentTag: tag,
+                            result,
+                            page,
+                            pageSize,
+                            total,
+                            loading: false,
+                        },
+                    });
+                })
         );
     }
 

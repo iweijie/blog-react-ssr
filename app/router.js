@@ -11,5 +11,5 @@ module.exports = (app) => {
         );
     });
 
-    router.redirect("/", "/page/1", 302);
+    router.redirect("/", "/tags/all/1", 302);
 };

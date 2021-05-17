@@ -13,7 +13,7 @@ import "./css.less";
 const json = [
     {
         name: "首页",
-        url: "/page/1",
+        url: "/tags/all/1",
         icon: "iconhome",
         state: 1,
     },

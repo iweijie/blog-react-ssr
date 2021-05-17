@@ -93,7 +93,6 @@ export default {
             return { ...state, tagsList: payload };
         },
         setTagsDetailList({ state }, payload) {
-            debugger
             return { ...state, tagsDetailList: payload };
         },
         setArticleDetails({ state }, payload) {

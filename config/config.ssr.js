@@ -6,7 +6,7 @@ const pageComponent = () =>
     __isBrowser__
         ? require("ykfe-utils").Loadable({
               loader: () =>
-                  import(/* webpackChunkName: "page" */ "@/page/home"),
+                  import(/* webpackChunkName: "tags" */ "@/page/home"),
               loading: function Loading() {
                   return React.createElement("div");
               },
@@ -16,13 +16,6 @@ const pageComponent = () =>
 module.exports = {
     type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
     routes: [
-        {
-            path: "/page/:page",
-            exact: true,
-            Component: pageComponent,
-            controller: "page",
-            handler: "index",
-        },
         {
             path: "/tags/:id/:page",
             exact: true,
