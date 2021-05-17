@@ -230,7 +230,7 @@ Home.getInitialProps = async (ctx) => {
     const { id = "", page = 1 } = __isBrowser__ ? ctx.match.params : ctx.params;
     const { store } = ctx;
     const { dispatch } = store;
-    const payload = { page, pageSize: 10, tag: encodeURIComponent(id) };
+    const payload = { page, pageSize: 10, tag: decodeURIComponent(id) };
 
     const empty = undefined;
     const other = __isBrowser__ ? {} : { ctx };
@@ -239,10 +239,10 @@ Home.getInitialProps = async (ctx) => {
     const state = store.getState();
 
     const { article, home } = state;
+
     if (
         +payload.page !== +get(article, "articleList.page") ||
-        payload.tag !==
-            encodeURIComponent(get(article, "articleList.currentTag"))
+        payload.tag !== get(article, "articleList.currentTag")
     ) {
         requestList.push(
             apis
