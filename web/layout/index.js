@@ -4,6 +4,9 @@ import "../style/basics.less";
 import isEmpty from "lodash/isEmpty";
 import serialize from "serialize-javascript";
 import { __INITIAL_DATA__ } from "../createStore";
+import packageJson from "../../package.json";
+
+const { version } = packageJson;
 
 const commonNode = (props) => {
     return props.children ? props.children : "";
@@ -44,7 +47,7 @@ const Layout = (props) => {
                     {chunkName && chunkName ? (
                         <link
                             rel="stylesheet"
-                            href={`/static/css/${chunkName}.chunk.css`}
+                            href={`/static/css/${chunkName}_${version}.chunk.css`}
                         />
                     ) : (
                         ""

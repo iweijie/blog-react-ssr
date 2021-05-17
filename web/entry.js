@@ -48,7 +48,6 @@ const clientRender = async () => {
                                             <Layout>
                                                 <WrappedComponent
                                                     store={store}
-                                                    key={location.pathname}
                                                 />
                                             </Layout>
                                         );
