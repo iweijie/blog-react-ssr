@@ -2,16 +2,14 @@ const resolvePath = (path) => require("path").resolve(process.cwd(), path);
 const React = require("react");
 const packageJson = require("../package.json");
 const { version } = packageJson;
-const pageComponent = () =>
-    __isBrowser__
-        ? require("ykfe-utils").Loadable({
-              loader: () =>
-                  import(/* webpackChunkName: "tags" */ "@/page/home"),
-              loading: function Loading() {
-                  return React.createElement("div");
-              },
-          })
-        : require("@/page/home").default;
+
+const createLoading = () => {
+    return React.createElement(
+        "div",
+        { className: "global-loading" },
+        React.createElement("i", { className: "iconLoading iconfont" })
+    );
+};
 
 module.exports = {
     type: "ssr", // 指定运行类型可设置为csr切换为客户端渲染
@@ -19,7 +17,20 @@ module.exports = {
         {
             path: "/tags/:id/:page",
             exact: true,
-            Component: pageComponent,
+            Component: () =>
+                __isBrowser__
+                    ? require("ykfe-utils").Loadable({
+                          loader: () =>
+                              import(
+                                  /* webpackChunkName: "tags" */ "@/page/home"
+                              ),
+                          loading: function Loading() {
+                              return createLoading();
+                          },
+
+                          delay: 200,
+                      })
+                    : require("@/page/home").default,
             controller: "page",
             handler: "index",
         },
@@ -34,8 +45,10 @@ module.exports = {
                                   /* webpackChunkName: "article" */ "@/page/articleDetail"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/articleDetail").default,
             controller: "page",
@@ -53,8 +66,10 @@ module.exports = {
                                   /* webpackChunkName: "about" */ "@/page/about"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/about").default,
             controller: "page",
@@ -72,7 +87,9 @@ module.exports = {
                                   /* webpackChunkName: "login" */ "@/page/login"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return React.createElement("div", {
+                                  className: "iconLoading iconfont",
+                              });
                           },
                       })
                     : require("@/page/login").default,
@@ -93,8 +110,10 @@ module.exports = {
                                   /* webpackChunkName: "set" */ "@/page/set/addArticle"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/set/addArticle").default,
             controller: "page",
@@ -112,8 +131,9 @@ module.exports = {
                                   /* webpackChunkName: "set" */ "@/page/set/addArticle"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+                          delay: 200,
                       })
                     : require("@/page/set/addArticle").default,
             controller: "page",
@@ -131,8 +151,10 @@ module.exports = {
                                   /* webpackChunkName: "set" */ "@/page/set/selftalking"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/set/selftalking").default,
             controller: "page",
@@ -150,8 +172,10 @@ module.exports = {
                                   /* webpackChunkName: "set" */ "@/page/set/tags"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/set/tags").default,
             controller: "page",
@@ -169,8 +193,10 @@ module.exports = {
                                   /* webpackChunkName: "set" */ "@/page/set/upload"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/set/upload").default,
             controller: "page",
@@ -187,8 +213,10 @@ module.exports = {
                                   /* webpackChunkName: "selftalking" */ "@/page/selftalking"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/selftalking").default,
             controller: "page",
@@ -205,8 +233,10 @@ module.exports = {
                                   /* webpackChunkName: "selftalking" */ "@/page/game"
                               ),
                           loading: function Loading() {
-                              return React.createElement("div");
+                              return createLoading();
                           },
+
+                          delay: 200,
                       })
                     : require("@/page/game").default,
             controller: "page",
